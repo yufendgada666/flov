@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "flov-dev",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "set PATH=D:\\node.js;%PATH% && npm run dev"],
+      "port": 3000
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Variables ─────────────────────────────── */
+:root {
+  --color-sakura: #FF6B9D;
+  --color-sakura-light: #FFB3CC;
+  --color-sakura-dark: #E84577;
+  --color-spring: #2EC4B6;
+  --color-spring-light: #7EDDD3;
+  --color-sunshine: #FFD93D;
+  --color-sky: #6CB4EE;
+  --color-sky-light: #A8D8F0;
+  --color-lavender: #A78BFA;
+  --color-snow: #FAFBFF;
+  --color-cream: #FFF5E4;
+  --color-charcoal: #2D3436;
+  --color-charcoal-light: #636E72;
+  --color-nightsky: #0F1B3D;
+}
+
+/* ─── Base Reset ─────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-snow);
+    color: var(--color-charcoal);
+    font-family: var(--font-noto-sans-sc), var(--font-inter), sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Hide default cursor on desktop when custom cursor is active */
+  body.custom-cursor * {
+    cursor: none !important;
+  }
+
+  :lang(zh) {
+    font-feature-settings: "kern" 1;
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-noto-serif-sc), var(--font-cormorant), serif;
+    font-weight: 700;
+  }
+}
+
+/* ─── Utility Classes ────────────────────────────── */
+@layer utilities {
+  .section-container {
+    @apply max-w-6xl mx-auto px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-20 lg:py-28;
+  }
+
+  .poem-text {
+    font-family: var(--font-noto-serif-sc), serif;
+    font-weight: 400;
+    line-height: 2;
+    letter-spacing: 0.1em;
+  }
+
+  .en-display {
+    font-family: var(--font-cormorant), serif;
+    font-weight: 300;
+  }
+
+  .mono-display {
+    font-family: var(--font-jetbrains-mono), monospace;
+  }
+
+  /* Gradient text */
+  .text-gradient-sakura {
+    background: linear-gradient(135deg, #FF6B9D 0%, #A78BFA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-spring {
+    background: linear-gradient(135deg, #2EC4B6 0%, #6CB4EE 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass effect for NavBar */
+  .glass-light {
+    backdrop-filter: blur(16px) saturate(1.8);
+    -webkit-backdrop-filter: blur(16px) saturate(1.8);
+    background: rgba(250, 251, 255, 0.85);
+  }
+}
+
+/* ─── Selection Color ────────────────────────────── */
+::selection {
+  background-color: rgba(255, 107, 157, 0.25);
+  color: var(--color-charcoal);
+}

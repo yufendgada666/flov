@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//usr/local/**)",
+      "Bash(command -v node npm npx)",
+      "Read(//mnt/c/**)",
+      "Read(//mnt/c/Users/21327/AppData/Roaming/**)",
+      "Bash(ls /mnt/)",
+      "Read(//proc/**)",
+      "Read(//c/Users/21327/AppData/Roaming/**)",
+      "Read(//c/Program Files/**)",
+      "Read(//c/Users/21327/AppData/Local/**)",
+      "Read(//c/Users/21327/**)",
+      "Bash(/d/node.js/node.exe --version)",
+      "Bash(/d/node.js/npm.cmd --version)",
+      "Bash(\"/d/node.js/npm.cmd\" install:*)",
+      "Bash(export PATH=\"/d/node.js:$PATH\")",
+      "Bash(npm --version)",
+      "Bash(npm install:*)",
+      "Bash(npx kill-port:*)",
+      "Bash(powershell -Command \"Get-Process -Id \\(Get-NetTCPConnection -LocalPort 3000\\).OwningProcess | Stop-Process -Force\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
