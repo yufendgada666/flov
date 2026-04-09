@@ -3,7 +3,6 @@
 import FlowerMascot from './FlowerMascot'
 import ChildFlower from './ChildFlower'
 import AmbientFlower from './AmbientFlower'
-import FloatingPetal from './FloatingPetal'
 import type { ChildFlowerColorVariant } from './ChildFlower'
 import type { AmbientFlowerVariant } from './AmbientFlower'
 import { COLORS } from '@/lib/garden-config'
@@ -12,18 +11,8 @@ interface GardenSceneProps {
   children?: React.ReactNode
 }
 
-const PETAL_POSITIONS = [
-  { top: '12%', left: '6%' },
-  { top: '20%', right: '8%' },
-  { top: '55%', left: '3%' },
-  { top: '65%', right: '6%' },
-  { top: '35%', left: '92%' },
-  { top: '8%', left: '70%' },
-  { top: '75%', left: '15%' },
-]
-
-// Child flowers scattered around the main mascot
-// Each entry: position relative to viewport, size, personality, color, responsive visibility
+// Child flowers — flowers with faces, scattered around the garden floor
+// Sizes kept in 32-44px range for visual cohesion
 const CHILD_FLOWERS: Array<{
   style: React.CSSProperties
   size: number
@@ -32,20 +21,39 @@ const CHILD_FLOWERS: Array<{
   delay: number
   hideOn?: 'sm' | 'md'
 }> = [
-  // Left side cluster
-  { style: { bottom: '8%', left: '14%' }, size: 50, personality: 'curious', color: 'lavender', delay: 0.2 },
-  { style: { bottom: '15%', left: '22%' }, size: 38, personality: 'shy', color: 'white', delay: 0.6, hideOn: 'sm' },
-  { style: { bottom: '4%', left: '28%' }, size: 44, personality: 'happy', color: 'sakura', delay: 0.4, hideOn: 'sm' },
-  { style: { bottom: '11%', left: '6%' }, size: 34, personality: 'shy', color: 'deep', delay: 1.1, hideOn: 'md' },
+  // Front row — closest to camera, slightly larger
+  { style: { bottom: '2%', left: '8%' }, size: 42, personality: 'curious', color: 'lavender', delay: 0.2 },
+  { style: { bottom: '3%', left: '18%' }, size: 40, personality: 'happy', color: 'sakura', delay: 0.5 },
+  { style: { bottom: '1%', left: '28%' }, size: 44, personality: 'shy', color: 'white', delay: 0.8 },
+  { style: { bottom: '2%', left: '38%' }, size: 38, personality: 'happy', color: 'deep', delay: 1.1 },
+  { style: { bottom: '3%', right: '38%' }, size: 42, personality: 'curious', color: 'sunshine', delay: 0.4 },
+  { style: { bottom: '1%', right: '28%' }, size: 40, personality: 'happy', color: 'lavender', delay: 0.7 },
+  { style: { bottom: '2%', right: '18%' }, size: 44, personality: 'shy', color: 'sakura', delay: 1.0 },
+  { style: { bottom: '3%', right: '8%' }, size: 38, personality: 'curious', color: 'white', delay: 1.3 },
 
-  // Right side cluster
-  { style: { bottom: '8%', right: '16%' }, size: 48, personality: 'happy', color: 'sunshine', delay: 0.3 },
-  { style: { bottom: '14%', right: '24%' }, size: 36, personality: 'curious', color: 'lavender', delay: 0.7, hideOn: 'sm' },
-  { style: { bottom: '5%', right: '30%' }, size: 42, personality: 'happy', color: 'white', delay: 0.9, hideOn: 'sm' },
-  { style: { bottom: '12%', right: '6%' }, size: 32, personality: 'curious', color: 'sakura', delay: 1.3, hideOn: 'md' },
+  // Second row — slightly higher, slightly smaller
+  { style: { bottom: '8%', left: '4%' }, size: 36, personality: 'happy', color: 'sakura', delay: 0.3 },
+  { style: { bottom: '9%', left: '14%' }, size: 38, personality: 'curious', color: 'white', delay: 0.6 },
+  { style: { bottom: '7%', left: '24%' }, size: 36, personality: 'shy', color: 'lavender', delay: 0.9, hideOn: 'sm' },
+  { style: { bottom: '10%', left: '34%' }, size: 38, personality: 'happy', color: 'sunshine', delay: 1.2, hideOn: 'sm' },
+  { style: { bottom: '9%', right: '34%' }, size: 36, personality: 'curious', color: 'deep', delay: 0.5, hideOn: 'sm' },
+  { style: { bottom: '7%', right: '24%' }, size: 38, personality: 'shy', color: 'sakura', delay: 0.8, hideOn: 'sm' },
+  { style: { bottom: '10%', right: '14%' }, size: 36, personality: 'happy', color: 'white', delay: 1.1 },
+  { style: { bottom: '8%', right: '4%' }, size: 38, personality: 'curious', color: 'lavender', delay: 1.4 },
+
+  // Third row — mid distance, smaller
+  { style: { bottom: '15%', left: '10%' }, size: 32, personality: 'shy', color: 'lavender', delay: 0.4, hideOn: 'md' },
+  { style: { bottom: '16%', left: '20%' }, size: 34, personality: 'happy', color: 'sakura', delay: 0.7, hideOn: 'sm' },
+  { style: { bottom: '14%', left: '30%' }, size: 32, personality: 'curious', color: 'white', delay: 1.0, hideOn: 'sm' },
+  { style: { bottom: '17%', left: '40%' }, size: 34, personality: 'happy', color: 'deep', delay: 1.3, hideOn: 'md' },
+  { style: { bottom: '17%', right: '40%' }, size: 32, personality: 'shy', color: 'sunshine', delay: 0.5, hideOn: 'md' },
+  { style: { bottom: '14%', right: '30%' }, size: 34, personality: 'happy', color: 'lavender', delay: 0.8, hideOn: 'sm' },
+  { style: { bottom: '16%', right: '20%' }, size: 32, personality: 'curious', color: 'sakura', delay: 1.1, hideOn: 'sm' },
+  { style: { bottom: '15%', right: '10%' }, size: 34, personality: 'shy', color: 'white', delay: 1.4, hideOn: 'md' },
 ]
 
-// Ambient (faceless) flowers — far background decoration on hills
+// Ambient (faceless) flowers — fill mid/far ground for density
+// Sizes 22-30px for cohesion
 const AMBIENT_FLOWERS: Array<{
   style: React.CSSProperties
   size: number
@@ -53,16 +61,35 @@ const AMBIENT_FLOWERS: Array<{
   delay: number
   hideOn?: 'sm' | 'md'
 }> = [
-  { style: { bottom: '28%', left: '8%' }, size: 28, variant: 'lavender', delay: 0.5 },
-  { style: { bottom: '32%', left: '18%' }, size: 22, variant: 'white', delay: 1.2, hideOn: 'sm' },
-  { style: { bottom: '26%', left: '38%' }, size: 24, variant: 'sakura', delay: 0.8, hideOn: 'sm' },
-  { style: { bottom: '34%', left: '52%' }, size: 20, variant: 'sunshine', delay: 1.5, hideOn: 'md' },
-  { style: { bottom: '30%', right: '38%' }, size: 26, variant: 'lavender', delay: 0.6, hideOn: 'sm' },
-  { style: { bottom: '27%', right: '20%' }, size: 22, variant: 'white', delay: 1.0, hideOn: 'sm' },
-  { style: { bottom: '33%', right: '8%' }, size: 28, variant: 'deep', delay: 0.4 },
-  { style: { bottom: '29%', right: '50%' }, size: 18, variant: 'sakura', delay: 1.4, hideOn: 'md' },
-  { style: { bottom: '36%', left: '28%' }, size: 16, variant: 'sunshine', delay: 1.8, hideOn: 'md' },
-  { style: { bottom: '37%', right: '28%' }, size: 18, variant: 'lavender', delay: 2.0, hideOn: 'md' },
+  // Mid ground row
+  { style: { bottom: '22%', left: '6%' }, size: 28, variant: 'lavender', delay: 0.3 },
+  { style: { bottom: '23%', left: '16%' }, size: 26, variant: 'white', delay: 0.6, hideOn: 'sm' },
+  { style: { bottom: '21%', left: '26%' }, size: 28, variant: 'sakura', delay: 0.9, hideOn: 'sm' },
+  { style: { bottom: '24%', left: '36%' }, size: 26, variant: 'sunshine', delay: 1.2, hideOn: 'md' },
+  { style: { bottom: '22%', left: '46%' }, size: 28, variant: 'deep', delay: 0.4, hideOn: 'md' },
+  { style: { bottom: '23%', right: '44%' }, size: 26, variant: 'lavender', delay: 0.7, hideOn: 'md' },
+  { style: { bottom: '21%', right: '34%' }, size: 28, variant: 'white', delay: 1.0, hideOn: 'sm' },
+  { style: { bottom: '24%', right: '24%' }, size: 26, variant: 'sakura', delay: 1.3, hideOn: 'sm' },
+  { style: { bottom: '22%', right: '14%' }, size: 28, variant: 'sunshine', delay: 0.5, hideOn: 'sm' },
+  { style: { bottom: '23%', right: '4%' }, size: 26, variant: 'deep', delay: 0.8 },
+
+  // Far ground row — slightly smaller
+  { style: { bottom: '29%', left: '10%' }, size: 24, variant: 'sakura', delay: 0.4, hideOn: 'sm' },
+  { style: { bottom: '30%', left: '20%' }, size: 22, variant: 'lavender', delay: 0.7, hideOn: 'md' },
+  { style: { bottom: '28%', left: '32%' }, size: 24, variant: 'white', delay: 1.0, hideOn: 'md' },
+  { style: { bottom: '31%', left: '44%' }, size: 22, variant: 'sunshine', delay: 1.3, hideOn: 'md' },
+  { style: { bottom: '30%', right: '46%' }, size: 24, variant: 'deep', delay: 0.5, hideOn: 'md' },
+  { style: { bottom: '28%', right: '32%' }, size: 22, variant: 'sakura', delay: 0.8, hideOn: 'md' },
+  { style: { bottom: '31%', right: '20%' }, size: 24, variant: 'lavender', delay: 1.1, hideOn: 'sm' },
+  { style: { bottom: '29%', right: '8%' }, size: 22, variant: 'white', delay: 1.4, hideOn: 'sm' },
+
+  // Furthest row — smallest, mostly desktop
+  { style: { bottom: '36%', left: '14%' }, size: 22, variant: 'lavender', delay: 0.6, hideOn: 'md' },
+  { style: { bottom: '37%', left: '28%' }, size: 22, variant: 'sakura', delay: 0.9, hideOn: 'md' },
+  { style: { bottom: '36%', left: '42%' }, size: 22, variant: 'white', delay: 1.2, hideOn: 'md' },
+  { style: { bottom: '37%', right: '42%' }, size: 22, variant: 'sunshine', delay: 0.5, hideOn: 'md' },
+  { style: { bottom: '36%', right: '28%' }, size: 22, variant: 'deep', delay: 0.8, hideOn: 'md' },
+  { style: { bottom: '37%', right: '14%' }, size: 22, variant: 'lavender', delay: 1.1, hideOn: 'md' },
 ]
 
 function hideClass(hideOn?: 'sm' | 'md') {
@@ -80,11 +107,12 @@ export default function GardenScene({ children }: GardenSceneProps) {
         style={{
           background: `linear-gradient(180deg,
             ${COLORS.sky} 0%,
-            ${COLORS.skyLight} 20%,
-            #C4B5FD 45%,
-            ${COLORS.sakuraLight} 65%,
-            ${COLORS.cream} 85%,
-            #E8F5E8 100%
+            ${COLORS.skyLight} 18%,
+            #C4B5FD 38%,
+            ${COLORS.sakuraLight} 58%,
+            ${COLORS.cream} 78%,
+            #E8F5E8 92%,
+            #D1F0D1 100%
           )`,
         }}
       />
@@ -123,57 +151,56 @@ export default function GardenScene({ children }: GardenSceneProps) {
         </svg>
       </div>
 
-      {/* Rolling hills */}
+      {/* Flat garden ground — gentle undulations only, no mountain-like peaks */}
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none" aria-hidden="true">
+        {/* Distant meadow line */}
         <svg
           className="absolute bottom-0 w-full"
-          height="250"
-          viewBox="0 0 1440 250"
+          height="180"
+          viewBox="0 0 1440 180"
           preserveAspectRatio="none"
         >
           <path
-            d="M0,200 C180,100 360,150 540,120 C720,90 900,160 1080,110 C1260,60 1440,140 1440,140 L1440,250 L0,250 Z"
+            d="M0,150 C240,140 480,148 720,142 C960,138 1200,148 1440,144 L1440,180 L0,180 Z"
+            fill="#A7F3D0"
+            opacity="0.4"
+          />
+        </svg>
+        {/* Mid meadow */}
+        <svg
+          className="absolute bottom-0 w-full"
+          height="130"
+          viewBox="0 0 1440 130"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,110 C300,104 600,112 900,106 C1140,102 1320,110 1440,108 L1440,130 L0,130 Z"
             fill="#86EFAC"
-            opacity="0.3"
-          />
-        </svg>
-        <svg
-          className="absolute bottom-0 w-full"
-          height="200"
-          viewBox="0 0 1440 200"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,160 C200,80 400,140 600,100 C800,60 1000,130 1200,90 C1350,60 1440,100 1440,100 L1440,200 L0,200 Z"
-            fill="#4ADE80"
-            opacity="0.35"
-          />
-        </svg>
-        <svg
-          className="absolute bottom-0 w-full"
-          height="140"
-          viewBox="0 0 1440 140"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,80 C120,40 240,90 400,60 C560,30 720,70 880,50 C1040,30 1200,65 1440,40 L1440,140 L0,140 Z"
-            fill="#34D399"
             opacity="0.5"
           />
         </svg>
+        {/* Front grass */}
+        <svg
+          className="absolute bottom-0 w-full"
+          height="80"
+          viewBox="0 0 1440 80"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,60 C240,56 480,64 720,58 C960,54 1200,62 1440,58 L1440,80 L0,80 Z"
+            fill="#4ADE80"
+            opacity="0.55"
+          />
+        </svg>
+        {/* Soft fade at very bottom */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-16"
+          className="absolute bottom-0 left-0 right-0 h-12"
           style={{
             background:
-              'linear-gradient(0deg, #E8F5E8 0%, rgba(232,245,232,0) 100%)',
+              'linear-gradient(0deg, #D1F0D1 0%, rgba(209,240,209,0) 100%)',
           }}
         />
       </div>
-
-      {/* Floating petals */}
-      {PETAL_POSITIONS.map((pos, i) => (
-        <FloatingPetal key={i} index={i} style={{ position: 'absolute', ...pos }} />
-      ))}
 
       {/* Ambient background flowers (faceless decorations) */}
       {AMBIENT_FLOWERS.map((f, i) => (

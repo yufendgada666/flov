@@ -41,12 +41,12 @@ export default function ChildFlower({
   colorVariant = 'sakura',
 }: ChildFlowerProps) {
   const ref = useRef<SVGSVGElement>(null)
-  const leftIrisRef = useRef<SVGCircleElement>(null)
-  const rightIrisRef = useRef<SVGCircleElement>(null)
-  const leftIrisX = useRef<gsap.QuickToFunc | null>(null)
-  const leftIrisY = useRef<gsap.QuickToFunc | null>(null)
-  const rightIrisX = useRef<gsap.QuickToFunc | null>(null)
-  const rightIrisY = useRef<gsap.QuickToFunc | null>(null)
+  const leftEyeRef = useRef<SVGCircleElement>(null)
+  const rightEyeRef = useRef<SVGCircleElement>(null)
+  const leftEyeX = useRef<gsap.QuickToFunc | null>(null)
+  const leftEyeY = useRef<gsap.QuickToFunc | null>(null)
+  const rightEyeX = useRef<gsap.QuickToFunc | null>(null)
+  const rightEyeY = useRef<gsap.QuickToFunc | null>(null)
   const mouse = useMousePosition()
   const colors = COLOR_VARIANTS[colorVariant]
   const trackFactor = PERSONALITY_TRACK_FACTOR[personality]
@@ -55,24 +55,23 @@ export default function ChildFlower({
     () => {
       if (!ref.current) return
 
-      // Init iris quickTo
       const trackDelay = personality === 'shy' ? 0.4 : 0.18
-      if (leftIrisRef.current) {
-        leftIrisX.current = gsap.quickTo(leftIrisRef.current, 'cx', {
+      if (leftEyeRef.current) {
+        leftEyeX.current = gsap.quickTo(leftEyeRef.current, 'cx', {
           duration: trackDelay,
           ease: 'power2.out',
         })
-        leftIrisY.current = gsap.quickTo(leftIrisRef.current, 'cy', {
+        leftEyeY.current = gsap.quickTo(leftEyeRef.current, 'cy', {
           duration: trackDelay,
           ease: 'power2.out',
         })
       }
-      if (rightIrisRef.current) {
-        rightIrisX.current = gsap.quickTo(rightIrisRef.current, 'cx', {
+      if (rightEyeRef.current) {
+        rightEyeX.current = gsap.quickTo(rightEyeRef.current, 'cx', {
           duration: trackDelay,
           ease: 'power2.out',
         })
-        rightIrisY.current = gsap.quickTo(rightIrisRef.current, 'cy', {
+        rightEyeY.current = gsap.quickTo(rightEyeRef.current, 'cy', {
           duration: trackDelay,
           ease: 'power2.out',
         })
@@ -80,7 +79,7 @@ export default function ChildFlower({
 
       // Gentle floating
       gsap.to(ref.current, {
-        y: -8,
+        y: -6,
         duration: 2.5 + delay * 0.5,
         repeat: -1,
         yoyo: true,
@@ -88,7 +87,7 @@ export default function ChildFlower({
         delay,
       })
 
-      // Petal rotation
+      // Petal sway
       const petals = ref.current.querySelectorAll('.child-petal')
       petals.forEach((p, i) => {
         gsap.to(p, {
@@ -101,13 +100,24 @@ export default function ChildFlower({
         })
       })
 
-      // Autonomous blinking
-      const eyeEls = ref.current.querySelectorAll('.child-eye')
+      // Blink — squash dot eyes
       const blink = () => {
         gsap.delayedCall(3 + Math.random() * 5, () => {
           const tl = gsap.timeline()
-          tl.to(eyeEls, { attr: { ry: 0.5 }, duration: 0.08, ease: 'power2.in' })
-          tl.to(eyeEls, { attr: { ry: 3.5 }, duration: 0.1, ease: 'power2.out' })
+          if (leftEyeRef.current && rightEyeRef.current) {
+            tl.to([leftEyeRef.current, rightEyeRef.current], {
+              scaleY: 0.1,
+              duration: 0.08,
+              ease: 'power2.in',
+              transformOrigin: 'center center',
+            })
+            tl.to([leftEyeRef.current, rightEyeRef.current], {
+              scaleY: 1,
+              duration: 0.1,
+              ease: 'power2.out',
+              transformOrigin: 'center center',
+            })
+          }
           tl.call(blink)
         })
       }
@@ -116,7 +126,7 @@ export default function ChildFlower({
     { scope: ref }
   )
 
-  // Eye tracking based on mouse position
+  // Eye tracking
   useEffect(() => {
     if (mouse.isTouch || !ref.current) return
 
@@ -133,20 +143,20 @@ export default function ChildFlower({
     const offsetX = nx * maxOffset
     const offsetY = ny * maxOffset
 
-    leftIrisX.current?.(35 + offsetX)
-    leftIrisY.current?.(33 + offsetY)
-    rightIrisX.current?.(45 + offsetX)
-    rightIrisY.current?.(33 + offsetY)
+    leftEyeX.current?.(35 + offsetX)
+    leftEyeY.current?.(33 + offsetY)
+    rightEyeX.current?.(45 + offsetX)
+    rightEyeY.current?.(33 + offsetY)
   }, [mouse.x, mouse.y, mouse.isTouch, trackFactor])
 
   // Mouth varies by personality
   const mouths = {
-    curious: 'M37 44 Q40 47 43 44',
-    happy: 'M35 43 Q40 48 45 43',
-    shy: 'M37 44 Q40 45 43 44',
+    curious: 'M37 43 Q40 46 43 43',
+    happy: 'M35 42 Q40 47 45 42',
+    shy: 'M37 43.5 Q40 45 43 43.5',
   }
 
-  // Build 5 begonia petals around center (40, 35)
+  // 5 begonia petals
   const petalPositions = Array.from({ length: 5 }).map((_, i) => {
     const angle = (i * 360) / 5 - 90
     const rad = (angle * Math.PI) / 180
@@ -200,7 +210,7 @@ export default function ChildFlower({
       {/* Face */}
       <circle cx="40" cy="35" r="14" fill={COLORS.cream} stroke={colors.outer} strokeWidth="0.6" />
 
-      {/* Stamen cluster (small) */}
+      {/* Stamen tiny cluster */}
       {[0, 1, 2, 3, 4].map((i) => {
         const a = (i * 72) * (Math.PI / 180)
         return (
@@ -214,44 +224,19 @@ export default function ChildFlower({
         )
       })}
 
-      {/* Eyes */}
-      <ellipse
-        className="child-eye"
-        cx="35"
-        cy="33"
-        rx="3"
-        ry="3.5"
-        fill="white"
-        stroke="#2D3436"
-        strokeWidth="0.6"
-      />
-      <circle ref={leftIrisRef} cx="35" cy="33" r="2" fill={COLORS.charcoal} />
-      <circle cx="35.8" cy="32" r="0.9" fill="white" />
+      {/* Abstract dot eyes */}
+      <circle ref={leftEyeRef} cx="35" cy="33" r="1.6" fill={COLORS.charcoal} />
+      <circle ref={rightEyeRef} cx="45" cy="33" r="1.6" fill={COLORS.charcoal} />
 
-      <ellipse
-        className="child-eye"
-        cx="45"
-        cy="33"
-        rx="3"
-        ry="3.5"
-        fill="white"
-        stroke="#2D3436"
-        strokeWidth="0.6"
-      />
-      <circle ref={rightIrisRef} cx="45" cy="33" r="2" fill={COLORS.charcoal} />
-      <circle cx="45.8" cy="32" r="0.9" fill="white" />
+      {/* Abstract cheeks */}
+      <circle cx="32" cy="38" r="2.2" fill={COLORS.sakura} opacity="0.5" />
+      <circle cx="48" cy="38" r="2.2" fill={COLORS.sakura} opacity="0.5" />
 
-      {/* Cartoon blush */}
-      <circle cx="31" cy="38.5" r="3.2" fill={COLORS.sakura} opacity="0.55" />
-      <circle cx="30.2" cy="37.7" r="0.9" fill="white" opacity="0.7" />
-      <circle cx="49" cy="38.5" r="3.2" fill={COLORS.sakura} opacity="0.55" />
-      <circle cx="48.2" cy="37.7" r="0.9" fill="white" opacity="0.7" />
-
-      {/* Mouth */}
+      {/* Mouth — simple curve */}
       <path
         d={mouths[personality]}
-        stroke={COLORS.sakuraDeep}
-        strokeWidth="1.6"
+        stroke={COLORS.charcoal}
+        strokeWidth="1.2"
         strokeLinecap="round"
         fill="none"
       />
