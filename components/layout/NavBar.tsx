@@ -44,7 +44,9 @@ export default function NavBar({ dict, currentLocale }: NavBarProps) {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
-        scrolled ? 'glass-light shadow-sm' : 'bg-transparent'
+        scrolled
+          ? 'glass-light shadow-sm'
+          : 'bg-gradient-to-b from-night-deep/70 to-transparent backdrop-blur-[2px]'
       }`}
     >
       <div className="section-container">
@@ -60,8 +62,10 @@ export default function NavBar({ dict, currentLocale }: NavBarProps) {
               <a
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors duration-200 hover:text-sakura ${
-                  scrolled ? 'text-charcoal-light' : 'text-charcoal/70'
+                className={`text-sm font-medium transition-colors duration-200 hover:text-candle-glow ${
+                  scrolled
+                    ? 'text-charcoal-light hover:text-sakura'
+                    : 'text-moon-silver/90'
                 }`}
               >
                 {dict[link.labelKey as keyof typeof dict]}
@@ -73,8 +77,10 @@ export default function NavBar({ dict, currentLocale }: NavBarProps) {
           <div className="flex items-center gap-3">
             <button
               onClick={toggleLocale}
-              className={`hidden md:block text-sm font-medium transition-colors hover:text-sakura ${
-                scrolled ? 'text-charcoal-light' : 'text-charcoal/60'
+              className={`hidden md:block text-sm font-medium transition-colors ${
+                scrolled
+                  ? 'text-charcoal-light hover:text-sakura'
+                  : 'text-moon-silver/70 hover:text-candle-glow'
               }`}
             >
               {dict.langToggle}
@@ -85,7 +91,9 @@ export default function NavBar({ dict, currentLocale }: NavBarProps) {
 
             {/* Mobile hamburger */}
             <button
-              className={`md:hidden p-2 rounded-lg ${scrolled ? 'text-charcoal' : 'text-charcoal/80'}`}
+              className={`md:hidden p-2 rounded-lg transition-colors ${
+                scrolled ? 'text-charcoal' : 'text-moon-silver'
+              }`}
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
             >

@@ -54,6 +54,28 @@ const config: Config = {
           DEFAULT: '#0F1B3D',
           light: '#1A2B5C',
         },
+        // "Night + Candle" — dual-state palette for Hero / BrandStory / Footer
+        night: {
+          ink: '#0E1626',
+          deep: '#070B18',
+          wash: '#1C2A3A',
+          mist: '#2A3950',
+        },
+        candle: {
+          glow: '#F3C77A',
+          flame: '#FF9D4D',
+          ember: '#D88442',
+          wax: '#F5E9CC',
+        },
+        moon: {
+          silver: '#C9D6E8',
+          dim: '#8497B0',
+        },
+        paper: {
+          warm: '#F5EDD8',
+          aged: '#E8DDC1',
+        },
+        cinnabar: '#B23B2E', // 朱砂印章红
       },
       fontFamily: {
         'display-zh': ['var(--font-noto-serif-sc)', 'serif'],
@@ -67,12 +89,19 @@ const config: Config = {
           'linear-gradient(180deg, #6CB4EE 0%, #A8D8F0 25%, #C4B5FD 50%, #FFB3CC 75%, #FFF5E4 100%)',
         'night-sky':
           'linear-gradient(180deg, #0F1B3D 0%, #1A2B5C 40%, #2D2440 100%)',
+        'hero-night':
+          'radial-gradient(ellipse 1400px 900px at 75% 30%, rgba(243,199,122,0.18) 0%, rgba(243,199,122,0.06) 25%, transparent 60%), linear-gradient(165deg, #070B18 0%, #0E1626 35%, #1C2A3A 70%, #0E1626 100%)',
+        'paper-texture':
+          'radial-gradient(circle at 20% 30%, rgba(181,147,90,0.05) 0px, transparent 2px), radial-gradient(circle at 70% 80%, rgba(181,147,90,0.04) 0px, transparent 2px)',
       },
       animation: {
         'petal-float': 'petal-float 8s ease-in-out infinite',
         'fade-in-up': 'fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'petal-spin': 'petal-spin 6s linear infinite',
         float: 'float 3s ease-in-out infinite',
+        'candle-flicker': 'candle-flicker 3.2s ease-in-out infinite',
+        'night-breathe': 'night-breathe 8s ease-in-out infinite',
+        'firefly-drift': 'firefly-drift 9s ease-in-out infinite',
       },
       keyframes: {
         'petal-float': {
@@ -91,6 +120,21 @@ const config: Config = {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-10px)' },
+        },
+        'candle-flicker': {
+          '0%, 100%': { transform: 'scale(1) rotate(-1deg)', opacity: '1' },
+          '33%': { transform: 'scale(1.04) rotate(1.5deg)', opacity: '0.92' },
+          '66%': { transform: 'scale(0.97) rotate(-0.5deg)', opacity: '1' },
+        },
+        'night-breathe': {
+          '0%, 100%': { opacity: '0.55', transform: 'scale(1)' },
+          '50%': { opacity: '0.85', transform: 'scale(1.08)' },
+        },
+        'firefly-drift': {
+          '0%, 100%': { transform: 'translate(0,0)', opacity: '0.4' },
+          '25%': { transform: 'translate(12px,-18px)', opacity: '1' },
+          '50%': { transform: 'translate(-8px,-30px)', opacity: '0.7' },
+          '75%': { transform: 'translate(-20px,-12px)', opacity: '0.9' },
         },
       },
       transitionTimingFunction: {

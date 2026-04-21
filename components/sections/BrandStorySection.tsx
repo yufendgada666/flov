@@ -1,10 +1,8 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import FadeInUp from '@/components/animations/FadeInUp'
-import SectionLabel from '@/components/ui/SectionLabel'
-import { fadeInUp, fadeInLeft, fadeInRight } from '@/components/animations/variants'
 
 interface BrandStorySectionProps {
   dict: {
@@ -16,284 +14,468 @@ interface BrandStorySectionProps {
     quote: string
     quoteAttr: string
     closing: string
-    floraTitle: string
-    floraBody: string
-    voiceTitle: string
-    voiceBody: string
+    // Full Haitang poem
+    poemFull1: string
+    poemFull2: string
+    poemFull3: string
+    poemFull4: string
+    poemTitle: string
+    poemAuthor: string
+    poemNote: string
+    // FLOV breakdown
+    flovTitle: string
+    flovSub: string
+    flovF: string
+    flovFMeaning: string
+    flovFBody: string
+    flovL: string
+    flovLMeaning: string
+    flovLBody: string
+    flovO: string
+    flovOMeaning: string
+    flovOBody: string
+    flovV: string
+    flovVMeaning: string
+    flovVBody: string
+    flovClosing: string
+    // Legacy (not rendered in album layout)
+    floraTitle?: string
+    floraBody?: string
+    voiceTitle?: string
+    voiceBody?: string
   }
 }
 
-function StrokeBranch() {
-  const svgRef = useRef<SVGSVGElement>(null)
-  const isInView = useInView(svgRef, { once: true, amount: 0.3 })
+export default function BrandStorySection({ dict }: BrandStorySectionProps) {
+  const rootRef = useRef<HTMLElement>(null)
+  const inView = useInView(rootRef, { once: true, amount: 0.15 })
 
-  useEffect(() => {
-    if (!isInView || !svgRef.current) return
-    const paths = svgRef.current.querySelectorAll('.stroke-path')
-    paths.forEach((path, i) => {
-      const el = path as SVGPathElement
-      const length = el.getTotalLength()
-      el.style.strokeDasharray = `${length}`
-      el.style.strokeDashoffset = `${length}`
-      el.style.transition = `stroke-dashoffset ${1.2 + i * 0.3}s ease-out ${i * 0.2}s`
-      // Trigger reflow then animate
-      el.getBoundingClientRect()
-      el.style.strokeDashoffset = '0'
-    })
-  }, [isInView])
+  const poemLines = [
+    dict.poemFull1,
+    dict.poemFull2,
+    dict.poemFull3,
+    dict.poemFull4,
+  ]
+
+  const flovLetters = [
+    { letter: 'F', name: dict.flovF, meaning: dict.flovFMeaning, body: dict.flovFBody, icon: 'flower' as const },
+    { letter: 'L', name: dict.flovL, meaning: dict.flovLMeaning, body: dict.flovLBody, icon: 'candle' as const },
+    { letter: 'O', name: dict.flovO, meaning: dict.flovOMeaning, body: dict.flovOBody, icon: 'ear' as const },
+    { letter: 'V', name: dict.flovV, meaning: dict.flovVMeaning, body: dict.flovVBody, icon: 'wave' as const },
+  ]
 
   return (
-    <svg
-      ref={svgRef}
-      width="320"
-      height="320"
-      viewBox="0 0 320 320"
-      fill="none"
-      className="opacity-90"
-      aria-hidden="true"
+    <section
+      ref={rootRef}
+      id="story"
+      className="relative overflow-hidden section-padding night-grain"
+      style={{
+        background:
+          'radial-gradient(ellipse 1100px 700px at 50% 20%, rgba(243,199,122,0.08) 0%, transparent 60%), linear-gradient(180deg, #0F1B3D 0%, #0E1626 45%, #070B18 100%)',
+      }}
     >
-      {/* Main branch */}
+      {/* Decorative firefly specks */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none">
+        {[
+          { x: '8%', y: '15%', s: 3, d: 0.2 },
+          { x: '18%', y: '42%', s: 2, d: 1.3 },
+          { x: '82%', y: '22%', s: 4, d: 0.7 },
+          { x: '92%', y: '55%', s: 2, d: 2.1 },
+          { x: '6%', y: '78%', s: 3, d: 1.5 },
+          { x: '88%', y: '82%', s: 2, d: 0.9 },
+        ].map((f, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full"
+            style={{
+              left: f.x,
+              top: f.y,
+              width: f.s,
+              height: f.s,
+              background: 'radial-gradient(circle, #F3C77A 0%, transparent 70%)',
+              boxShadow: '0 0 8px rgba(243,199,122,0.5)',
+            }}
+            animate={{ opacity: [0.3, 0.9, 0.3] }}
+            transition={{ duration: 4 + i * 0.5, delay: f.d, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        ))}
+      </div>
+
+      <div className="section-container relative z-10">
+        {/* Top label */}
+        <FadeInUp className="text-center mb-10">
+          <div
+            className="inline-flex items-center gap-3 text-xs tracking-[0.35em] uppercase en-display"
+            style={{ color: 'rgba(243,199,122,0.75)' }}
+          >
+            <span className="h-px w-10 bg-candle-glow/40" />
+            {dict.label}
+            <span className="h-px w-10 bg-candle-glow/40" />
+          </div>
+          <h2
+            className="text-3xl lg:text-[40px] font-bold mt-5 candle-glow-text"
+            style={{ fontFamily: 'var(--font-noto-serif-sc), serif' }}
+          >
+            {dict.heading}
+          </h2>
+        </FadeInUp>
+
+        {/* Album spread — two pages like an open Song dynasty book */}
+        <div className="relative max-w-6xl mx-auto">
+          {/* Binding line at the middle */}
+          <div
+            aria-hidden
+            className="hidden lg:block absolute left-1/2 top-4 bottom-4 w-px -translate-x-1/2 pointer-events-none z-20"
+            style={{
+              background:
+                'linear-gradient(180deg, transparent 0%, rgba(243,199,122,0.25) 15%, rgba(243,199,122,0.35) 50%, rgba(243,199,122,0.25) 85%, transparent 100%)',
+            }}
+          />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-0 items-stretch">
+            {/* ── LEFT PAGE · Poem in vertical Chinese layout ─────────── */}
+            <motion.div
+              initial={{ opacity: 0, x: -30, rotate: -1 }}
+              animate={inView ? { opacity: 1, x: 0, rotate: 0 } : {}}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="relative lg:mr-6"
+            >
+              <div
+                className="relative rounded-2xl p-8 md:p-12 min-h-[520px] flex items-center justify-center overflow-hidden"
+                style={{
+                  background:
+                    'linear-gradient(145deg, #F5EDD8 0%, #EADBB5 100%)',
+                  backgroundImage: `
+                    radial-gradient(circle at 15% 25%, rgba(139,95,45,0.06) 0px, transparent 2px),
+                    radial-gradient(circle at 70% 75%, rgba(139,95,45,0.05) 0px, transparent 2px),
+                    radial-gradient(circle at 40% 60%, rgba(139,95,45,0.04) 0px, transparent 2px),
+                    linear-gradient(145deg, #F5EDD8 0%, #EADBB5 100%)
+                  `,
+                  backgroundSize: '120px 120px, 90px 90px, 160px 160px, 100% 100%',
+                  boxShadow:
+                    '0 30px 60px -20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), inset 0 0 80px rgba(139,95,45,0.06)',
+                }}
+              >
+                {/* Page edge decoration — top & bottom border */}
+                <div
+                  aria-hidden
+                  className="absolute top-4 left-4 right-4 flex justify-between items-center"
+                >
+                  <div className="w-12 h-px bg-cinnabar/30" />
+                  <div className="text-[10px] tracking-[0.3em] text-cinnabar/60 en-display">
+                    {dict.poemNote}
+                  </div>
+                  <div className="w-12 h-px bg-cinnabar/30" />
+                </div>
+                <div
+                  aria-hidden
+                  className="absolute bottom-4 left-4 right-4 flex justify-between items-center"
+                >
+                  <div className="w-12 h-px bg-cinnabar/30" />
+                  <div className="w-12 h-px bg-cinnabar/30" />
+                </div>
+
+                {/* Poem title — small, top-right vertical */}
+                <div
+                  className="hidden md:block absolute top-10 right-8 vertical-zh text-xs text-cinnabar/80 tracking-[0.4em]"
+                  style={{ fontFamily: 'var(--font-noto-serif-sc), serif' }}
+                  aria-hidden
+                >
+                  {dict.poemTitle}
+                </div>
+
+                {/* Poem — vertical RL lines */}
+                <div className="flex flex-row-reverse gap-5 md:gap-8 items-start pt-8 pb-6">
+                  {poemLines.map((line, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={inView ? { opacity: 1, y: 0 } : {}}
+                      transition={{
+                        duration: 1.2,
+                        delay: 0.5 + i * 0.3,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                      className="vertical-zh text-xl md:text-2xl leading-relaxed"
+                      style={{
+                        fontFamily: 'var(--font-noto-serif-sc), serif',
+                        color: '#3A2A1A',
+                        letterSpacing: '0.3em',
+                      }}
+                    >
+                      {line}
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Author signature + seal */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  animate={inView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.6, delay: 1.8, ease: [0.34, 1.56, 0.64, 1] }}
+                  className="absolute bottom-10 left-10 flex items-center gap-2"
+                >
+                  <div
+                    className="vertical-zh text-xs tracking-widest"
+                    style={{ color: '#6B4A2A', fontFamily: 'var(--font-noto-serif-sc), serif' }}
+                  >
+                    {dict.poemAuthor}
+                  </div>
+                  <div className="seal w-9 h-9 text-sm rotate-6">苏</div>
+                </motion.div>
+              </div>
+            </motion.div>
+
+            {/* ── RIGHT PAGE · Story prose + closing ────────────────── */}
+            <motion.div
+              initial={{ opacity: 0, x: 30, rotate: 1 }}
+              animate={inView ? { opacity: 1, x: 0, rotate: 0 } : {}}
+              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="relative lg:ml-6"
+            >
+              <div className="py-8 md:py-12 md:pl-8 space-y-5 relative">
+                {/* Chapter marker */}
+                <div
+                  className="inline-flex items-center gap-2 text-[11px] tracking-[0.3em] uppercase en-display mb-2"
+                  style={{ color: 'rgba(243,199,122,0.7)' }}
+                >
+                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                    <circle cx="6" cy="6" r="2" fill="#F3C77A" />
+                    <circle cx="6" cy="6" r="5" stroke="#F3C77A" strokeOpacity="0.35" />
+                  </svg>
+                  Chapter · 起
+                </div>
+
+                <p
+                  className="text-base leading-loose"
+                  style={{
+                    color: 'rgba(232,221,193,0.82)',
+                    fontFamily: 'var(--font-noto-serif-sc), serif',
+                  }}
+                >
+                  {dict.body1}
+                </p>
+
+                <div className="ink-divider my-6" aria-hidden />
+
+                <p
+                  className="text-base leading-loose"
+                  style={{
+                    color: 'rgba(232,221,193,0.82)',
+                    fontFamily: 'var(--font-noto-serif-sc), serif',
+                  }}
+                >
+                  {dict.body2}
+                </p>
+
+                <div className="ink-divider my-6" aria-hidden />
+
+                <p
+                  className="text-base leading-loose"
+                  style={{
+                    color: 'rgba(232,221,193,0.82)',
+                    fontFamily: 'var(--font-noto-serif-sc), serif',
+                  }}
+                >
+                  {dict.body3}
+                </p>
+
+                {/* Poetic closing pull-quote */}
+                <blockquote
+                  className="mt-8 pl-5 border-l-2 italic"
+                  style={{
+                    borderColor: 'rgba(243,199,122,0.45)',
+                  }}
+                >
+                  <p
+                    className="text-lg leading-loose candle-glow-text"
+                    style={{
+                      fontFamily: 'var(--font-noto-serif-sc), serif',
+                      letterSpacing: '0.08em',
+                    }}
+                  >
+                    {dict.quote}
+                  </p>
+                  <cite
+                    className="mt-2 block text-xs not-italic"
+                    style={{ color: 'rgba(243,199,122,0.6)' }}
+                  >
+                    {dict.quoteAttr}
+                  </cite>
+                </blockquote>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* FLOV letter breakdown — four panels */}
+        <div className="max-w-6xl mx-auto mt-20">
+          <FadeInUp className="text-center mb-10">
+            <div className="text-[11px] tracking-[0.35em] uppercase en-display mb-2" style={{ color: 'rgba(243,199,122,0.65)' }}>
+              {dict.flovSub}
+            </div>
+            <h3
+              className="text-2xl md:text-3xl font-bold candle-glow-text"
+              style={{ fontFamily: 'var(--font-noto-serif-sc), serif' }}
+            >
+              {dict.flovTitle}
+            </h3>
+          </FadeInUp>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {flovLetters.map((item, i) => (
+              <motion.div
+                key={item.letter}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.8 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                className="group relative rounded-2xl p-5 md:p-6 overflow-hidden"
+                style={{
+                  background:
+                    'linear-gradient(160deg, rgba(243,199,122,0.06) 0%, rgba(243,199,122,0.02) 100%)',
+                  border: '1px solid rgba(243,199,122,0.18)',
+                }}
+              >
+                {/* Large display letter */}
+                <div
+                  className="absolute -top-2 -right-2 text-[90px] md:text-[110px] leading-none font-bold opacity-10 group-hover:opacity-20 transition-opacity"
+                  style={{
+                    color: '#F3C77A',
+                    fontFamily: 'var(--font-cormorant), serif',
+                  }}
+                  aria-hidden
+                >
+                  {item.letter}
+                </div>
+
+                {/* Icon */}
+                <div className="relative mb-3">
+                  <FlovIcon variant={item.icon} />
+                </div>
+
+                {/* Letter + name */}
+                <div className="relative flex items-baseline gap-2 mb-1">
+                  <span
+                    className="text-base tracking-wider font-semibold"
+                    style={{ color: '#F3C77A', fontFamily: 'var(--font-cormorant), serif' }}
+                  >
+                    {item.name}
+                  </span>
+                  <span
+                    className="text-xs"
+                    style={{ color: 'rgba(243,199,122,0.55)' }}
+                  >
+                    · {item.meaning}
+                  </span>
+                </div>
+
+                <p
+                  className="relative text-xs md:text-[13px] leading-relaxed"
+                  style={{ color: 'rgba(232,221,193,0.7)' }}
+                >
+                  {item.body}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Closing line */}
+          <FadeInUp className="text-center mt-10" delay={0.2}>
+            <p
+              className="text-sm italic"
+              style={{
+                fontFamily: 'var(--font-cormorant), serif',
+                color: 'rgba(243,199,122,0.7)',
+                fontSize: '1rem',
+              }}
+            >
+              {dict.flovClosing}
+            </p>
+            <p
+              className="text-xs mt-2"
+              style={{ color: 'rgba(201,214,232,0.45)' }}
+            >
+              {dict.closing}
+            </p>
+          </FadeInUp>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function FlovIcon({ variant }: { variant: 'flower' | 'candle' | 'ear' | 'wave' }) {
+  const color = '#F3C77A'
+  if (variant === 'flower') {
+    return (
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+        {[0, 72, 144, 216, 288].map((angle) => {
+          const rad = ((angle - 90) * Math.PI) / 180
+          const cx = 16 + Math.cos(rad) * 8
+          const cy = 16 + Math.sin(rad) * 8
+          return (
+            <ellipse
+              key={angle}
+              cx={cx}
+              cy={cy}
+              rx={4}
+              ry={7}
+              fill={color}
+              opacity="0.8"
+              transform={`rotate(${angle} ${cx} ${cy})`}
+            />
+          )
+        })}
+        <circle cx="16" cy="16" r="3.5" fill="#FF9D4D" />
+      </svg>
+    )
+  }
+  if (variant === 'candle') {
+    return (
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+        <path
+          d="M16 4 C15 6, 13 8, 13 12 C13 14, 14.5 15, 16 15 C17.5 15, 19 14, 19 12 C19 10, 17.5 7, 16 4 Z"
+          fill={color}
+        />
+        <rect x="13.5" y="15" width="5" height="11" rx="0.5" fill="#F5E9CC" />
+        <rect x="11" y="25" width="10" height="3" rx="1" fill="#D88442" />
+      </svg>
+    )
+  }
+  if (variant === 'ear') {
+    return (
+      <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+        <path
+          d="M16 5 C10 5, 7 10, 7 16 C7 22, 11 27, 16 27 C14 24, 14 22, 16 20 C19 17, 21 14, 19 11 C18 9, 16 8, 14 9"
+          stroke={color}
+          strokeWidth="1.8"
+          fill="rgba(243,199,122,0.1)"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <circle cx="15" cy="15" r="2" fill={color} />
+      </svg>
+    )
+  }
+  // wave
+  return (
+    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
       <path
-        className="stroke-path"
-        d="M60 280 C80 240 100 200 130 170 C155 145 175 140 200 120 C220 105 235 85 250 60"
-        stroke="#FF6B9D"
-        strokeWidth="3"
+        d="M3 16 C6 10, 10 10, 13 16 C16 22, 20 22, 23 16 C26 10, 29 10, 29 16"
+        stroke={color}
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        fill="none"
+      />
+      <path
+        d="M3 22 C6 18, 10 18, 13 22"
+        stroke={color}
+        strokeWidth="1.4"
         strokeLinecap="round"
         fill="none"
         opacity="0.6"
       />
-      {/* Sub-branches */}
-      <path
-        className="stroke-path"
-        d="M130 170 C115 155 110 135 120 115"
-        stroke="#FF6B9D"
-        strokeWidth="2"
-        strokeLinecap="round"
-        fill="none"
-        opacity="0.5"
-      />
-      <path
-        className="stroke-path"
-        d="M175 140 C165 120 168 100 180 85"
-        stroke="#FF6B9D"
-        strokeWidth="2"
-        strokeLinecap="round"
-        fill="none"
-        opacity="0.5"
-      />
-
-      {/* Hawthorn blossoms — appear after stroke draws */}
-      {[
-        { cx: 120, cy: 108, r: 18 },
-        { cx: 180, cy: 80, r: 16 },
-        { cx: 205, cy: 115, r: 14 },
-        { cx: 248, cy: 58, r: 15 },
-        { cx: 155, cy: 155, r: 12 },
-      ].map((flower, i) => (
-        <g
-          key={i}
-          style={{
-            opacity: isInView ? 1 : 0,
-            transform: isInView ? 'scale(1)' : 'scale(0)',
-            transformOrigin: `${flower.cx}px ${flower.cy}px`,
-            transition: `opacity 0.5s ease ${1.2 + i * 0.15}s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${1.2 + i * 0.15}s`,
-          }}
-        >
-          {[0, 72, 144, 216, 288].map((angle) => (
-            <ellipse
-              key={angle}
-              cx={flower.cx}
-              cy={flower.cy - flower.r * 0.6}
-              rx={flower.r * 0.38}
-              ry={flower.r * 0.65}
-              fill="#FF6B9D"
-              opacity="0.75"
-              transform={`rotate(${angle} ${flower.cx} ${flower.cy})`}
-            />
-          ))}
-          <circle cx={flower.cx} cy={flower.cy} r={flower.r * 0.22} fill="#FFD93D" />
-        </g>
-      ))}
-
-      {/* Candle */}
-      <g
-        style={{
-          opacity: isInView ? 1 : 0,
-          transition: 'opacity 0.8s ease 2s',
-        }}
-      >
-        <rect x="148" y="250" width="24" height="50" rx="3" fill="#FFF5E4" opacity="0.9" />
-        <path d="M160 245 C157 238 154 232 160 228 C166 232 163 238 160 245Z" fill="#FFD93D" />
-        <ellipse cx="160" cy="248" rx="12" ry="4" fill="#FFD93D" opacity="0.2" />
-      </g>
+      <circle cx="23" cy="16" r="1.5" fill={color} />
     </svg>
-  )
-}
-
-export default function BrandStorySection({ dict }: BrandStorySectionProps) {
-  return (
-    <section id="story" className="section-padding" style={{ background: '#FFF5E4' }}>
-      <div className="section-container">
-        {/* Top label */}
-        <FadeInUp className="text-center mb-16">
-          <SectionLabel>{dict.label}</SectionLabel>
-        </FadeInUp>
-
-        {/* Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          {/* Left: Illustration with stroke animation */}
-          <motion.div
-            variants={fadeInLeft}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <div
-              className="relative rounded-3xl overflow-hidden flex items-center justify-center"
-              style={{
-                background: 'linear-gradient(135deg, #FAFBFF 0%, #FFF5E4 50%, #FFE4EE 100%)',
-                minHeight: 400,
-              }}
-            >
-              <StrokeBranch />
-
-              {/* Poem overlay */}
-              <div
-                className="absolute bottom-0 left-0 right-0 p-6"
-                style={{ background: 'linear-gradient(0deg, rgba(255,245,228,0.95) 0%, transparent 100%)' }}
-              >
-                <p
-                  className="text-lg leading-loose text-center"
-                  style={{
-                    fontFamily: 'var(--font-noto-serif-sc), serif',
-                    color: '#2D3436',
-                    letterSpacing: '0.1em',
-                  }}
-                >
-                  {dict.quote}
-                </p>
-                <p className="text-xs text-center mt-2" style={{ color: '#FF6B9D' }}>
-                  {dict.quoteAttr}
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right: Text */}
-          <motion.div
-            variants={fadeInRight}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <div className="space-y-5">
-              <h2
-                className="text-3xl lg:text-4xl font-bold leading-tight"
-                style={{ fontFamily: 'var(--font-noto-serif-sc), serif', color: '#2D3436' }}
-              >
-                {dict.heading}
-              </h2>
-
-              <p className="text-base leading-loose" style={{ color: '#636E72' }}>
-                {dict.body1}
-              </p>
-              <p className="text-base leading-loose" style={{ color: '#636E72' }}>
-                {dict.body2}
-              </p>
-              <p className="text-base leading-loose" style={{ color: '#636E72' }}>
-                {dict.body3}
-              </p>
-
-              {/* Inline poem quote */}
-              <div
-                className="rounded-2xl p-5 border"
-                style={{
-                  background: 'rgba(255,107,157,0.06)',
-                  borderColor: 'rgba(255,107,157,0.15)',
-                }}
-              >
-                <p
-                  className="text-base leading-loose text-center"
-                  style={{
-                    fontFamily: 'var(--font-noto-serif-sc), serif',
-                    color: '#FF6B9D',
-                    letterSpacing: '0.08em',
-                  }}
-                >
-                  {dict.quote}
-                </p>
-                <p className="text-xs text-center mt-1" style={{ color: '#A78BFA' }}>
-                  {dict.quoteAttr}
-                </p>
-              </div>
-
-              <p
-                className="text-sm pt-2"
-                style={{
-                  fontFamily: 'var(--font-cormorant), serif',
-                  fontSize: '1.1rem',
-                  color: '#A78BFA',
-                  fontStyle: 'italic',
-                }}
-              >
-                {dict.closing}
-              </p>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Flora + Voice cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
-          {[
-            {
-              title: dict.floraTitle,
-              body: dict.floraBody,
-              color: '#FF6B9D',
-              bg: 'rgba(255,107,157,0.08)',
-              borderColor: 'rgba(255,107,157,0.15)',
-              iconPath: 'M12 2C7 2 3 7 3 12c0 3 1.5 5.5 4 7.5C9 21 12 22 12 22s3-1 5-2.5c2.5-2 4-4.5 4-7.5 0-5-4-10-9-10z',
-            },
-            {
-              title: dict.voiceTitle,
-              body: dict.voiceBody,
-              color: '#2EC4B6',
-              bg: 'rgba(46,196,182,0.08)',
-              borderColor: 'rgba(46,196,182,0.15)',
-              iconPath: 'M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3zM19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8',
-            },
-          ].map((card, i) => (
-            <FadeInUp key={i} delay={i * 0.1}>
-              <motion.div
-                className="rounded-2xl p-6 border cursor-default"
-                style={{ background: card.bg, borderColor: card.borderColor }}
-                whileHover={{
-                  y: -4,
-                  boxShadow: `0 16px 40px ${card.borderColor}`,
-                  transition: { duration: 0.3 },
-                }}
-              >
-                <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center mb-3"
-                  style={{ background: card.bg }}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={card.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={card.iconPath} />
-                  </svg>
-                </div>
-                <h3
-                  className="text-lg font-bold mb-2"
-                  style={{ fontFamily: 'var(--font-noto-serif-sc), serif', color: '#2D3436' }}
-                >
-                  {card.title}
-                </h3>
-                <p className="text-sm leading-loose" style={{ color: '#636E72' }}>
-                  {card.body}
-                </p>
-              </motion.div>
-            </FadeInUp>
-          ))}
-        </div>
-      </div>
-    </section>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import FadeInUp from '@/components/animations/FadeInUp'
 import Button from '@/components/ui/Button'
@@ -10,56 +10,77 @@ interface CtaSectionProps {
   dict: {
     heading: string
     subheading: string
-    counterLabel: string
-    counterUnit: string
+    promise1Title: string
+    promise1Body: string
+    promise2Title: string
+    promise2Body: string
+    promise3Title: string
+    promise3Body: string
     quote: string
     cta: string
   }
 }
 
-function AnimatedCounter({ target, inView }: { target: number; inView: boolean }) {
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    if (!inView) return
-    let start = 0
-    const duration = 2000
-    const startTime = Date.now()
-
-    const tick = () => {
-      const elapsed = Date.now() - startTime
-      const progress = Math.min(elapsed / duration, 1)
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setCount(Math.floor(eased * target))
-      if (progress < 1) requestAnimationFrame(tick)
-    }
-    requestAnimationFrame(tick)
-  }, [inView, target])
-
-  return (
-    <span className="tabular-nums">
-      {count.toLocaleString()}
-    </span>
-  )
-}
+const PROMISE_ICONS = [
+  // 1 · Child's private space — a bud / closed flower (safe cocoon)
+  <svg key="0" width="22" height="22" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M12 3 C8 5, 6 9, 6 13 C6 17, 9 20, 12 20 C15 20, 18 17, 18 13 C18 9, 16 5, 12 3 Z"
+      fill="rgba(243,199,122,0.22)"
+      stroke="#F3C77A"
+      strokeWidth="1.4"
+    />
+    <path
+      d="M12 8 C10.5 10, 10 12, 10.5 14 M12 8 C13.5 10, 14 12, 13.5 14"
+      stroke="#F3C77A"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      fill="none"
+      opacity="0.7"
+    />
+    <circle cx="12" cy="14" r="1.2" fill="#F3C77A" />
+  </svg>,
+  // 2 · Parent digest — envelope
+  <svg key="1" width="22" height="22" viewBox="0 0 24 24" fill="none">
+    <rect x="3" y="6" width="18" height="14" rx="2" fill="rgba(243,199,122,0.18)" stroke="#F3C77A" strokeWidth="1.4" />
+    <path d="M3 8 L12 14 L21 8" stroke="#F3C77A" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <circle cx="18" cy="5" r="2" fill="#FF9D4D" opacity="0.85" />
+  </svg>,
+  // 3 · End-to-end encrypted — shield w/ check
+  <svg key="2" width="22" height="22" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M12 2 L20 5 V12 C20 17 16 21 12 22 C8 21 4 17 4 12 V5 L12 2 Z"
+      fill="rgba(243,199,122,0.18)"
+      stroke="#F3C77A"
+      strokeWidth="1.5"
+    />
+    <path d="M9 12 L11 14 L15 10" stroke="#F3C77A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+  </svg>,
+]
 
 export default function CtaSection({ dict }: CtaSectionProps) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, amount: 0.3 })
+
+  const promises = [
+    { title: dict.promise1Title, body: dict.promise1Body },
+    { title: dict.promise2Title, body: dict.promise2Body },
+    { title: dict.promise3Title, body: dict.promise3Body },
+  ]
 
   return (
     <section
       ref={ref}
       className="relative overflow-hidden"
       style={{
-        background: 'linear-gradient(180deg, #0F1B3D 0%, #1A1040 40%, #0F1B3D 100%)',
-        padding: '5rem 0',
+        background:
+          'radial-gradient(ellipse 80% 60% at 50% 30%, rgba(243,199,122,0.12) 0%, transparent 60%), linear-gradient(180deg, #0F1B3D 0%, #1A1040 50%, #0F1B3D 100%)',
+        padding: '6rem 0 5rem',
       }}
     >
       <FireflyField />
 
-      {/* Stars background — deterministic positions to avoid hydration mismatch */}
+      {/* Deterministic star field */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         {[
           { x: 5, y: 8, s: 2, o: 0.35 }, { x: 12, y: 15, s: 1.5, o: 0.25 }, { x: 22, y: 5, s: 2.5, o: 0.4 },
@@ -89,36 +110,32 @@ export default function CtaSection({ dict }: CtaSectionProps) {
       </div>
 
       <div className="section-container relative z-10">
-        {/* Counter */}
-        <FadeInUp className="text-center mb-12">
-          <div
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full mb-6"
+        {/* Candle icon + heading */}
+        <FadeInUp className="text-center mb-5">
+          <motion.div
+            className="inline-flex items-center justify-center w-14 h-14 mb-6 rounded-full"
             style={{
-              background: 'rgba(255,217,61,0.1)',
-              border: '1px solid rgba(255,217,61,0.2)',
+              background: 'radial-gradient(circle, rgba(243,199,122,0.3) 0%, transparent 70%)',
             }}
+            animate={{ opacity: [0.7, 1, 0.85, 1], scale: [1, 1.04, 0.98, 1] }}
+            transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <span className="text-xl">🕯️</span>
-            <span className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
-              {dict.counterLabel}
-            </span>
-            <span
-              className="text-2xl font-bold"
-              style={{
-                color: '#FFD93D',
-                fontFamily: 'var(--font-jetbrains-mono), monospace',
-              }}
-            >
-              <AnimatedCounter target={12847} inView={isInView} />
-            </span>
-            <span className="text-sm" style={{ color: '#FFD93D' }}>
-              {dict.counterUnit}
-            </span>
-          </div>
+            <svg width="28" height="36" viewBox="0 0 28 36" fill="none">
+              <path
+                d="M14 2 C13 5, 10 7, 10 12 C10 15, 12 17, 14 17 C16 17, 18 15, 18 12 C18 9, 16 6, 14 2 Z"
+                fill="#F3C77A"
+              />
+              <path
+                d="M14 2 C13.5 4, 12 6, 12 10 C12 12, 13 13, 14 13 C15 13, 16 12, 16 10 C16 8, 15 5, 14 2 Z"
+                fill="#FF9D4D"
+              />
+              <rect x="11.5" y="17" width="5" height="14" rx="0.5" fill="#F5E9CC" />
+              <rect x="9" y="30" width="10" height="3" rx="1" fill="#D88442" />
+            </svg>
+          </motion.div>
         </FadeInUp>
 
-        {/* Heading */}
-        <FadeInUp delay={0.1} className="text-center mb-6">
+        <FadeInUp delay={0.08} className="text-center mb-4">
           <h2
             className="text-3xl lg:text-4xl font-bold"
             style={{
@@ -130,46 +147,95 @@ export default function CtaSection({ dict }: CtaSectionProps) {
           </h2>
         </FadeInUp>
 
-        <FadeInUp delay={0.15} className="text-center mb-8">
+        <FadeInUp delay={0.14} className="text-center mb-12">
           <p
-            className="text-base max-w-lg mx-auto leading-loose"
-            style={{ color: 'rgba(250,251,255,0.5)' }}
+            className="text-base max-w-xl mx-auto leading-loose"
+            style={{
+              color: 'rgba(250,251,255,0.65)',
+              fontFamily: 'var(--font-noto-serif-sc), serif',
+            }}
           >
             {dict.subheading}
           </p>
         </FadeInUp>
 
-        {/* Quote */}
-        <FadeInUp delay={0.2} className="text-center mb-10">
-          <p
-            className="text-sm max-w-md mx-auto italic leading-relaxed"
-            style={{
-              fontFamily: 'var(--font-noto-serif-sc), serif',
-              color: 'rgba(255,217,61,0.6)',
-            }}
-          >
-            &ldquo;{dict.quote}&rdquo;
-          </p>
+        {/* Three real promises — replaces the fake counter */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-12">
+          {promises.map((p, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.3 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              className="relative rounded-2xl p-5 overflow-hidden"
+              style={{
+                background: 'rgba(243,199,122,0.06)',
+                border: '1px solid rgba(243,199,122,0.18)',
+                backdropFilter: 'blur(8px)',
+              }}
+            >
+              {/* Candle-glow corner */}
+              <div
+                aria-hidden
+                className="absolute -top-6 -right-6 w-16 h-16 rounded-full pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(circle, rgba(243,199,122,0.25) 0%, transparent 60%)',
+                }}
+              />
+
+              <div className="relative flex items-start gap-3">
+                <div className="mt-0.5 flex-shrink-0">{PROMISE_ICONS[i]}</div>
+                <div className="min-w-0">
+                  <div
+                    className="text-base font-semibold mb-1 text-paper-warm"
+                    style={{ fontFamily: 'var(--font-noto-serif-sc), serif' }}
+                  >
+                    {p.title}
+                  </div>
+                  <div className="text-[13px] leading-relaxed text-moon-silver/70">
+                    {p.body}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Poem quote */}
+        <FadeInUp delay={0.55} className="text-center mb-8">
+          <div className="inline-flex items-center gap-3">
+            <span className="h-px w-8 bg-candle-glow/30" />
+            <p
+              className="text-sm italic leading-relaxed"
+              style={{
+                fontFamily: 'var(--font-noto-serif-sc), serif',
+                color: 'rgba(243,199,122,0.6)',
+              }}
+            >
+              {dict.quote}
+            </p>
+            <span className="h-px w-8 bg-candle-glow/30" />
+          </div>
         </FadeInUp>
 
         {/* CTA */}
-        <FadeInUp delay={0.25} className="text-center">
+        <FadeInUp delay={0.65} className="text-center">
           <Button variant="gold" size="lg">
             <a href="#contact">{dict.cta}</a>
           </Button>
         </FadeInUp>
 
-        {/* Mascot waving */}
+        {/* Mascot — kept as a signature, muted to fit night palette */}
         <motion.div
-          className="absolute -bottom-2 right-8 md:right-16 hidden md:block"
+          className="absolute -bottom-2 right-8 md:right-16 hidden md:block pointer-events-none"
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={isInView ? { opacity: 0.55, y: 0 } : {}}
           transition={{ delay: 1, duration: 0.6 }}
+          style={{ filter: 'saturate(0.7) brightness(0.85)' }}
         >
           <svg width="60" height="80" viewBox="0 0 60 80" fill="none" aria-hidden="true">
-            {/* Stem */}
             <path d="M30 50 C30 55 30 65 30 75" stroke="#2EC4B6" strokeWidth="2.5" strokeLinecap="round" />
-            {/* Petals */}
             {[0, 72, 144, 216, 288].map((angle) => {
               const rad = ((angle - 90) * Math.PI) / 180
               const cx = 30 + Math.cos(rad) * 12
@@ -188,12 +254,9 @@ export default function CtaSection({ dict }: CtaSectionProps) {
               )
             })}
             <circle cx="30" cy="30" r="8" fill="#FFD93D" />
-            {/* Eyes */}
             <circle cx="27" cy="29" r="1.5" fill="#2D3436" />
             <circle cx="33" cy="29" r="1.5" fill="#2D3436" />
-            {/* Smile */}
             <path d="M28 33 Q30 35 32 33" stroke="#2D3436" strokeWidth="1" strokeLinecap="round" fill="none" />
-            {/* Waving hand/leaf */}
             <motion.path
               d="M42 30 C46 26 50 24 52 20"
               stroke="#2EC4B6"

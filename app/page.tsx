@@ -4,8 +4,8 @@ import Footer from '@/components/layout/Footer'
 import HeroSection from '@/components/sections/HeroSection'
 import BrandStorySection from '@/components/sections/BrandStorySection'
 import FeaturesSection from '@/components/sections/FeaturesSection'
-import ProductSection from '@/components/sections/ProductSection'
 import JourneySection from '@/components/sections/JourneySection'
+import PrivacySection from '@/components/sections/PrivacySection'
 import HowItWorksSection from '@/components/sections/HowItWorksSection'
 import CtaSection from '@/components/sections/CtaSection'
 import TestimonialsSection from '@/components/sections/TestimonialsSection'
@@ -35,22 +35,38 @@ export default async function HomePage() {
       <NavBar dict={t.nav} currentLocale={locale} />
 
       <main>
+        {/* 1 · Hero — product-first, night + candle */}
         <HeroSection dict={t.hero} />
-        <WavyDivider variant={1} fillTop="#E8F5E8" fillBottom="#FFF5E4" />
-        <BrandStorySection dict={t.brandStory} />
-        <WavyDivider variant={2} fillTop="#FFF5E4" fillBottom="#FAFBFF" />
+
+        {/* Transition: night → dawn */}
+        <WavyDivider variant={1} fillTop="#1C2A3A" fillBottom="#FFF5E4" />
+
+        {/* 2 · Core capabilities — daylight begins */}
         <FeaturesSection dict={t.features} />
-        <WavyDivider variant={3} fillTop="#FAFBFF" fillBottom="#FFF5E4" />
-        <ProductSection dict={t.product} />
-        <WavyDivider variant={4} fillTop="#FFF5E4" fillBottom="#FAFBFF" />
+        <WavyDivider variant={2} fillTop="#FFF5E4" fillBottom="#FAFBFF" />
+
+        {/* 3 · Xiao Ban's 24 hours — scene timeline */}
         <JourneySection dict={t.journey} />
-        <WavyDivider variant={5} fillTop="#FAFBFF" fillBottom="#FAFBFF" />
+        <WavyDivider variant={4} fillTop="#FFF5E4" fillBottom="#FAFBFF" />
+
+        {/* 4 · Privacy on both sides — child vs parent view */}
+        <PrivacySection dict={t.privacy} />
+
+        {/* 5 · How it works — slim banner */}
         <HowItWorksSection dict={t.howItWorks} />
-        <WavyDivider variant={3} fillTop="#FAFBFF" fillBottom="#FFF5E4" />
+        <WavyDivider variant={5} fillTop="#FAFBFF" fillBottom="#FFF5E4" />
+
+        {/* 6 · Early-access testimonials */}
         <TestimonialsSection dict={t.testimonials} prelaunch />
         <WavyDivider variant={1} fillTop="#FFF5E4" fillBottom="#0F1B3D" />
+
+        {/* 7 · Early-access CTA — back into the night */}
         <CtaSection dict={t.candleToken} />
-        <WavyDivider variant={2} fillTop="#0F1B3D" fillBottom="#FAFBFF" />
+
+        {/* 8 · Brand story — night album spread (cultural grounding) */}
+        <BrandStorySection dict={t.brandStory} />
+
+        {/* 9 · Contact — stays in the night */}
         <ContactSection dict={t.contact} />
       </main>
 
