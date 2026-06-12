@@ -7,95 +7,67 @@ import Button from '@/components/ui/Button'
 
 interface NavBarProps {
   dict: {
-    story: string
-    product: string
-    howItWorks: string
-    investor: string
-    contact: string
-    requestAccess: string
-    langToggle: string
+    how: string
+    features: string
+    report: string
+    faq: string
+    cta: string
   }
-  currentLocale: string
 }
 
 const NAV_LINKS = [
-  { labelKey: 'story', href: '#story' },
-  { labelKey: 'product', href: '#product' },
-  { labelKey: 'howItWorks', href: '#how-it-works' },
-  { labelKey: 'contact', href: '#contact' },
+  { labelKey: 'how', href: '#how' },
+  { labelKey: 'features', href: '#features' },
+  { labelKey: 'report', href: '#report' },
+  { labelKey: 'faq', href: '#faq' },
 ] as const
 
-export default function NavBar({ dict, currentLocale }: NavBarProps) {
+export default function NavBar({ dict }: NavBarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40)
+    const handleScroll = () => setScrolled(window.scrollY > 24)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const toggleLocale = () => {
-    const next = currentLocale === 'zh' ? 'en' : 'zh'
-    document.cookie = `NEXT_LOCALE=${next};path=/;max-age=31536000`
-    window.location.reload()
-  }
-
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
-        scrolled
-          ? 'glass-light shadow-sm'
-          : 'bg-gradient-to-b from-night-deep/70 to-transparent backdrop-blur-[2px]'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? 'glass-light shadow-sm' : 'bg-transparent'
       }`}
     >
       <div className="section-container">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <a href="#top" className="hover:opacity-80 transition-opacity">
-            <FlovLogo variant={scrolled ? 'dark' : 'garden'} showWordmark />
+          <a href="#top" className="hover:opacity-80 transition-opacity" aria-label="小伴 · FLOV 首页">
+            <FlovLogo variant="dark" showWordmark />
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-7">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-colors duration-200 hover:text-candle-glow ${
-                  scrolled
-                    ? 'text-charcoal-light hover:text-sakura'
-                    : 'text-moon-silver/90'
-                }`}
+                className="text-sm font-medium text-charcoal-light hover:text-sakura transition-colors duration-200"
               >
-                {dict[link.labelKey as keyof typeof dict]}
+                {dict[link.labelKey]}
               </a>
             ))}
           </nav>
 
-          {/* Right actions */}
           <div className="flex items-center gap-3">
-            <button
-              onClick={toggleLocale}
-              className={`hidden md:block text-sm font-medium transition-colors ${
-                scrolled
-                  ? 'text-charcoal-light hover:text-sakura'
-                  : 'text-moon-silver/70 hover:text-candle-glow'
-              }`}
-            >
-              {dict.langToggle}
-            </button>
-            <Button variant="primary" size="sm" className="hidden md:inline-flex">
-              <a href="#contact">{dict.requestAccess}</a>
+            <Button variant="primary" size="sm" className="hidden md:inline-flex" onClick={() => { document.querySelector('#cta')?.scrollIntoView({ behavior: 'smooth' }) }}>
+              {dict.cta}
             </Button>
 
             {/* Mobile hamburger */}
             <button
-              className={`md:hidden p-2 rounded-lg transition-colors ${
-                scrolled ? 'text-charcoal' : 'text-moon-silver'
-              }`}
+              className="md:hidden p-2 rounded-lg text-charcoal transition-colors"
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
+              aria-label="打开菜单"
+              aria-expanded={menuOpen}
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                 {menuOpen ? (
@@ -113,27 +85,26 @@ export default function NavBar({ dict, currentLocale }: NavBarProps) {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="md:hidden pb-4 border-t border-charcoal/10"
+            className="md:hidden pb-4 border-t border-charcoal/10 glass-light -mx-6 px-6"
           >
             <nav className="flex flex-col gap-1 mt-3">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="px-2 py-2 text-sm rounded-lg text-charcoal-light hover:text-sakura hover:bg-sakura-50 transition-colors"
+                  className="px-2 py-2.5 text-sm rounded-lg text-charcoal-light hover:text-sakura hover:bg-sakura-50 transition-colors"
                   onClick={() => setMenuOpen(false)}
                 >
-                  {dict[link.labelKey as keyof typeof dict]}
+                  {dict[link.labelKey]}
                 </a>
               ))}
-              <div className="flex items-center justify-between mt-3 px-2">
-                <button onClick={toggleLocale} className="text-sm text-charcoal-light">
-                  {dict.langToggle}
-                </button>
-                <Button variant="primary" size="sm">
-                  <a href="#contact" onClick={() => setMenuOpen(false)}>{dict.requestAccess}</a>
-                </Button>
-              </div>
+              <a
+                href="#cta"
+                onClick={() => setMenuOpen(false)}
+                className="mt-2 inline-flex items-center justify-center px-4 py-2.5 rounded-full text-sm font-medium bg-sakura text-white"
+              >
+                {dict.cta}
+              </a>
             </nav>
           </motion.div>
         )}

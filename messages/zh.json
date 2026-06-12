@@ -1,242 +1,150 @@
 {
   "nav": {
-    "story": "品牌故事",
-    "product": "产品",
-    "howItWorks": "如何运作",
-    "investor": "投资者",
-    "contact": "联系我们",
-    "requestAccess": "申请体验",
-    "langToggle": "EN"
+    "how": "三步开始",
+    "features": "功能",
+    "report": "家长报告",
+    "faq": "常见问题",
+    "cta": "扫码体验"
+  },
+  "intro": {
+    "skip": "跳过",
+    "photoLabel": "题目照片",
+    "problem": "小明带了20元，买了3本一样的笔记本，还剩2元，每本多少钱？",
+    "childAsk": "答案是多少呀？",
+    "banReply": "我不直接给答案，我们一步步来。",
+    "step1": "20 − 2 = 18",
+    "step2": "18 ÷ 3 = ?",
+    "childSolve": "一本 6 元！是我自己算出来的！",
+    "reportToast": "21:30 · 家长报告已送达",
+    "brandName": "小伴",
+    "brandLine": "不给答案的 AI 老师"
   },
   "hero": {
-    "poemLine1": "只恐夜深花睡去，",
-    "poemLine2": "故烧高烛照红妆。",
-    "poemAuthor": "—— 苏轼《海棠》",
-    "tagline": "陪你听见孩子成长的声音",
-    "subTagline": "孩子是正在绽放的花，花声科技帮父母倾听那些不易察觉的声音",
-    "eyebrow": "面向 6–14 岁家庭 · AI 成长陪伴",
-    "titleLine1": "孩子不说的事，",
-    "titleHighlight": "让小伴替你听见。",
-    "titleLine2": "",
-    "description": "小伴是一款陪伴式 AI，在孩子身边听、陪、答；把关键的情绪与成长信号，第二天清晨，轻声告诉你。",
-    "cta": "申请使用小伴",
-    "ctaPrimary": "申请使用小伴",
-    "ctaSecondary": "查看运作方式",
-    "trustLine": "孩子对话仅孩子可见 · 家长只读摘要 · 端到端加密",
-    "liveDemo": {
-      "header": "与小伴的对话",
-      "subheader": "online · 22:08",
+    "eyebrow": "微信里的 AI 辅导老师",
+    "h1Line1": "不给答案的 AI 老师，",
+    "h1Line2Pre": "把孩子陪到",
+    "h1Highlight": "真的懂",
+    "h1Tail": "。",
+    "sub": "微信里加个好友就能用。孩子把不会的题拍照、打字或发语音发给小伴，它一步步引导孩子自己算出来——每天晚上，再告诉你他学得怎么样。",
+    "points": ["陪孩子问到懂", "不给答案防抄袭", "家长每天看得见"],
+    "ctaPrimary": "扫码，让小伴认识你家孩子",
+    "qrCaption": "微信扫码 · 加小伴为好友",
+    "qrHint": "手机打开本页？长按识别二维码",
+    "demo": {
+      "title": "小伴",
+      "statusTime": "19:32",
+      "timestampChip": "晚上 7:32",
       "turns": [
-        { "role": "child", "text": "今天我其实不太想睡……", "time": "22:04" },
-        { "role": "flov",  "text": "怎么啦？是心里有事吗？", "time": "22:04" },
-        { "role": "child", "text": "数学测验没考好，我不敢告诉妈妈。", "time": "22:05" },
-        { "role": "flov",  "text": "嗯，我陪着你。愿意和我说说是哪道题卡住了吗？", "time": "22:05" },
-        { "role": "child", "text": "应用题全错了，我脑子一片空白。", "time": "22:06" },
-        { "role": "flov",  "text": "一次没考好，不代表你不行。明天我陪你把这几道题拆开看，好吗？", "time": "22:06" }
-      ],
-      "summaryTitle": "昨晚：数学测验失利",
-      "summaryTime": "次日 07:00",
-      "summaryBody": "孩子情绪低落但愿意表达。建议今早先陪伴——她说「不敢告诉妈妈」，不急着问成绩。",
-      "summaryTag1": "情绪 · 低落",
-      "summaryTag2": "主动表达",
-      "floatingNote": "这条摘要只会发给你，孩子看不到。"
+        { "role": "child", "type": "photo", "text": "小明带了20元，买了3本一样的笔记本，还剩2元，每本多少钱？" },
+        { "role": "ban", "type": "text", "text": "我们先把题读明白～小明带了20元，最后剩2元。那你想想：买本子一共花了多少钱？你来算算 😊" },
+        { "role": "child", "type": "text", "text": "18元" },
+        { "role": "ban", "type": "text", "text": "对啦！花了18元，买了3本一样的本子。那求一本多少钱，该用什么方法呢？" },
+        { "role": "child", "type": "text", "text": "除法！18÷3" },
+        { "role": "ban", "type": "text", "text": "太棒了，这是你自己想出来的！算算等于几，这道题就被你拿下了～" }
+      ]
     }
   },
-  "brandStory": {
-    "label": "品牌起源",
-    "heading": "花声，源于一首宋词",
-    "body1": "北宋元丰七年深夜，苏轼在庭院中望见海棠花在月色下静静绽放。他担心夜深露重，花儿无人陪伴而独自沉睡，于是点燃高烛，彻夜守候。",
-    "body2": "这份深情，不是占有，而是陪伴——不是等花谢了才惋惜，而是在花开的每一刻，都有人在用心倾听。",
-    "body3": "孩子就是正在绽放的花。花声科技做的事情，就是帮父母「听见」孩子成长中那些不易察觉的声音——一个困惑、一次进步、一份需要被关注的情绪。",
-    "quote": "只恐夜深花睡去，故烧高烛照红妆",
-    "quoteAttr": "—— 苏轼《海棠》",
-    "closing": "FLOV = FL(ora) + O + V(oice)，念作 'flɒv'，与 'love' 同韵。",
-    "poemFull1": "东风袅袅泛崇光，",
-    "poemFull2": "香雾空蒙月转廊。",
-    "poemFull3": "只恐夜深花睡去，",
-    "poemFull4": "故烧高烛照红妆。",
-    "poemTitle": "海棠",
-    "poemAuthor": "苏轼",
-    "poemNote": "宋 · 元丰七年",
-    "flovTitle": "FLOV 的拆解",
-    "flovSub": "四个字母，四件事",
-    "flovF": "Flora",
-    "flovFMeaning": "花",
-    "flovFBody": "罗马花神，万物绽放的主掌者。",
-    "flovL": "Light",
-    "flovLMeaning": "烛",
-    "flovLBody": "苏轼的那支烛，点亮整夜。",
-    "flovO": "Open",
-    "flovOMeaning": "耳",
-    "flovOBody": "为愿意表达的孩子留一只耳朵。",
-    "flovV": "Voice",
-    "flovVMeaning": "声",
-    "flovVBody": "让花的声音、孩子的声音被听见。",
-    "flovClosing": "也是 Flow of Love，爱的流动。"
+  "steps": {
+    "label": "三步开始",
+    "heading": "加个好友，就能开始",
+    "sub": "不用下载 App，不用注册账号",
+    "items": [
+      { "title": "扫码加小伴微信", "body": "打开微信扫一扫，加小伴为好友，马上就能用。" },
+      { "title": "把不会的题发给它", "body": "拍照、打字、发语音都行，怎么方便怎么来。" },
+      { "title": "跟着一步步想明白", "body": "小伴不报答案，带着孩子把每一步自己算出来。" }
+    ]
   },
   "features": {
-    "label": "核心能力",
-    "heading": "小伴能做什么",
-    "subheading": "四项核心能力，让孩子成长中的每一个信号都被看见、被听见",
-    "feature1Title": "自然对话",
-    "feature1Body": "根据孩子年龄调整语言风格，像朋友一样陪聊。孩子愿意说出心里话，困惑不再被隐藏。",
-    "feature2Title": "情绪感知",
-    "feature2Body": "捕捉对话中的犹豫、沉默和突破时刻。每一个情绪的涟漪，都不会被错过。",
-    "feature3Title": "成长摘要",
-    "feature3Body": "每周生成温暖易读的成长简报。父母一眼就能读懂孩子的近况，不再靠猜。",
-    "feature4Title": "里程碑记录",
-    "feature4Body": "可视化学习和成长轨迹时间线。每一个「第一次」都被珍藏，不留遗憾。"
+    "label": "小伴能做什么",
+    "heading": "一位只教方法的 AI 老师",
+    "sub": "六件事，把「不会」变成「会了」",
+    "items": [
+      { "icon": "method", "title": "只教方法，不给答案", "body": "无论孩子怎么软磨硬泡，小伴只引导思路、绝不报答案。抄不了，只能学会。" },
+      { "icon": "ask", "title": "没懂？接着问", "body": "孩子说「第二步没懂」，小伴就拆得更小、换个比方再讲，直到真的懂。" },
+      { "icon": "input", "title": "拍照、打字、发语音都行", "body": "题目拍下来发过去就行，连字都不用打。" },
+      { "icon": "subjects", "title": "全科辅导", "body": "数学应用题、语文古诗病句作文思路、英语语法翻译、科学常识，一个小伴全包。" },
+      { "icon": "practice", "title": "讲完就练，学练闭环", "body": "每讲完一道题出 3 道同类题，会一道不如会一类。" },
+      { "icon": "reportIcon", "title": "每天一份家长报告", "body": "做了几道题、错在哪个知识点、该重点练什么，孩子的学习不再是黑盒。" }
+    ]
   },
-  "problem": {
-    "label": "我们解决的问题",
-    "heading": "父母最怕错过的，恰恰是最小的信号",
-    "subheading": "孩子在说话——用困惑、用沉默、用细小的挣扎。大多数声音，悄悄消失了。",
-    "card1Title": "困惑信号",
-    "card1Body": "孩子卡住了，却说不出口。挫败感在心里堆积，父母浑然不觉。",
-    "card2Title": "情绪涟漪",
-    "card2Body": "情绪的暗流在日常对话里藏着。一句话、一个沉默，都是线索。",
-    "card3Title": "成长节点",
-    "card3Body": "每一个「第一次」都值得被记录。那些关键时刻，稍纵即逝。"
+  "compare": {
+    "quote1": "搜题软件给孩子一个答案，小伴教孩子一套方法。",
+    "quote2": "答案抄完就忘，方法一辈子有用。",
+    "leftTitle": "搜题软件",
+    "leftPoints": ["给一个答案", "抄完就忘", "下次还是不会"],
+    "rightTitle": "小伴",
+    "rightPoints": ["教一套方法", "自己算出来", "会一道更会一类"]
   },
-  "product": {
-    "label": "核心产品",
-    "heading": "小伴 — 你孩子的 AI 学习伴侣",
-    "subheading": "用自然对话陪伴孩子，将成长信号翻译成父母看得懂的语言",
-    "feature1Title": "智能对话",
-    "feature1Body": "根据孩子年龄调整语言风格，自然流畅，孩子愿意说心里话。",
-    "feature2Title": "情绪识别",
-    "feature2Body": "捕捉对话中的犹豫、困惑和突破时刻，每一个信号都不被遗漏。",
-    "feature3Title": "家长摘要",
-    "feature3Body": "每周生成温暖易读的成长简报，父母一眼就能读懂孩子的近况。",
-    "feature4Title": "成长轨迹",
-    "feature4Body": "可视化学习里程碑时间线，见证每一步成长，不留遗憾。",
-    "cta": "申请早期体验",
-    "chatMsg1": "今天数学有点难……",
-    "chatMsg2": "哪里觉得难呢？分数？还是应用题？",
-    "chatMsg3": "就是那个通分，我搞不懂为什么要这样做",
-    "chatMsg4": "没关系，我们来一步一步看 🕯️",
-    "chatLabel": "小伴"
+  "report": {
+    "label": "家长报告",
+    "heading": "每天晚上，发到你微信里",
+    "sub": "做了几道题、学科分布、反复出错的知识点、一句话总结——一条微信的长度，孩子的学习不再是黑盒。",
+    "sampleTime": "21:30",
+    "sampleBody": "【小伴学习报告】今天孩子做了 6 道题（数学 4、英语 2）。“分数加减”错了 2 次，建议这两天重点练一练。比昨天更主动，肯自己往下算，继续保持～",
+    "note": "家长和孩子加同一个小伴号：孩子发题自动进入辅导模式，家长发「报告」自动查看学情，互不打扰。"
   },
-  "journey": {
-    "label": "小伴的一天",
-    "heading": "孩子的一天，小伴都在",
-    "subheading": "从早到晚，小伴在孩子身边接住每一个小小的情绪波动；你只在清晨收到一份温和的摘要。",
-    "scene1Time": "07:00",
-    "scene1Phase": "早晨",
-    "scene1Title": "起床前的那五分钟",
-    "scene1Body": "小伴陪孩子醒来，用一个小游戏打开心情；顺手提醒今天的课表。",
-    "scene2Time": "12:30",
-    "scene2Phase": "午后",
-    "scene2Title": "课间的碎碎念",
-    "scene2Body": "同学之间的小摩擦、被老师叫起来发言的紧张——孩子可以随时跟小伴说一句。",
-    "scene3Time": "16:00",
-    "scene3Phase": "放学",
-    "scene3Title": "作业之前，先喘口气",
-    "scene3Body": "小伴先问「今天感觉怎么样」，再开始复盘；卡住的题目，陪练不代做。",
-    "scene4Time": "19:30",
-    "scene4Phase": "晚饭后",
-    "scene4Title": "家人还没回家的时候",
-    "scene4Body": "让孩子不孤单。自然对话代替刷短视频，并在需要时提醒「该休息一下眼睛了」。",
-    "scene5Time": "22:00",
-    "scene5Phase": "睡前",
-    "scene5Title": "灯关了，话才真的开始",
-    "scene5Body": "白天不敢说的事，往往在这一刻涌出来。小伴安静地接住，不评判、不转述。",
-    "scene6Time": "07:00",
-    "scene6Phase": "次日清晨",
-    "scene6Title": "你收到一封轻声的摘要",
-    "scene6Body": "昨日孩子的关键时刻、情绪走向、需要你关注的点——三分钟读完，不打扰孩子的隐私。"
+  "trust": {
+    "label": "放心",
+    "heading": "把学习这件事，放心交给小伴",
+    "items": [
+      { "title": "只教方法，防抄袭", "body": "无论怎么问，小伴都不报最终答案。孩子交上去的每一步，都是自己算出来的。" },
+      { "title": "只聊学习，不闲聊", "body": "与学习无关的话题，小伴会温和地把孩子带回题目上。它是辅导老师，不是聊天玩具。" },
+      { "title": "提问记录，家长可查", "body": "孩子问过什么、怎么一步步算出来的，家长在微信里随时可以查看。" },
+      { "title": "我们是 AI 学习助手", "body": "7×24 随时在线、无限耐心，孩子问多少遍都不会烦——这是真人做不到的。" }
+    ]
   },
-  "privacy": {
-    "label": "两端都有隐私",
-    "heading": "孩子有孩子的空间，家长有家长的视角",
-    "subheading": "小伴把「倾听」和「转达」隔成两件事——中间是一道不可穿越的隐私墙。",
-    "childSide": "孩子端",
-    "childTitle": "孩子的空间",
-    "childBody": "孩子和小伴说的每一句话，都只留在小伴这里。不会发给家长、不会被导出、不会被用来训练。",
-    "childTagline": "「小伴是我的，不是爸妈的。」",
-    "childChipChat": "原始对话",
-    "childChipOnly": "仅孩子可见",
-    "parentSide": "家长端",
-    "parentTitle": "家长的视角",
-    "parentBody": "家长每天清晨收到一份摘要，只包含孩子主动愿意被看见的关键时刻——情绪起伏、需要陪伴的信号。",
-    "parentTagline": "「我能读懂孩子，不用偷窥。」",
-    "parentChipDigest": "成长摘要",
-    "parentChipNoRaw": "看不到原话",
-    "wallLabel": "隐私墙",
-    "wallCopy": "不转述、不共享、不可穿越"
+  "faq": {
+    "label": "常见问题",
+    "heading": "你可能想问",
+    "items": [
+      {
+        "q": "会不会直接给孩子答案？",
+        "a": "不会。无论孩子怎么索要，小伴都不报最终结果。它会先帮孩子把题目读懂，再一步步引导孩子自己算出每个中间结果——最后一步，永远留给孩子自己完成。"
+      },
+      {
+        "q": "支持哪些科目和年级？",
+        "a": "覆盖中小学的语文、数学、英语和科学常识。数学应用题、古诗、病句、作文思路、英语语法和翻译，都可以直接发给小伴。"
+      },
+      {
+        "q": "怎么收费？",
+        "a": "定价方案正在最终确认中，确定后会尽快在本页公布。现在可以先扫码加小伴，有任何问题直接在微信里问我们。"
+      },
+      {
+        "q": "孩子拿它闲聊怎么办？",
+        "a": "小伴只聊学习。遇到与学习无关的话题，它会温和地把孩子带回题目上——不闲聊、不跑题，家长不用担心孩子在里面消磨时间。"
+      },
+      {
+        "q": "家长怎么看报告？",
+        "a": "家长和孩子加同一个小伴号。孩子发题自动进入辅导模式；家长发「报告」两个字，立刻查看当天学情，互不打扰。每天晚上，小伴也会把当日学习报告主动发到你微信里。"
+      }
+    ]
   },
-  "howItWorks": {
-    "label": "三步概览",
-    "heading": "孩子说 · 小伴听 · 你读摘要",
-    "step1Title": "孩子说",
-    "step1Body": "与小伴自然对话，分享喜怒哀乐。",
-    "step2Title": "小伴听",
-    "step2Body": "识别关键时刻，守住对话的隐私边界。",
-    "step3Title": "你读摘要",
-    "step3Body": "每天清晨收到一封温和的成长简报。"
+  "pricing": {
+    "label": "收费",
+    "heading": "定价即将公布",
+    "price": "¥XX",
+    "unit": "/ 月",
+    "note": "正式定价正在最终确认中，以本页更新为准。现在扫码即可开始体验。"
   },
-  "candleToken": {
-    "heading": "为每个家庭，点一盏温柔的烛火",
-    "subheading": "苏轼不惜灯火，只为花儿不孤单。我们燃烧算力，只为孩子被听见。",
-    "promise1Title": "孩子的私密空间",
-    "promise1Body": "小伴和孩子的对话，家长看不到原文。这是孩子可以安心说心里话的地方。",
-    "promise2Title": "家长的温柔摘要",
-    "promise2Body": "家长只会收到需要关注的关键时刻——不转述原话，不打扰孩子的隐私。",
-    "promise3Title": "端到端加密",
-    "promise3Body": "对话从设备到云端全程加密，只有这个家庭能访问。",
-    "quote": "故烧高烛 = 为你点亮算力　　倾听花声 = 替你听见孩子",
-    "cta": "申请使用资格"
-  },
-  "testimonials": {
-    "label": "早期通道",
-    "heading": "他们已经听见了",
-    "prelaunchHeading": "成为最早听见的那批人",
-    "prelaunchBody": "小伴正在向首批家庭开放。留下邮箱，开放时我们会第一时间通知你。",
-    "prelaunchCta": "申请使用资格",
-    "emailPlaceholder": "你的邮箱地址"
-  },
-  "investor": {
-    "label": "投资者",
-    "heading": "构建儿童 AI 陪伴的基础设施",
-    "subheading": "在 AI 重塑教育的时代，每个孩子都应该有一个真正理解他的伴侣",
-    "ticker": "NASDAQ: FLOV",
-    "metric1Label": "目标市场",
-    "metric1Value": "¥2.1 万亿",
-    "metric1Note": "中国 K-12 教育科技市场",
-    "metric2Label": "融资阶段",
-    "metric2Value": "种子轮",
-    "metric2Note": "正在进行，欢迎战略投资者",
-    "metric3Label": "核心使命",
-    "metric3Value": "听见每一个孩子",
-    "metric3Note": "Flora + Voice = 花声",
-    "deckCta": "下载投资简报",
-    "contactCta": "投资者联系"
-  },
-  "contact": {
-    "label": "联系我们",
-    "heading": "一起让孩子被听见",
-    "subheading": "无论你是家长、投资者还是合作伙伴，我们都期待与你交流",
-    "namePlaceholder": "你的姓名",
-    "emailPlaceholder": "邮箱地址",
-    "rolePlaceholder": "你的身份",
-    "roleParent": "家长",
-    "roleInvestor": "投资者",
-    "rolePartner": "合作伙伴",
-    "rolePress": "媒体",
-    "messagePlaceholder": "你想说的话...",
-    "submit": "发送",
-    "submitting": "发送中...",
-    "successMsg": "已收到，我们会尽快回复你 🕯️",
-    "wechat": "微信",
-    "email": "邮箱"
+  "cta": {
+    "heading": "现在，让小伴认识你家孩子",
+    "sub": "微信扫码加好友，把今天那道不会的题发给它试试。",
+    "qrCaption": "微信扫码 · 加小伴为好友",
+    "qrHint": "手机打开本页？长按识别二维码"
   },
   "footer": {
-    "tagline": "只恐夜深花睡去，故烧高烛照红妆",
-    "copyright": "© 2025 花声科技 FLOV Inc.",
-    "icp": "ICP备案号待申请",
-    "story": "品牌故事",
-    "product": "产品",
-    "investor": "投资者",
-    "contact": "联系我们"
+    "tagline": "小伴 · 微信里的 AI 辅导老师",
+    "desc": "只教方法，不给答案，把孩子陪到真的懂。",
+    "linksTitle": "页面导航",
+    "links": {
+      "how": "三步开始",
+      "features": "功能",
+      "report": "家长报告",
+      "faq": "常见问题"
+    },
+    "contactTitle": "联系我们",
+    "contactEmail": "hello@flov.ai",
+    "copyright": "© 2026 花声科技 FLOV Inc.",
+    "icp": "ICP 备案号待申请"
   }
 }

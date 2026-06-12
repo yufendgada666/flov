@@ -76,6 +76,15 @@ const config: Config = {
           aged: '#E8DDC1',
         },
         cinnabar: '#B23B2E', // 朱砂印章红
+        // WeChat surface — chat demo / scan CTA only, never section backgrounds
+        wechat: {
+          DEFAULT: '#07C160',
+          dark: '#06AD56',
+          bubble: '#95EC69',
+          bubbleDark: '#89D961',
+          bg: '#EDEDED',
+          text: '#181818',
+        },
       },
       fontFamily: {
         'display-zh': ['var(--font-noto-serif-sc)', 'serif'],

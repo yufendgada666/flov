@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from 'react'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'gold'
+  variant?: 'primary' | 'secondary' | 'ghost' | 'gold' | 'wechat'
   size?: 'sm' | 'md' | 'lg'
 }
 
@@ -23,6 +23,8 @@ export default function Button({
     ghost: 'text-charcoal-light hover:text-charcoal hover:bg-charcoal/5',
     gold:
       'bg-sunshine text-charcoal hover:bg-sunshine-dark shadow-md shadow-sunshine/25 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0',
+    wechat:
+      'bg-wechat text-white hover:bg-wechat-dark shadow-md shadow-wechat/25 hover:shadow-lg hover:shadow-wechat/30 hover:-translate-y-0.5 active:translate-y-0',
   }
 
   const sizes = {

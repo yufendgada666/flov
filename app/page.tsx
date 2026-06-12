@@ -1,25 +1,20 @@
-import { cookies, headers } from 'next/headers'
 import NavBar from '@/components/layout/NavBar'
 import Footer from '@/components/layout/Footer'
-import HeroSection from '@/components/sections/HeroSection'
-import BrandStorySection from '@/components/sections/BrandStorySection'
-import FeaturesSection from '@/components/sections/FeaturesSection'
-import JourneySection from '@/components/sections/JourneySection'
-import PrivacySection from '@/components/sections/PrivacySection'
-import HowItWorksSection from '@/components/sections/HowItWorksSection'
-import CtaSection from '@/components/sections/CtaSection'
-import TestimonialsSection from '@/components/sections/TestimonialsSection'
-import ContactSection from '@/components/sections/ContactSection'
-import WavyDivider from '@/components/garden/WavyDivider'
+import IntroProvider from '@/components/intro/IntroProvider'
+import HeroTutor from '@/components/sections/HeroTutor'
+import StepsRow from '@/components/sections/StepsRow'
+import FeatureGrid from '@/components/sections/FeatureGrid'
+import CompareBlock from '@/components/sections/CompareBlock'
+import ReportCard from '@/components/sections/ReportCard'
+import TrustGrid from '@/components/sections/TrustGrid'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import PricingPlaceholder from '@/components/sections/PricingPlaceholder'
+import FinalCta from '@/components/sections/FinalCta'
 
-async function getLocale(): Promise<'zh' | 'en'> {
-  const cookieStore = await cookies()
-  const cookie = cookieStore.get('NEXT_LOCALE')?.value
-  if (cookie === 'en' || cookie === 'zh') return cookie
-
-  const headersList = await headers()
-  const acceptLang = headersList.get('accept-language') || ''
-  return acceptLang.startsWith('en') ? 'en' : 'zh'
+// Landing copy is zh-only for now. Forcing 'zh' also keeps English-locale
+// browsers off the legacy en.json (old schema — would crash on missing keys).
+async function getLocale(): Promise<'zh'> {
+  return 'zh'
 }
 
 async function getMessages(locale: string) {
@@ -32,43 +27,34 @@ export default async function HomePage() {
 
   return (
     <>
-      <NavBar dict={t.nav} currentLocale={locale} />
+      <NavBar dict={t.nav} />
 
-      <main>
-        {/* 1 · Hero — product-first, night + candle */}
-        <HeroSection dict={t.hero} />
+      <IntroProvider dict={t.intro}>
+        <main>
+          {/* 1 · Hero — H1 + WeChat live demo + scan CTA */}
+          <HeroTutor dict={t.hero} />
 
-        {/* Transition: night → dawn */}
-        <WavyDivider variant={1} fillTop="#1C2A3A" fillBottom="#FFF5E4" />
+          {/* 2 · 三步开始 */}
+          <StepsRow dict={t.steps} />
 
-        {/* 2 · Core capabilities — daylight begins */}
-        <FeaturesSection dict={t.features} />
-        <WavyDivider variant={2} fillTop="#FFF5E4" fillBottom="#FAFBFF" />
+          {/* 3 · 六大特色 */}
+          <FeatureGrid dict={t.features} />
 
-        {/* 3 · Xiao Ban's 24 hours — scene timeline */}
-        <JourneySection dict={t.journey} />
-        <WavyDivider variant={4} fillTop="#FFF5E4" fillBottom="#FAFBFF" />
+          {/* 4 · 搜题软件 vs 小伴 */}
+          <CompareBlock dict={t.compare} />
 
-        {/* 4 · Privacy on both sides — child vs parent view */}
-        <PrivacySection dict={t.privacy} />
+          {/* 5 · 家长报告样例 */}
+          <ReportCard dict={t.report} />
 
-        {/* 5 · How it works — slim banner */}
-        <HowItWorksSection dict={t.howItWorks} />
-        <WavyDivider variant={5} fillTop="#FAFBFF" fillBottom="#FFF5E4" />
+          {/* 6 · 信任与安全 */}
+          <TrustGrid dict={t.trust} />
 
-        {/* 6 · Early-access testimonials */}
-        <TestimonialsSection dict={t.testimonials} prelaunch />
-        <WavyDivider variant={1} fillTop="#FFF5E4" fillBottom="#0F1B3D" />
-
-        {/* 7 · Early-access CTA — back into the night */}
-        <CtaSection dict={t.candleToken} />
-
-        {/* 8 · Brand story — night album spread (cultural grounding) */}
-        <BrandStorySection dict={t.brandStory} />
-
-        {/* 9 · Contact — stays in the night */}
-        <ContactSection dict={t.contact} />
-      </main>
+          {/* 7 · FAQ + 价格占位 + 底部扫码 */}
+          <FaqAccordion dict={t.faq} />
+          <PricingPlaceholder dict={t.pricing} />
+          <FinalCta dict={t.cta} />
+        </main>
+      </IntroProvider>
 
       <Footer dict={t.footer} />
     </>
