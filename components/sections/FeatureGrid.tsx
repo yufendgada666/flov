@@ -1,4 +1,5 @@
 import FadeInUp from '@/components/animations/FadeInUp'
+import HeaderReveal from '@/components/animations/HeaderReveal'
 import SectionLabel from '@/components/ui/SectionLabel'
 
 interface FeatureItem {
@@ -78,15 +79,15 @@ function FeatureIcon({ name }: { name: string }) {
 
 export default function FeatureGrid({ dict }: { dict: FeatureGridDict }) {
   return (
-    <section id="features" className="section-padding bg-snow scroll-mt-16">
+    <section id="features" className="section-sheet section-padding bg-snow scroll-mt-16">
       <div className="section-container">
-        <FadeInUp className="text-center">
+        <HeaderReveal className="text-center">
           <SectionLabel>{dict.label}</SectionLabel>
           <h2 className="mt-4 font-display-zh font-bold text-charcoal text-2xl sm:text-3xl lg:text-4xl">
             {dict.heading}
           </h2>
           <p className="mt-3 text-charcoal-light text-[15px]">{dict.sub}</p>
-        </FadeInUp>
+        </HeaderReveal>
 
         <div className="mt-10 lg:mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {dict.items.map((f, i) => (

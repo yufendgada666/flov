@@ -1,4 +1,5 @@
-import FadeInUp from '@/components/animations/FadeInUp'
+import HeaderReveal from '@/components/animations/HeaderReveal'
+import FadeInX from '@/components/animations/FadeInX'
 import SectionLabel from '@/components/ui/SectionLabel'
 
 interface TrustDict {
@@ -40,18 +41,18 @@ const ICON_TONES = [
 
 export default function TrustGrid({ dict }: { dict: TrustDict }) {
   return (
-    <section id="trust" className="section-padding bg-cream scroll-mt-16">
+    <section id="trust" className="section-sheet section-padding bg-cream scroll-mt-16">
       <div className="section-container">
-        <FadeInUp className="text-center">
+        <HeaderReveal className="text-center">
           <SectionLabel>{dict.label}</SectionLabel>
           <h2 className="mt-4 font-display-zh font-bold text-charcoal text-2xl sm:text-3xl lg:text-4xl">
             {dict.heading}
           </h2>
-        </FadeInUp>
+        </HeaderReveal>
 
         <div className="mt-10 lg:mt-14 grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6 max-w-4xl mx-auto">
           {dict.items.map((item, i) => (
-            <FadeInUp key={item.title} delay={(i % 2) * 0.1}>
+            <FadeInX key={item.title} dir={i % 2 === 0 ? 'left' : 'right'} delay={Math.floor(i / 2) * 0.1}>
               <div
                 className={`h-full bg-white rounded-2xl px-6 py-6 border ${
                   i === dict.items.length - 1 ? 'border-sakura/30' : 'border-charcoal/[0.06]'
@@ -65,7 +66,7 @@ export default function TrustGrid({ dict }: { dict: TrustDict }) {
                 </div>
                 <p className="mt-3 text-[14px] leading-relaxed text-charcoal-light">{item.body}</p>
               </div>
-            </FadeInUp>
+            </FadeInX>
           ))}
         </div>
       </div>

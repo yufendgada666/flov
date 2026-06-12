@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import FlovLogo from '@/components/icons/FlovLogo'
-import Button from '@/components/ui/Button'
 
 interface NavBarProps {
   dict: {
@@ -58,9 +57,12 @@ export default function NavBar({ dict }: NavBarProps) {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Button variant="primary" size="sm" className="hidden md:inline-flex" onClick={() => { document.querySelector('#cta')?.scrollIntoView({ behavior: 'smooth' }) }}>
+            <a
+              href="#cta"
+              className="hidden md:inline-flex items-center justify-center px-5 py-2 rounded-full text-sm font-medium bg-sakura text-white shadow-md shadow-sakura/25 hover:bg-sakura-dark hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+            >
               {dict.cta}
-            </Button>
+            </a>
 
             {/* Mobile hamburger */}
             <button

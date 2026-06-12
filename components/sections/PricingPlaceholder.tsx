@@ -1,4 +1,4 @@
-import FadeInUp from '@/components/animations/FadeInUp'
+import ScaleSettle from '@/components/animations/ScaleSettle'
 import SectionLabel from '@/components/ui/SectionLabel'
 
 interface PricingDict {
@@ -13,7 +13,7 @@ export default function PricingPlaceholder({ dict }: { dict: PricingDict }) {
   return (
     <section id="pricing" className="pb-20 lg:pb-28 bg-snow scroll-mt-16">
       <div className="section-container">
-        <FadeInUp className="max-w-md mx-auto">
+        <ScaleSettle className="max-w-md mx-auto">
           <div className="rounded-2xl border border-dashed border-charcoal/20 bg-white px-8 py-8 text-center">
             <SectionLabel>{dict.label}</SectionLabel>
             <h2 className="mt-4 font-display-zh font-bold text-charcoal text-xl sm:text-2xl">{dict.heading}</h2>
@@ -23,7 +23,7 @@ export default function PricingPlaceholder({ dict }: { dict: PricingDict }) {
             </div>
             <p className="mt-4 text-[13px] leading-relaxed text-charcoal-light">{dict.note}</p>
           </div>
-        </FadeInUp>
+        </ScaleSettle>
       </div>
     </section>
   )

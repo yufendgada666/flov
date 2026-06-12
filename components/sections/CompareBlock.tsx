@@ -1,4 +1,5 @@
-import FadeInUp from '@/components/animations/FadeInUp'
+import HeaderReveal from '@/components/animations/HeaderReveal'
+import FadeInX from '@/components/animations/FadeInX'
 
 interface CompareDict {
   quote1: string
@@ -11,20 +12,20 @@ interface CompareDict {
 
 export default function CompareBlock({ dict }: { dict: CompareDict }) {
   return (
-    <section className="section-padding bg-cream">
+    <section className="section-sheet section-padding bg-cream">
       <div className="section-container">
-        <FadeInUp className="text-center max-w-3xl mx-auto">
+        <HeaderReveal className="text-center max-w-3xl mx-auto">
           <p className="font-display-zh text-charcoal text-xl sm:text-2xl lg:text-[28px] leading-relaxed font-semibold">
             {dict.quote1}
           </p>
           <p className="mt-2 font-display-zh text-sakura-dark text-lg sm:text-xl lg:text-2xl leading-relaxed font-semibold">
             {dict.quote2}
           </p>
-        </FadeInUp>
+        </HeaderReveal>
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0 max-w-3xl mx-auto md:rounded-2xl md:overflow-hidden md:shadow-[0_18px_45px_-22px_rgba(45,52,54,0.25)]">
           {/* 搜题软件 */}
-          <div className="rounded-2xl md:rounded-none bg-[#F2F3F5] px-7 py-7 border border-charcoal/[0.05] md:border-0">
+          <FadeInX dir="left" className="rounded-2xl md:rounded-none bg-[#F2F3F5] px-7 py-7 border border-charcoal/[0.05] md:border-0">
             <div className="text-[15px] font-bold text-charcoal-light">{dict.leftTitle}</div>
             <ul className="mt-4 space-y-3">
               {dict.leftPoints.map((p) => (
@@ -37,9 +38,9 @@ export default function CompareBlock({ dict }: { dict: CompareDict }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </FadeInX>
           {/* 小伴 */}
-          <div className="rounded-2xl md:rounded-none bg-white px-7 py-7 border-2 border-sakura/30 md:border-0 md:border-l md:border-l-charcoal/[0.06] relative">
+          <FadeInX dir="right" delay={0.12} className="rounded-2xl md:rounded-none bg-white px-7 py-7 border-2 border-sakura/30 md:border-0 md:border-l md:border-l-charcoal/[0.06] relative">
             <div className="flex items-center gap-2">
               <span className="text-[15px] font-bold text-sakura-dark">{dict.rightTitle}</span>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-sakura/10 text-sakura-dark font-medium">AI 辅导老师</span>
@@ -55,7 +56,7 @@ export default function CompareBlock({ dict }: { dict: CompareDict }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </FadeInX>
         </div>
       </div>
     </section>

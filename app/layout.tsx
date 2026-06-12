@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notoSerifSC, notoSansSC, cormorant, inter, jetbrainsMono } from '@/lib/fonts'
 import MotionConfigWrapper from '@/components/animations/MotionConfig'
+import SmoothScroll from '@/components/animations/SmoothScroll'
 import { MousePositionProvider } from '@/hooks/useMousePosition'
 import CustomCursor from '@/components/garden/CustomCursor'
 import './globals.css'
@@ -59,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <MotionConfigWrapper>
           <MousePositionProvider>
+            <SmoothScroll />
             <CustomCursor />
             {children}
           </MousePositionProvider>

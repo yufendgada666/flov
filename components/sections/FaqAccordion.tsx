@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FadeInUp from '@/components/animations/FadeInUp'
+import HeaderReveal from '@/components/animations/HeaderReveal'
 import SectionLabel from '@/components/ui/SectionLabel'
 
 interface FaqDict {
@@ -15,14 +16,14 @@ export default function FaqAccordion({ dict }: { dict: FaqDict }) {
   const [openIdx, setOpenIdx] = useState<number | null>(0)
 
   return (
-    <section id="faq" className="section-padding bg-snow scroll-mt-16">
+    <section id="faq" className="section-sheet section-padding bg-snow scroll-mt-16">
       <div className="section-container">
-        <FadeInUp className="text-center">
+        <HeaderReveal className="text-center">
           <SectionLabel>{dict.label}</SectionLabel>
           <h2 className="mt-4 font-display-zh font-bold text-charcoal text-2xl sm:text-3xl lg:text-4xl">
             {dict.heading}
           </h2>
-        </FadeInUp>
+        </HeaderReveal>
 
         <FadeInUp delay={0.1} className="mt-10 max-w-2xl mx-auto">
           <div className="divide-y divide-charcoal/[0.07] rounded-2xl border border-charcoal/[0.07] bg-white overflow-hidden">

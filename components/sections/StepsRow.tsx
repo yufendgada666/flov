@@ -1,4 +1,5 @@
 import FadeInUp from '@/components/animations/FadeInUp'
+import HeaderReveal from '@/components/animations/HeaderReveal'
 import SectionLabel from '@/components/ui/SectionLabel'
 
 interface StepsRowDict {
@@ -13,15 +14,15 @@ const STEP_TEXT = ['text-white', 'text-charcoal', 'text-white'] as const
 
 export default function StepsRow({ dict }: { dict: StepsRowDict }) {
   return (
-    <section id="how" className="section-padding bg-cream scroll-mt-16">
+    <section id="how" className="section-sheet section-padding bg-cream scroll-mt-16">
       <div className="section-container">
-        <FadeInUp className="text-center">
+        <HeaderReveal className="text-center">
           <SectionLabel>{dict.label}</SectionLabel>
           <h2 className="mt-4 font-display-zh font-bold text-charcoal text-2xl sm:text-3xl lg:text-4xl">
             {dict.heading}
           </h2>
           <p className="mt-3 text-charcoal-light text-[15px]">{dict.sub}</p>
-        </FadeInUp>
+        </HeaderReveal>
 
         <div className="mt-10 lg:mt-14 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
           {dict.items.map((step, i) => (
