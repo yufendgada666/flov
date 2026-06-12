@@ -14,7 +14,7 @@ export default function HeaderReveal({ children, className }: HeaderRevealProps)
       className={className}
       initial={{ opacity: 0, y: 34, clipPath: 'inset(0% 0% 100% 0%)' }}
       whileInView={{ opacity: 1, y: 0, clipPath: 'inset(0% 0% -8% 0%)' }}
-      viewport={{ once: true, amount: 0.4 }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}

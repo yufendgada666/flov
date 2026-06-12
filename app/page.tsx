@@ -1,6 +1,7 @@
 import NavBar from '@/components/layout/NavBar'
 import Footer from '@/components/layout/Footer'
 import IntroProvider from '@/components/intro/IntroProvider'
+import SheetMotion from '@/components/animations/SheetMotion'
 import HeroTutor from '@/components/sections/HeroTutor'
 import StepsRow from '@/components/sections/StepsRow'
 import FeatureGrid from '@/components/sections/FeatureGrid'
@@ -30,6 +31,7 @@ export default async function HomePage() {
       <NavBar dict={t.nav} />
 
       <IntroProvider dict={t.intro}>
+        <SheetMotion />
         <main>
           {/* 1 · Hero — H1 + WeChat live demo + scan CTA */}
           <HeroTutor dict={t.hero} />

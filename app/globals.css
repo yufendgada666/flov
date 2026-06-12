@@ -197,18 +197,24 @@
     box-shadow: 0 2px 6px rgba(178, 59, 46, 0.3);
   }
 
-  /* Stacked-sheet section seam — each section slides over the previous like a new page */
+  /* Stacked-sheet section seam — each section settles over the previous like a new page.
+     Radius scales with viewport so the curl reads at any width; layered shadow + a paper-edge
+     highlight make the overlap feel like depth instead of a hairline crack. */
   .section-sheet {
+    --sheet-r: clamp(32px, 5vw, 80px);
     position: relative;
-    border-radius: 28px 28px 0 0;
-    margin-top: -28px;
-    box-shadow: 0 -20px 44px -26px rgba(45, 52, 54, 0.28);
+    border-radius: var(--sheet-r) var(--sheet-r) 0 0;
+    margin-top: calc(var(--sheet-r) * -1);
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow:
+      0 -34px 64px -24px rgba(45, 52, 54, 0.16),
+      0 -10px 26px -12px rgba(45, 52, 54, 0.1);
   }
-  @media (min-width: 640px) {
-    .section-sheet {
-      border-radius: 44px 44px 0 0;
-      margin-top: -44px;
-    }
+  footer.section-sheet {
+    border-top-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 -34px 64px -24px rgba(45, 52, 54, 0.3),
+      0 -10px 26px -12px rgba(45, 52, 54, 0.18);
   }
 
   /* Ink wash divider */

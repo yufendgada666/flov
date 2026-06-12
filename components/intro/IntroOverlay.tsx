@@ -79,6 +79,7 @@ export default function IntroOverlay({ dict, onDone }: IntroOverlayProps) {
     markSeen()
     tlRef.current?.kill()
     document.body.style.overflow = ''
+    ;(window as unknown as { __lenis?: { start: () => void } }).__lenis?.start()
     const el = rootRef.current
     if (!el || instant) {
       setSkipped(true)
@@ -109,6 +110,7 @@ export default function IntroOverlay({ dict, onDone }: IntroOverlayProps) {
     () => {
       if (skipped !== false || reducedMotion) return
       document.body.style.overflow = 'hidden'
+      ;(window as unknown as { __lenis?: { stop: () => void } }).__lenis?.stop()
 
       const tl = gsap.timeline({
         defaults: { ease: 'power3.out' },
@@ -120,6 +122,7 @@ export default function IntroOverlay({ dict, onDone }: IntroOverlayProps) {
             ease: 'power3.inOut',
             onStart: () => {
               document.body.style.overflow = ''
+              ;(window as unknown as { __lenis?: { start: () => void } }).__lenis?.start()
               if (!doneRef.current) {
                 doneRef.current = true
                 markSeen()

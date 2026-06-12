@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import Lenis from 'lenis'
+import { ScrollTrigger } from '@/lib/gsap'
 
 /** Site-wide inertial smooth scrolling + silky in-page anchor travel. */
 export default function SmoothScroll() {
@@ -12,6 +13,12 @@ export default function SmoothScroll() {
       lerp: 0.1,
       wheelMultiplier: 1,
     })
+
+    // Keep GSAP ScrollTrigger scrubs in lockstep with Lenis' virtualized scroll
+    lenis.on('scroll', ScrollTrigger.update)
+
+    // Expose for the intro overlay to pause/resume scrolling while it plays
+    ;(window as unknown as { __lenis?: Lenis }).__lenis = lenis
 
     let rafId = requestAnimationFrame(function loop(time) {
       lenis.raf(time)
@@ -38,6 +45,7 @@ export default function SmoothScroll() {
     return () => {
       cancelAnimationFrame(rafId)
       document.removeEventListener('click', onClick)
+      delete (window as unknown as { __lenis?: Lenis }).__lenis
       lenis.destroy()
     }
   }, [])
