@@ -14,7 +14,7 @@ interface ReportDict {
 
 export default function ReportCard({ dict }: { dict: ReportDict }) {
   return (
-    <section id="report" className="section-sheet section-padding bg-snow scroll-mt-16">
+    <section id="report" className="section-padding scroll-mt-16">
       <div className="section-container">
         <HeaderReveal className="text-center max-w-2xl mx-auto">
           <SectionLabel>{dict.label}</SectionLabel>

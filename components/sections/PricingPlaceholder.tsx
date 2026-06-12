@@ -11,7 +11,7 @@ interface PricingDict {
 
 export default function PricingPlaceholder({ dict }: { dict: PricingDict }) {
   return (
-    <section id="pricing" className="pb-20 lg:pb-28 bg-snow scroll-mt-16">
+    <section id="pricing" className="pb-20 lg:pb-28 scroll-mt-16">
       <div className="section-container">
         <ScaleSettle className="max-w-md mx-auto">
           <div className="rounded-2xl border border-dashed border-charcoal/20 bg-white px-8 py-8 text-center">

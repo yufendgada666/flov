@@ -14,7 +14,7 @@ const STEP_TEXT = ['text-white', 'text-charcoal', 'text-white'] as const
 
 export default function StepsRow({ dict }: { dict: StepsRowDict }) {
   return (
-    <section id="how" className="section-sheet section-padding bg-cream scroll-mt-16">
+    <section id="how" className="section-padding scroll-mt-16">
       <div className="section-container">
         <HeaderReveal className="text-center">
           <SectionLabel>{dict.label}</SectionLabel>

@@ -11,11 +11,7 @@ interface FinalCtaDict {
 
 export default function FinalCta({ dict }: { dict: FinalCtaDict }) {
   return (
-    <section
-      id="cta"
-      className="section-sheet overflow-hidden section-padding scroll-mt-16"
-      style={{ background: 'linear-gradient(170deg, #FFF0F5 0%, #FFF5E4 55%, #FFF9F2 100%)' }}
-    >
+    <section id="cta" className="relative overflow-hidden section-padding scroll-mt-16">
       <div aria-hidden className="absolute -top-20 right-[8%] w-72 h-72 rounded-full bg-sakura/[0.08] blur-3xl" />
       <div aria-hidden className="absolute -bottom-24 left-[5%] w-80 h-80 rounded-full bg-wechat/[0.06] blur-3xl" />
 

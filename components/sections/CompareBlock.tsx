@@ -12,7 +12,7 @@ interface CompareDict {
 
 export default function CompareBlock({ dict }: { dict: CompareDict }) {
   return (
-    <section className="section-sheet section-padding bg-cream">
+    <section className="section-padding">
       <div className="section-container">
         <HeaderReveal className="text-center max-w-3xl mx-auto">
           <p className="font-display-zh text-charcoal text-xl sm:text-2xl lg:text-[28px] leading-relaxed font-semibold">

@@ -27,7 +27,7 @@ export default function Footer({ dict }: FooterProps) {
   ]
 
   return (
-    <footer className="section-sheet bg-charcoal text-white/80">
+    <footer className="bg-charcoal text-white/80">
       <div className="section-container py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr_1fr] gap-10">
           <div>

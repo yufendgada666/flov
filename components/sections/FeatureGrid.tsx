@@ -79,7 +79,7 @@ function FeatureIcon({ name }: { name: string }) {
 
 export default function FeatureGrid({ dict }: { dict: FeatureGridDict }) {
   return (
-    <section id="features" className="section-sheet section-padding bg-snow scroll-mt-16">
+    <section id="features" className="section-padding scroll-mt-16">
       <div className="section-container">
         <HeaderReveal className="text-center">
           <SectionLabel>{dict.label}</SectionLabel>

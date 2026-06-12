@@ -40,11 +40,7 @@ export default function HeroTutor({ dict }: HeroTutorProps) {
       : { opacity: 0 }
 
   return (
-    <section
-      id="top"
-      className="relative overflow-hidden"
-      style={{ background: 'linear-gradient(175deg, #FFF9F2 0%, #FAFBFF 45%, #FFF5E4 100%)' }}
-    >
+    <section id="top" className="relative overflow-hidden">
       {/* Soft ambient blobs */}
       <div aria-hidden className="absolute -top-24 -right-24 w-[380px] h-[380px] rounded-full bg-sakura/[0.07] blur-3xl" />
       <div aria-hidden className="absolute bottom-0 -left-28 w-[340px] h-[340px] rounded-full bg-sunshine/[0.1] blur-3xl" />

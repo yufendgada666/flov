@@ -41,7 +41,7 @@ const ICON_TONES = [
 
 export default function TrustGrid({ dict }: { dict: TrustDict }) {
   return (
-    <section id="trust" className="section-sheet section-padding bg-cream scroll-mt-16">
+    <section id="trust" className="section-padding scroll-mt-16">
       <div className="section-container">
         <HeaderReveal className="text-center">
           <SectionLabel>{dict.label}</SectionLabel>
