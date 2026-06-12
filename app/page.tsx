@@ -1,6 +1,7 @@
 import NavBar from '@/components/layout/NavBar'
 import Footer from '@/components/layout/Footer'
 import IntroProvider from '@/components/intro/IntroProvider'
+import AmbientCanvas from '@/components/garden/AmbientCanvas'
 import HeroTutor from '@/components/sections/HeroTutor'
 import StepsRow from '@/components/sections/StepsRow'
 import FeatureGrid from '@/components/sections/FeatureGrid'
@@ -30,6 +31,9 @@ export default async function HomePage() {
       <NavBar dict={t.nav} />
 
       <IntroProvider dict={t.intro}>
+        {/* 「花瓣的一天」ambient layer — petals by day, fireflies at dusk */}
+        <AmbientCanvas />
+
         {/* One continuous color journey — warm blush → cream → snow, breathing back and
             forth, then dusk-fading into the charcoal footer. No band edges anywhere. */}
         <main
