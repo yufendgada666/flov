@@ -124,6 +124,18 @@ export default function WeChatDemo({ dict, active = true, className = '' }: WeCh
       onMouseEnter={() => setHoverPaused(true)}
       onMouseLeave={() => setHoverPaused(false)}
     >
+      {/* Text transcript for screen readers / no-animation — the demo's persuasion lives here too */}
+      <div className="sr-only">
+        <p>与小伴的对话示例：</p>
+        <ul>
+          {dict.turns.map((turn, i) => (
+            <li key={i}>
+              {turn.role === 'child' ? '孩子' : '小伴'}：{turn.text}
+            </li>
+          ))}
+        </ul>
+      </div>
+
       {/* Soft brand glow behind the phone */}
       <div
         aria-hidden

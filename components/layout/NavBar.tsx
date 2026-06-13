@@ -65,10 +65,11 @@ export default function NavBar({ dict }: NavBarProps) {
 
             {/* Mobile hamburger */}
             <button
-              className="md:hidden p-2 rounded-lg text-charcoal transition-colors"
+              className="md:hidden inline-flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg text-charcoal transition-colors"
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="打开菜单"
+              aria-label={menuOpen ? '关闭菜单' : '打开菜单'}
               aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
                 {menuOpen ? (
@@ -84,6 +85,7 @@ export default function NavBar({ dict }: NavBarProps) {
         {/* Mobile menu */}
         {menuOpen && (
           <div
+            id="mobile-menu"
             className="md:hidden pb-4 border-t border-charcoal/10 glass-light -mx-6 px-6 animate-fade-in-up"
             style={{ animationDuration: '0.25s' }}
           >
@@ -92,7 +94,7 @@ export default function NavBar({ dict }: NavBarProps) {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="px-2 py-2.5 text-sm rounded-lg text-charcoal-light hover:text-sakura hover:bg-sakura-50 transition-colors"
+                  className="px-2 py-3 text-sm rounded-lg text-charcoal-light hover:text-sakura hover:bg-sakura-50 transition-colors"
                   onClick={() => setMenuOpen(false)}
                 >
                   {dict[link.labelKey]}
