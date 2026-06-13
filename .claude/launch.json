@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "flov-dev",
-      "runtimeExecutable": "cmd",
-      "runtimeArgs": ["/c", "set PATH=D:\\node.js;%PATH% && npm run dev"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
       "port": 3000
     }
   ]
