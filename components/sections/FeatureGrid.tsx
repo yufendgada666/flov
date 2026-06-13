@@ -92,7 +92,7 @@ export default function FeatureGrid({ dict }: { dict: FeatureGridDict }) {
         <div className="mt-10 lg:mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {dict.items.map((f, i) => (
             <FadeInUp key={f.title} delay={(i % 3) * 0.1}>
-              <div className="group h-full bg-white rounded-2xl border border-charcoal/[0.06] px-6 py-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_-20px_rgba(45,52,54,0.25)]">
+              <div className="group h-full bg-white rounded-2xl border border-charcoal/[0.06] px-6 py-6 shadow-[0_2px_12px_-8px_rgba(45,52,54,0.15)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_-20px_rgba(45,52,54,0.25)] active:scale-[0.99]">
                 <span className={`inline-flex items-center justify-center w-11 h-11 rounded-xl ${ICON_BG[f.icon] ?? ICON_BG.method}`}>
                   <FeatureIcon name={f.icon} />
                 </span>

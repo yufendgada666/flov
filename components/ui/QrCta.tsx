@@ -33,7 +33,7 @@ export default function QrCta({ heading, caption, hint, wechatId, size = 'md', c
 
   return (
     <div
-      className={`inline-flex flex-col items-center rounded-2xl bg-white shadow-[0_18px_45px_-18px_rgba(45,52,54,0.25)] border border-charcoal/[0.06] overflow-hidden ${className}`}
+      className={`inline-flex flex-col items-center rounded-2xl bg-white shadow-[0_18px_45px_-18px_rgba(45,52,54,0.25)] border border-charcoal/[0.06] overflow-hidden transition-transform duration-300 hover:-translate-y-0.5 ${className}`}
     >
       {heading && (
         <div className="w-full bg-wechat text-white text-[15px] font-medium text-center px-5 py-3">{heading}</div>

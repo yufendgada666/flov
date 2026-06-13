@@ -27,7 +27,7 @@ export default function StepsRow({ dict }: { dict: StepsRowDict }) {
         <div className="mt-10 lg:mt-14 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto">
           {dict.items.map((step, i) => (
             <FadeInUp key={step.title} delay={i * 0.12} className="relative">
-              <div className="relative h-full bg-white rounded-2xl border border-charcoal/[0.06] shadow-[0_12px_30px_-16px_rgba(45,52,54,0.18)] px-6 py-7 text-center md:text-left">
+              <div className="relative h-full bg-white rounded-2xl border border-charcoal/[0.06] shadow-[0_12px_30px_-16px_rgba(45,52,54,0.18)] px-6 py-7 text-center md:text-left transition-transform duration-300 hover:-translate-y-1 active:scale-[0.99]">
                 <span
                   className={`inline-flex items-center justify-center w-10 h-10 rounded-full font-display-en font-semibold text-lg ${STEP_COLORS[i % 3]} ${STEP_TEXT[i % 3]}`}
                 >
