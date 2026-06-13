@@ -43,6 +43,13 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%; /* stop WeChat/iOS auto font inflation */
+    text-size-adjust: 100%;
+  }
+
+  /* Kill the grey tap-flash in mobile WebViews (esp. WeChat) */
+  * {
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {

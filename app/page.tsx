@@ -2,6 +2,7 @@ import NavBar from '@/components/layout/NavBar'
 import Footer from '@/components/layout/Footer'
 import IntroProvider from '@/components/intro/IntroProvider'
 import AmbientCanvas from '@/components/garden/AmbientCanvas'
+import StickyCta from '@/components/ui/StickyCta'
 import HeroTutor from '@/components/sections/HeroTutor'
 import StepsRow from '@/components/sections/StepsRow'
 import FeatureGrid from '@/components/sections/FeatureGrid'
@@ -80,6 +81,8 @@ export default async function HomePage() {
       </IntroProvider>
 
       <Footer dict={t.footer} />
+
+      <StickyCta label={t.cta.sticky} />
     </>
   )
 }

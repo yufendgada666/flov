@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { notoSerifSC, notoSansSC, cormorant, inter, jetbrainsMono } from '@/lib/fonts'
 import MotionConfigWrapper from '@/components/animations/MotionConfig'
 import SmoothScroll from '@/components/animations/SmoothScroll'
@@ -43,6 +43,13 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover', // honor safe-area insets on notched phones
+  themeColor: '#FFF7F0', // tints the WeChat/Safari chrome to match the hero
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
