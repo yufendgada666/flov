@@ -55,13 +55,8 @@
   body {
     background-color: var(--color-snow);
     color: var(--color-charcoal);
-    font-family: var(--font-noto-sans-sc), var(--font-inter), sans-serif;
+    font-family: var(--font-noto-sans-sc), system-ui, sans-serif;
     overflow-x: hidden;
-  }
-
-  /* Hide default cursor on desktop when custom cursor is active */
-  body.custom-cursor * {
-    cursor: none !important;
   }
 
   :lang(zh) {

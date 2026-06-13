@@ -15,10 +15,10 @@ export default function CompareBlock({ dict }: { dict: CompareDict }) {
     <section className="section-padding">
       <div className="section-container">
         <HeaderReveal className="text-center max-w-3xl mx-auto">
-          <p className="font-display-zh text-charcoal text-xl sm:text-2xl lg:text-[28px] leading-relaxed font-semibold">
+          <p className="font-display-zh text-charcoal text-xl sm:text-2xl lg:text-[28px] leading-relaxed font-bold">
             {dict.quote1}
           </p>
-          <p className="mt-2 font-display-zh text-sakura-dark text-lg sm:text-xl lg:text-2xl leading-relaxed font-semibold">
+          <p className="mt-2 font-display-zh text-sakura-dark text-lg sm:text-xl lg:text-2xl leading-relaxed font-bold">
             {dict.quote2}
           </p>
         </HeaderReveal>

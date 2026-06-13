@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
 import FlovLogo from '@/components/icons/FlovLogo'
 
 interface NavBarProps {
@@ -84,10 +83,9 @@ export default function NavBar({ dict }: NavBarProps) {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="md:hidden pb-4 border-t border-charcoal/10 glass-light -mx-6 px-6"
+          <div
+            className="md:hidden pb-4 border-t border-charcoal/10 glass-light -mx-6 px-6 animate-fade-in-up"
+            style={{ animationDuration: '0.25s' }}
           >
             <nav className="flex flex-col gap-1 mt-3">
               {NAV_LINKS.map((link) => (
@@ -108,7 +106,7 @@ export default function NavBar({ dict }: NavBarProps) {
                 {dict.cta}
               </a>
             </nav>
-          </motion.div>
+          </div>
         )}
       </div>
     </header>

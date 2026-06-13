@@ -1,9 +1,7 @@
 import type { Metadata, Viewport } from 'next'
-import { notoSerifSC, notoSansSC, cormorant, inter, jetbrainsMono } from '@/lib/fonts'
+import { notoSerifSC, notoSansSC, cormorant, jetbrainsMono } from '@/lib/fonts'
 import MotionConfigWrapper from '@/components/animations/MotionConfig'
 import SmoothScroll from '@/components/animations/SmoothScroll'
-import { MousePositionProvider } from '@/hooks/useMousePosition'
-import CustomCursor from '@/components/garden/CustomCursor'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -60,17 +58,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         notoSerifSC.variable,
         notoSansSC.variable,
         cormorant.variable,
-        inter.variable,
         jetbrainsMono.variable,
       ].join(' ')}
     >
       <body>
         <MotionConfigWrapper>
-          <MousePositionProvider>
-            <SmoothScroll />
-            <CustomCursor />
-            {children}
-          </MousePositionProvider>
+          <SmoothScroll />
+          {children}
         </MotionConfigWrapper>
       </body>
     </html>

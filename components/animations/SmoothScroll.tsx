@@ -2,22 +2,35 @@
 
 import { useEffect } from 'react'
 import Lenis from 'lenis'
-import { ScrollTrigger } from '@/lib/gsap'
 
-/** Site-wide inertial smooth scrolling + silky in-page anchor travel. */
+/**
+ * Desktop: inertial smooth scrolling via Lenis + eased hash-anchor travel.
+ * Mobile/touch: NO Lenis (it fights the WeChat WebView's native scrolling); hash anchors
+ * use native scrollIntoView, and `scroll-mt-16` on sections supplies the header offset.
+ * Reduced-motion: native scrolling, nothing installed.
+ */
 export default function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    const lenis = new Lenis({
-      lerp: 0.1,
-      wheelMultiplier: 1,
-    })
+    const isDesktop = window.matchMedia('(min-width: 1024px) and (pointer: fine)').matches
 
-    // Keep GSAP ScrollTrigger scrubs in lockstep with Lenis' virtualized scroll
-    lenis.on('scroll', ScrollTrigger.update)
+    if (!isDesktop) {
+      const onClick = (e: MouseEvent) => {
+        const a = (e.target as HTMLElement).closest?.('a[href^="#"]') as HTMLAnchorElement | null
+        if (!a) return
+        const hash = a.getAttribute('href') || ''
+        if (hash.length < 2) return
+        const target = document.querySelector(hash)
+        if (!target) return
+        e.preventDefault()
+        ;(target as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+      document.addEventListener('click', onClick)
+      return () => document.removeEventListener('click', onClick)
+    }
 
-    // Expose for the intro overlay to pause/resume scrolling while it plays
+    const lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1 })
     ;(window as unknown as { __lenis?: Lenis }).__lenis = lenis
 
     let rafId = requestAnimationFrame(function loop(time) {
@@ -25,7 +38,6 @@ export default function SmoothScroll() {
       rafId = requestAnimationFrame(loop)
     })
 
-    // Intercept in-page hash links → eased scroll with header offset
     const onClick = (e: MouseEvent) => {
       const a = (e.target as HTMLElement).closest?.('a[href^="#"]') as HTMLAnchorElement | null
       if (!a) return
