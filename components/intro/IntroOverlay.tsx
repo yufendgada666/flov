@@ -29,14 +29,6 @@ interface IntroOverlayProps {
 
 const SEEN_KEY = 'flov-intro-seen'
 
-function hasSeen(): boolean {
-  try {
-    return sessionStorage.getItem(SEEN_KEY) === '1'
-  } catch {
-    return false
-  }
-}
-
 function markSeen() {
   try {
     sessionStorage.setItem(SEEN_KEY, '1')
@@ -51,27 +43,29 @@ export default function IntroOverlay({ dict, onDone }: IntroOverlayProps) {
   const rootRef = useRef<HTMLDivElement>(null)
   const tlRef = useRef<gsap.core.Timeline | null>(null)
   const doneRef = useRef(false)
-  // null = undecided (first client render), false = play, true = skip entirely
-  const [skipped, setSkipped] = useState<boolean | null>(null)
+  // false = play the intro, true = skip it. Decided SYNCHRONOUSLY on first client render
+  // (this component is ssr:false, so window/sessionStorage exist) to avoid a null→state
+  // race that could leave the overlay stuck unrendered.
+  const [skipped, setSkipped] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return true
+    try {
+      if (sessionStorage.getItem(SEEN_KEY) === '1') return true
+    } catch {
+      /* ignore */
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true
+    return false
+  })
 
+  // If we're skipping (already seen / reduced motion), let the provider know once.
   useEffect(() => {
-    if (hasSeen()) {
-      setSkipped(true)
+    if (skipped) {
       doneRef.current = true
+      markSeen()
       onDone()
-    } else {
-      setSkipped(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  // Reduced motion: never play
-  useEffect(() => {
-    if (skipped === false && reducedMotion) {
-      finish(true)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reducedMotion, skipped])
 
   function finish(instant = false) {
     if (doneRef.current) return
@@ -97,7 +91,7 @@ export default function IntroOverlay({ dict, onDone }: IntroOverlayProps) {
 
   // Escape to skip
   useEffect(() => {
-    if (skipped !== false) return
+    if (skipped) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') finish()
     }
@@ -108,7 +102,7 @@ export default function IntroOverlay({ dict, onDone }: IntroOverlayProps) {
 
   useGSAP(
     () => {
-      if (skipped !== false || reducedMotion) return
+      if (skipped || reducedMotion) return
       document.body.style.overflow = 'hidden'
       ;(window as unknown as { __lenis?: { stop: () => void } }).__lenis?.stop()
 
@@ -199,7 +193,7 @@ export default function IntroOverlay({ dict, onDone }: IntroOverlayProps) {
     document.body.style.overflow = ''
   }, [])
 
-  if (skipped !== false) return null
+  if (skipped) return null
 
   return (
     <div
