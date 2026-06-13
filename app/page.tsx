@@ -9,7 +9,6 @@ import CompareBlock from '@/components/sections/CompareBlock'
 import ReportCard from '@/components/sections/ReportCard'
 import TrustGrid from '@/components/sections/TrustGrid'
 import FaqAccordion from '@/components/sections/FaqAccordion'
-import PricingPlaceholder from '@/components/sections/PricingPlaceholder'
 import FinalCta from '@/components/sections/FinalCta'
 
 // Landing copy is zh-only for now. Forcing 'zh' also keeps English-locale
@@ -71,9 +70,8 @@ export default async function HomePage() {
           {/* 6 · 信任与安全 */}
           <TrustGrid dict={t.trust} />
 
-          {/* 7 · FAQ + 价格占位 + 底部扫码 */}
+          {/* 7 · FAQ + 底部扫码 */}
           <FaqAccordion dict={t.faq} />
-          <PricingPlaceholder dict={t.pricing} />
           <FinalCta dict={t.cta} />
 
           {/* Dusk runway — the gradient's fade into the footer happens here */}
