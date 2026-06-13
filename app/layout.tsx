@@ -5,6 +5,8 @@ import SmoothScroll from '@/components/animations/SmoothScroll'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://flov.cheerai.cn'),
+  alternates: { canonical: '/' },
   title: '小伴 · 微信里的 AI 辅导老师｜不给答案，把孩子陪到真的懂',
   description:
     '小伴是住在微信里的 AI 辅导老师：孩子把不会的题拍照、打字或发语音发给它，它只教方法、不给答案，一步步引导孩子自己算出来；每天晚上给家长一份微信学习报告。加好友即用，无需下载 App。',

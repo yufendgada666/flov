@@ -26,8 +26,33 @@ export default async function HomePage() {
   const locale = await getLocale()
   const t = await getMessages(locale)
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        name: '北京花声智能科技有限公司',
+        alternateName: '花声科技 FLOV',
+        url: 'https://flov.cheerai.cn',
+        logo: 'https://flov.cheerai.cn/icon.svg',
+        email: 'hello@flov.ai',
+      },
+      { '@type': 'WebSite', name: '小伴 · 微信里的 AI 辅导老师', url: 'https://flov.cheerai.cn' },
+      {
+        '@type': 'FAQPage',
+        mainEntity: t.faq.items.map((it: { q: string; a: string }) => ({
+          '@type': 'Question',
+          name: it.q,
+          acceptedAnswer: { '@type': 'Answer', text: it.a },
+        })),
+      },
+    ],
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
       <NavBar dict={t.nav} />
 
       <IntroProvider dict={t.intro}>
