@@ -13,6 +13,8 @@ interface FooterProps {
     }
     contactTitle: string
     contactEmail: string
+    legal: { privacy: string; terms: string }
+    company: string
     copyright: string
     icp: string
   }
@@ -48,18 +50,22 @@ export default function Footer({ dict }: FooterProps) {
           </div>
 
           <div>
-            <div className="text-[13px] font-semibold tracking-wider text-white/45 mb-4">{dict.contactTitle}</div>
+            <div className="text-[13px] font-semibold tracking-wider text-white/55 mb-4">{dict.contactTitle}</div>
             <a
               href={`mailto:${dict.contactEmail}`}
-              className="text-[14px] text-white/70 hover:text-white transition-colors"
+              className="text-[14px] text-white/75 hover:text-white transition-colors"
             >
               {dict.contactEmail}
             </a>
+            <div className="mt-4 flex gap-4 text-[13px]">
+              <a href="/privacy" className="text-white/60 hover:text-white transition-colors">{dict.legal.privacy}</a>
+              <a href="/terms" className="text-white/60 hover:text-white transition-colors">{dict.legal.terms}</a>
+            </div>
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-white/40">
-          <span>{dict.copyright}</span>
+        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-white/55">
+          <span>{dict.company} · {dict.copyright}</span>
           <span>{dict.icp}</span>
         </div>
       </div>
