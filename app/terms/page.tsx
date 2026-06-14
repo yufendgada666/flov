@@ -46,7 +46,7 @@ const SECTIONS: { h: string; p: string[] }[] = [
   },
   {
     h: '九、联系我们',
-    p: ['如对本协议有任何疑问，可发送邮件至 hello@flov.ai，或在微信中直接联系小伴。'],
+    p: ['如对本协议有任何疑问，可发送邮件至 yufeng@flov.la，或在微信中直接联系小伴。'],
   },
 ]
 

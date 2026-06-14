@@ -20,12 +20,30 @@ export default function QrCta({ heading, caption, hint, wechatId, size = 'md', c
 
   const copy = async () => {
     if (!wechatId) return
+    let ok = false
     try {
       await navigator.clipboard.writeText(wechatId)
+      ok = true
+    } catch {
+      /* clipboard API blocked (common in WeChat WebView) — fall back to execCommand */
+    }
+    if (!ok) {
+      try {
+        const ta = document.createElement('textarea')
+        ta.value = wechatId
+        ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0'
+        document.body.appendChild(ta)
+        ta.focus()
+        ta.select()
+        ok = document.execCommand('copy')
+        document.body.removeChild(ta)
+      } catch {
+        /* both paths failed — long-press the QR is still the primary path */
+      }
+    }
+    if (ok) {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    } catch {
-      /* clipboard blocked — long-press path still works */
     }
   }
 

@@ -30,6 +30,7 @@
     "ctaPrimary": "扫码，让小伴认识你家孩子",
     "qrCaption": "微信扫码 · 加小伴为好友",
     "qrHint": "手机打开本页？长按识别二维码",
+    "wechatId": "cheeeeeeeeeeeeeeer",
     "demo": {
       "title": "小伴",
       "statusTime": "19:32",
@@ -129,6 +130,7 @@
     "sub": "微信扫码加好友，把今天那道不会的题发给它试试。",
     "qrCaption": "微信扫码 · 加小伴为好友",
     "qrHint": "手机打开本页？长按识别二维码",
+    "wechatId": "cheeeeeeeeeeeeeeer",
     "sticky": "扫码，免费加小伴体验"
   },
   "footer": {
@@ -142,7 +144,7 @@
       "faq": "常见问题"
     },
     "contactTitle": "联系我们",
-    "contactEmail": "hello@flov.ai",
+    "contactEmail": "yufeng@flov.la",
     "legal": { "privacy": "隐私政策", "terms": "用户协议" },
     "company": "北京花声智能科技有限公司",
     "copyright": "© 2026 花声科技 FLOV Inc.",

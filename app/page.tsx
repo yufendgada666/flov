@@ -35,7 +35,7 @@ export default async function HomePage() {
         alternateName: '花声科技 FLOV',
         url: 'https://flov.cheerai.cn',
         logo: 'https://flov.cheerai.cn/icon.svg',
-        email: 'hello@flov.ai',
+        email: 'yufeng@flov.la',
       },
       { '@type': 'WebSite', name: '小伴 · 微信里的 AI 辅导老师', url: 'https://flov.cheerai.cn' },
       {
