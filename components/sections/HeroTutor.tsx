@@ -12,7 +12,6 @@ interface HeroTutorDict {
   ctaPrimary: string
   qrCaption: string
   qrHint: string
-  wechatId: string
   demo: WeChatDemoDict
 }
 
@@ -75,7 +74,7 @@ export default function HeroTutor({ dict }: HeroTutorProps) {
             </ul>
 
             <div className="mt-8 flex justify-center lg:justify-start">
-              <QrCta heading={dict.ctaPrimary} caption={dict.qrCaption} hint={dict.qrHint} wechatId={dict.wechatId} />
+              <QrCta heading={dict.ctaPrimary} caption={dict.qrCaption} hint={dict.qrHint} />
             </div>
           </div>
 

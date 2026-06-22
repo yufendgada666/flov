@@ -7,7 +7,6 @@ interface FinalCtaDict {
   sub: string
   qrCaption: string
   qrHint: string
-  wechatId: string
 }
 
 export default function FinalCta({ dict }: { dict: FinalCtaDict }) {
@@ -25,7 +24,7 @@ export default function FinalCta({ dict }: { dict: FinalCtaDict }) {
         </HeaderReveal>
 
         <ScaleSettle delay={0.12} className="mt-9 flex justify-center">
-          <QrCta size="lg" caption={dict.qrCaption} hint={dict.qrHint} wechatId={dict.wechatId} />
+          <QrCta size="lg" caption={dict.qrCaption} hint={dict.qrHint} />
         </ScaleSettle>
       </div>
     </section>
