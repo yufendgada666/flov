@@ -6,13 +6,14 @@ interface FooterProps {
     desc: string
     linksTitle: string
     links: {
-      how: string
+      why: string
       features: string
-      report: string
+      pricing: string
       faq: string
     }
     contactTitle: string
     contactEmail: string
+    contactPhone: string
     legal: { privacy: string; terms: string }
     company: string
     copyright: string
@@ -22,9 +23,9 @@ interface FooterProps {
 
 export default function Footer({ dict }: FooterProps) {
   const links = [
-    { label: dict.links.how, href: '#how' },
+    { label: dict.links.why, href: '#why' },
     { label: dict.links.features, href: '#features' },
-    { label: dict.links.report, href: '#report' },
+    { label: dict.links.pricing, href: '#pricing' },
     { label: dict.links.faq, href: '#faq' },
   ]
 
@@ -57,6 +58,7 @@ export default function Footer({ dict }: FooterProps) {
             >
               {dict.contactEmail}
             </a>
+            <div className="mt-2 text-[14px] text-white/75">{dict.contactPhone}</div>
             <div className="mt-4 flex gap-4 text-[13px]">
               <a href="/privacy" className="text-white/60 hover:text-white transition-colors">{dict.legal.privacy}</a>
               <a href="/terms" className="text-white/60 hover:text-white transition-colors">{dict.legal.terms}</a>

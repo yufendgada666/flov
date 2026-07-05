@@ -1,7 +1,7 @@
-import WeChatDemo, { type WeChatDemoDict } from '@/components/sections/WeChatDemo'
+import DeviceDemo, { type DeviceDemoDict } from '@/components/sections/DeviceDemo'
 import QrCta from '@/components/ui/QrCta'
 
-interface HeroTutorDict {
+interface HeroDeviceDict {
   eyebrow: string
   h1Line1: string
   h1Line2Pre: string
@@ -9,15 +9,12 @@ interface HeroTutorDict {
   h1Tail: string
   sub: string
   points: string[]
+  priceAnchor: string
   ctaPrimary: string
   qrCaption: string
   qrHint: string
   wechatId: string
-  demo: WeChatDemoDict
-}
-
-interface HeroTutorProps {
-  dict: HeroTutorDict
+  demo: DeviceDemoDict
 }
 
 function CheckIcon() {
@@ -29,19 +26,17 @@ function CheckIcon() {
   )
 }
 
-/* Hero renders statically (no JS/animation gate) so the H1 + CTA are in the SSR HTML and
-   paint immediately — the intro overlay (if it plays) sits on top and wipes away to reveal
-   already-painted content. This protects LCP and guarantees the CTA is never blank even if
-   the intro animation stalls on a low-end WeChat WebView. */
-export default function HeroTutor({ dict }: HeroTutorProps) {
+/* 首屏：设备（蓝色学习机 + 实时辅导演示）为主视觉；文案、价格锚点与扫码咨询直达。
+   静态渲染进 SSR，开场动画只是叠加层 —— CTA 永不空白。 */
+export default function HeroDevice({ dict }: { dict: HeroDeviceDict }) {
   return (
     <section id="top" className="relative overflow-hidden">
-      <div aria-hidden className="absolute -top-24 -right-24 w-[380px] h-[380px] rounded-full bg-sakura/[0.07] blur-3xl" />
+      <div aria-hidden className="absolute -top-24 -right-24 w-[380px] h-[380px] rounded-full bg-sky/[0.12] blur-3xl" />
       <div aria-hidden className="absolute bottom-0 -left-28 w-[340px] h-[340px] rounded-full bg-sunshine/[0.1] blur-3xl" />
 
       <div className="section-container relative pt-24 pb-14 lg:pt-32 lg:pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-center">
-          {/* Copy column */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-10 lg:gap-14 items-center">
+          {/* 文案列 */}
           <div className="text-center lg:text-left animate-fade-in-up">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[13px] font-medium bg-sakura/10 text-sakura-dark border border-sakura/25">
               <span className="w-1.5 h-1.5 rounded-full bg-wechat" />
@@ -74,14 +69,23 @@ export default function HeroTutor({ dict }: HeroTutorProps) {
               ))}
             </ul>
 
-            <div className="mt-8 flex justify-center lg:justify-start">
+            {/* 价格锚点 */}
+            <p className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sunshine/20 border border-sunshine/40 text-[13.5px] font-medium text-charcoal">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden className="flex-shrink-0 text-sunshine-dark">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.8" />
+                <path d="M8 8.5 L12 13 L16 8.5 M12 13 v5 M9 15.5 h6 M9 13 h6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              {dict.priceAnchor}
+            </p>
+
+            <div className="mt-6 flex justify-center lg:justify-start">
               <QrCta heading={dict.ctaPrimary} caption={dict.qrCaption} hint={dict.qrHint} wechatId={dict.wechatId} />
             </div>
           </div>
 
-          {/* Demo column — auto-plays in a loop, pauses offscreen */}
-          <div>
-            <WeChatDemo dict={dict.demo} />
+          {/* 设备列：蓝色学习机 + 机内实时演示 */}
+          <div className="flex justify-center">
+            <DeviceDemo dict={dict.demo} className="w-[240px] sm:w-[264px] lg:w-[300px]" />
           </div>
         </div>
       </div>

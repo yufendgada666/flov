@@ -5,18 +5,20 @@ import FlovLogo from '@/components/icons/FlovLogo'
 
 interface NavBarProps {
   dict: {
-    how: string
+    why: string
     features: string
-    report: string
+    gallery: string
+    pricing: string
     faq: string
     cta: string
   }
 }
 
 const NAV_LINKS = [
-  { labelKey: 'how', href: '#how' },
+  { labelKey: 'why', href: '#why' },
   { labelKey: 'features', href: '#features' },
-  { labelKey: 'report', href: '#report' },
+  { labelKey: 'gallery', href: '#gallery' },
+  { labelKey: 'pricing', href: '#pricing' },
   { labelKey: 'faq', href: '#faq' },
 ] as const
 

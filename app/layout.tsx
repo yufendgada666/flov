@@ -7,17 +7,18 @@ import './globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL('https://flov.cheerai.cn'),
   alternates: { canonical: '/' },
-  title: '小伴 · 微信里的 AI 辅导老师｜不给答案，把孩子陪到真的懂',
+  title: '小伴 AI 学习机｜只能学习的手机，不给答案只教方法',
   description:
-    '小伴是住在微信里的 AI 辅导老师：孩子把不会的题拍照、打字或发语音发给它，它只教方法、不给答案，一步步引导孩子自己算出来；每天晚上给家长一份微信学习报告。加好友即用，无需下载 App。',
+    '小伴是一台只能学习的 AI 学习机：孩子把不会的题拍照或按住说话问它，它不给答案、一步步教方法；退不出去、装不了游戏和短视频；每天晚上给家长一份微信学习报告。首月 399 元，次月起 99 元/月，满 12 个月机器归你。',
   keywords: [
     '小伴',
-    'AI辅导老师',
-    'AI学习助手',
-    '微信AI老师',
-    '作业辅导',
+    'AI学习机',
+    '儿童学习机',
+    '学习专用手机',
+    '防沉迷手机',
     '不给答案',
     '引导式学习',
+    '拍照搜题',
     '家长学习报告',
     '全科辅导',
     '花声科技',
@@ -25,9 +26,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: '花声科技 FLOV Inc.' }],
   openGraph: {
-    title: '小伴 · 微信里的 AI 辅导老师',
+    title: '小伴 AI 学习机 · 只能学习的手机',
     description:
-      '只教方法、不给答案，把孩子陪到真的懂。拍照、打字、发语音都能问，每天晚上给家长一份学习报告。微信加好友即用。',
+      '不给答案、只教方法的 AI 学习机：拍照、说话就能问，退不出去、装不了游戏，每天给家长一份学习报告。首月 399 元，满 12 个月机器归你。',
     url: 'https://flov.cheerai.cn',
     siteName: '小伴 · FLOV',
     locale: 'zh_CN',
@@ -35,9 +36,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '小伴 · 微信里的 AI 辅导老师',
+    title: '小伴 AI 学习机 · 只能学习的手机',
     description:
-      '只教方法、不给答案，把孩子陪到真的懂。拍照、打字、发语音都能问，每天晚上给家长一份学习报告。',
+      '不给答案、只教方法的 AI 学习机：拍照、说话就能问，退不出去、装不了游戏，每天给家长一份学习报告。',
   },
   robots: {
     index: true,

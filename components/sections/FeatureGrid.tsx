@@ -22,11 +22,28 @@ const ICON_BG: Record<string, string> = {
   subjects: 'bg-lavender/15 text-lavender-dark',
   practice: 'bg-sunshine/20 text-sunshine-dark',
   reportIcon: 'bg-wechat/10 text-wechat-dark',
+  power: 'bg-sakura/10 text-sakura-dark',
+  lock: 'bg-lavender/15 text-lavender-dark',
 }
 
 function FeatureIcon({ name }: { name: string }) {
   const stroke = 'currentColor'
   switch (name) {
+    case 'power':
+      return (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M12 3 v8" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
+          <path d="M7 6.5 a8 8 0 1 0 10 0" stroke={stroke} strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+      )
+    case 'lock':
+      return (
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <rect x="4.5" y="10.5" width="15" height="10" rx="2.2" stroke={stroke} strokeWidth="1.7" />
+          <path d="M8 10.5 V8 a4 4 0 0 1 8 0 v2.5" stroke={stroke} strokeWidth="1.7" strokeLinecap="round" />
+          <circle cx="12" cy="15" r="1.4" fill={stroke} />
+        </svg>
+      )
     case 'method':
       return (
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
