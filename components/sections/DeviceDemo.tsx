@@ -14,11 +14,20 @@ interface DemoTurn {
   text: string
 }
 
+interface Scenario {
+  label: string
+  turns: DemoTurn[]
+}
+
 export interface DeviceDemoDict {
   title: string
   statusTime: string
   timestampChip: string
-  turns: DemoTurn[]
+  menuGreeting: string
+  menuHint: string
+  tryAgain: string
+  listening: string
+  scenarios: Scenario[]
 }
 
 interface DeviceDemoProps {
@@ -27,7 +36,9 @@ interface DeviceDemoProps {
 }
 
 const TURN_INTERVAL = 1700
-const END_HOLD = 4200
+const AUTO_START_MS = 8000
+const AUTO_RETURN_MS = 5000
+const USER_RETURN_MS = 14000
 
 /* 真机 App 的配色（v2.7 起）：珊瑚主色 + 叶绿说话键 + 奶白底 */
 const C_CORAL = '#D98370'
@@ -35,6 +46,9 @@ const C_CORAL2 = '#C9705F'
 const C_LEAF = '#8AA585'
 const C_LEAF2 = '#789573'
 const C_INK = '#33302B'
+
+const CORAL_GRAD = `linear-gradient(135deg, ${C_CORAL} 0%, ${C_CORAL2} 100%)`
+const LEAF_GRAD = `linear-gradient(135deg, ${C_LEAF} 0%, ${C_LEAF2} 100%)`
 
 function PhotoBubble({ text }: { text: string }) {
   return (
@@ -60,15 +74,31 @@ function PhotoBubble({ text }: { text: string }) {
   )
 }
 
-/** 小伴学习机的实时辅导演示：自动循环播放一次完整的「不给答案」引导，渲染在蓝色机身内。 */
+/**
+ * 小伴学习机·可交互演示：
+ * 选题 chips 点哪道演示哪道；「按住说话」可真实按住（松开进入语音提问的辅导）；
+ * 「拍照搜题」直接演示拍照题；无人操作 8 秒后自动开始演示（一旦交互即停用自动）。
+ * 全部脚本化，不连真实 AI。
+ */
 export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
   const reducedMotion = useReducedMotion()
+  const [mode, setMode] = useState<'menu' | 'playing'>('menu')
+  const [scenarioIdx, setScenarioIdx] = useState(0)
   const [visibleCount, setVisibleCount] = useState(0)
+  const [recording, setRecording] = useState(false)
+  const [interacted, setInteracted] = useState(false)
   const [hoverPaused, setHoverPaused] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
   const tiltRef = useRef<HTMLDivElement>(null)
+  const autoIdxRef = useRef(0)
+  const voiceIdxRef = useRef(1)
   const inView = useInView(rootRef, { amount: 0.3 })
+
+  const scenario = dict.scenarios[scenarioIdx]
+  const total = scenario ? scenario.turns.length : 0
+  const paused = hoverPaused || !inView
+  const finished = mode === 'playing' && visibleCount >= total
 
   const TILT_REST = 'rotateY(-4deg) rotateX(2deg)'
   const onTiltMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -82,27 +112,67 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
     if (tiltRef.current) tiltRef.current.style.transform = TILT_REST
   }
 
-  const total = dict.turns.length
-  const paused = hoverPaused || !inView
+  function startScenario(idx: number, viaUser: boolean) {
+    setScenarioIdx(idx)
+    setMode('playing')
+    setVisibleCount(reducedMotion ? dict.scenarios[idx].turns.length : 0)
+    if (viaUser) setInteracted(true)
+  }
 
+  function backToMenu() {
+    setMode('menu')
+    setVisibleCount(0)
+  }
+
+  /* 对话推进 */
   useEffect(() => {
-    if (reducedMotion || paused) return
+    if (mode !== 'playing' || reducedMotion || paused) return
     if (visibleCount < total) {
       const t = setTimeout(() => setVisibleCount((c) => c + 1), TURN_INTERVAL)
       return () => clearTimeout(t)
     }
-    const t = setTimeout(() => setVisibleCount(0), END_HOLD)
+  }, [mode, visibleCount, paused, reducedMotion, total])
+
+  /* 播完自动回到选题屏 */
+  useEffect(() => {
+    if (!finished || paused) return
+    const t = setTimeout(() => backToMenu(), interacted ? USER_RETURN_MS : AUTO_RETURN_MS)
     return () => clearTimeout(t)
-  }, [visibleCount, paused, reducedMotion, total])
+  }, [finished, paused, interacted])
+
+  /* 无人操作时自动开始演示（循环换题） */
+  useEffect(() => {
+    if (mode !== 'menu' || interacted || reducedMotion || paused) return
+    const t = setTimeout(() => {
+      const idx = autoIdxRef.current % dict.scenarios.length
+      autoIdxRef.current += 1
+      startScenario(idx, false)
+    }, AUTO_START_MS)
+    return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, interacted, reducedMotion, paused])
 
   useEffect(() => {
     if (!scrollRef.current) return
     scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' })
-  }, [visibleCount])
+  }, [visibleCount, mode])
 
-  const shown = reducedMotion ? total : visibleCount
-  const nextTurn = dict.turns[shown]
-  const showTyping = !reducedMotion && shown < total && nextTurn?.role === 'ban'
+  /* 按住说话：按下出录音条，松开"识别"出一道语音题并进入辅导 */
+  const voiceDown = () => {
+    if (mode === 'playing' && !finished) return
+    setRecording(true)
+  }
+  const voiceUp = () => {
+    if (!recording) return
+    setRecording(false)
+    const idx = voiceIdxRef.current % dict.scenarios.length
+    voiceIdxRef.current += 1
+    startScenario(idx, true)
+  }
+
+  const shown = mode === 'playing' ? (reducedMotion ? total : visibleCount) : 0
+  const nextTurn = scenario?.turns[shown]
+  const showTyping = mode === 'playing' && !reducedMotion && shown < total && nextTurn?.role === 'ban'
 
   return (
     <div
@@ -116,16 +186,21 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
       onMouseMove={onTiltMove}
       style={{ perspective: '1400px' }}
     >
-      {/* 屏幕阅读器文字版 —— 核心说服力不依赖动画 */}
+      {/* 屏幕阅读器文字版 —— 三套辅导脚本完整可读 */}
       <div className="sr-only">
-        <p>小伴学习机上的一次辅导示例：</p>
-        <ul>
-          {dict.turns.map((turn, i) => (
-            <li key={i}>
-              {turn.role === 'child' ? '孩子' : '小伴'}：{turn.text}
-            </li>
-          ))}
-        </ul>
+        <p>小伴学习机辅导演示（三个例题）：</p>
+        {dict.scenarios.map((s) => (
+          <div key={s.label}>
+            <p>{s.label}：</p>
+            <ul>
+              {s.turns.map((turn, i) => (
+                <li key={i}>
+                  {turn.role === 'child' ? '孩子' : '小伴'}：{turn.text}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
 
       {/* 品牌光晕 */}
@@ -139,114 +214,160 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
         }}
       />
 
-      <div
-        ref={tiltRef}
-        style={{ transform: TILT_REST, transition: 'transform 0.25s ease-out', transformStyle: 'preserve-3d' }}
-      >
-      <DeviceView view="front" className="relative" float shadow>
-        <div className="absolute inset-0 flex flex-col">
-          {/* App 顶栏（珊瑚渐变，让出居中挖孔） */}
-          <div
-            className="relative flex items-end justify-between px-3 pb-1.5 pt-[16%] flex-shrink-0"
-            style={{ background: `linear-gradient(135deg, ${C_CORAL} 0%, ${C_CORAL2} 100%)` }}
-          >
-            <div className="flex items-center gap-1.5">
-              <XiaoBanAvatar size={18} />
-              <div className="leading-none">
-                <div className="text-[10px] font-bold text-white">{dict.title}</div>
-                <div className="text-[6.5px] text-white/80 mt-0.5 tracking-wider">学习小伙伴</div>
+      <div ref={tiltRef} style={{ transform: TILT_REST, transition: 'transform 0.25s ease-out', transformStyle: 'preserve-3d' }}>
+        <DeviceView view="front" className="relative" float shadow>
+          <div className="absolute inset-0 flex flex-col">
+            {/* App 顶栏 */}
+            <div
+              className="relative flex items-end justify-between px-3 pb-1.5 pt-[16%] flex-shrink-0"
+              style={{ background: CORAL_GRAD }}
+            >
+              <div className="flex items-center gap-1.5">
+                <XiaoBanAvatar size={18} />
+                <div className="leading-none">
+                  <div className="text-[10px] font-bold text-white">{dict.title}</div>
+                  <div className="text-[6.5px] text-white/80 mt-0.5 tracking-wider">学习小伙伴</div>
+                </div>
               </div>
+              <div className="text-[7px] text-white/85 font-mono pb-0.5">{dict.statusTime}</div>
             </div>
-            <div className="text-[7px] text-white/85 font-mono pb-0.5">{dict.statusTime}</div>
-          </div>
 
-          {/* 对话区 */}
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-2 py-2" style={{ scrollbarWidth: 'none' }}>
-            <div className="flex flex-col gap-1.5">
-              <div className="text-center">
-                <span className="text-[7px] text-charcoal-light/70">{dict.timestampChip}</span>
-              </div>
-
-              <AnimatePresence initial={false}>
-                {dict.turns.slice(0, shown).map((turn, idx) => {
-                  const isChild = turn.role === 'child'
-                  return (
-                    <motion.div
-                      key={idx}
-                      initial={reducedMotion ? false : { opacity: 0, y: 8, scale: 0.97 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                      className={`flex items-start gap-1 ${isChild ? 'justify-end' : ''}`}
-                    >
-                      {!isChild && <XiaoBanAvatar size={16} className="mt-0.5" />}
-                      {turn.type === 'photo' ? (
-                        <PhotoBubble text={turn.text} />
-                      ) : (
-                        <div
-                          className="max-w-[76%] px-2 py-1.5 text-[9px] leading-[1.55] shadow-sm"
-                          style={
-                            isChild
-                              ? {
-                                  background: `linear-gradient(135deg, ${C_CORAL} 0%, ${C_CORAL2} 100%)`,
-                                  color: '#FFFFFF',
-                                  borderRadius: '9px 9px 3px 9px',
-                                }
-                              : { background: '#FFFFFF', color: C_INK, borderRadius: '9px 9px 9px 3px' }
-                          }
-                        >
-                          {turn.text}
-                        </div>
-                      )}
-                    </motion.div>
-                  )
-                })}
-
-                {showTyping && (
-                  <motion.div
-                    key="typing"
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="flex items-start gap-1"
+            {/* 内容区：选题屏 或 对话 */}
+            {mode === 'menu' ? (
+              <div className="flex-1 flex flex-col items-center justify-center gap-1.5 px-3 text-center">
+                <XiaoBanAvatar size={44} />
+                <div className="text-[11px] font-bold mt-1" style={{ color: C_INK }}>
+                  {dict.menuGreeting}
+                </div>
+                <div className="text-[8px] mb-1.5" style={{ color: '#8A8378' }}>
+                  {dict.menuHint}
+                </div>
+                {dict.scenarios.map((s, i) => (
+                  <button
+                    key={s.label}
+                    onClick={() => startScenario(i, true)}
+                    className="w-[78%] py-1.5 rounded-full text-[9px] font-bold bg-white shadow-sm border active:scale-95 transition-transform"
+                    style={{ color: C_CORAL2, borderColor: 'rgba(217,131,112,0.4)' }}
                   >
-                    <XiaoBanAvatar size={16} className="mt-0.5" />
-                    <div className="bg-white rounded-lg px-2 py-1.5 flex gap-0.5 shadow-sm">
-                      <span className="w-1 h-1 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:0ms]" />
-                      <span className="w-1 h-1 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:150ms]" />
-                      <span className="w-1 h-1 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:300ms]" />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
+                    {s.label}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div ref={scrollRef} className="flex-1 overflow-y-auto px-2 py-2" style={{ scrollbarWidth: 'none' }}>
+                <div className="flex flex-col gap-1.5">
+                  <div className="text-center">
+                    <span className="text-[7px] text-charcoal-light/70">{dict.timestampChip}</span>
+                  </div>
 
-          {/* 底部两大按钮（真机 v4 起无打字，只有拍照 + 按住说话） */}
-          <div className="flex-shrink-0 flex gap-1.5 px-2 pb-2.5 pt-1">
-            <div
-              className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-full text-[8.5px] font-bold text-white shadow-sm"
-              style={{ background: `linear-gradient(135deg, ${C_CORAL} 0%, ${C_CORAL2} 100%)` }}
-            >
-              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <rect x="3" y="6.5" width="18" height="13" rx="2.5" stroke="white" strokeWidth="2" />
-                <circle cx="12" cy="13" r="3.6" stroke="white" strokeWidth="2" />
-                <path d="M8.5 6.5 L10 4 h4 l1.5 2.5" stroke="white" strokeWidth="2" strokeLinejoin="round" />
-              </svg>
-              拍照搜题
-            </div>
-            <div
-              className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-full text-[8.5px] font-bold text-white shadow-sm"
-              style={{ background: `linear-gradient(135deg, ${C_LEAF} 0%, ${C_LEAF2} 100%)` }}
-            >
-              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <rect x="9" y="3" width="6" height="11" rx="3" stroke="white" strokeWidth="2" />
-                <path d="M5.5 11.5 a6.5 6.5 0 0 0 13 0 M12 18 v3" stroke="white" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-              按住说话
+                  <AnimatePresence initial={false}>
+                    {scenario.turns.slice(0, shown).map((turn, idx) => {
+                      const isChild = turn.role === 'child'
+                      return (
+                        <motion.div
+                          key={`${scenarioIdx}-${idx}`}
+                          initial={reducedMotion ? false : { opacity: 0, y: 8, scale: 0.97 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                          className={`flex items-start gap-1 ${isChild ? 'justify-end' : ''}`}
+                        >
+                          {!isChild && <XiaoBanAvatar size={16} className="mt-0.5" />}
+                          {turn.type === 'photo' ? (
+                            <PhotoBubble text={turn.text} />
+                          ) : (
+                            <div
+                              className="max-w-[76%] px-2 py-1.5 text-[9px] leading-[1.55] shadow-sm"
+                              style={
+                                isChild
+                                  ? { background: CORAL_GRAD, color: '#FFFFFF', borderRadius: '9px 9px 3px 9px' }
+                                  : { background: '#FFFFFF', color: C_INK, borderRadius: '9px 9px 9px 3px' }
+                              }
+                            >
+                              {turn.text}
+                            </div>
+                          )}
+                        </motion.div>
+                      )
+                    })}
+
+                    {showTyping && (
+                      <motion.div
+                        key="typing"
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="flex items-start gap-1"
+                      >
+                        <XiaoBanAvatar size={16} className="mt-0.5" />
+                        <div className="bg-white rounded-lg px-2 py-1.5 flex gap-0.5 shadow-sm">
+                          <span className="w-1 h-1 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:0ms]" />
+                          <span className="w-1 h-1 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:150ms]" />
+                          <span className="w-1 h-1 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:300ms]" />
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {finished && (
+                      <motion.div
+                        key="again"
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex justify-center pt-1"
+                      >
+                        <button
+                          onClick={backToMenu}
+                          className="px-3 py-1 rounded-full text-[8.5px] font-bold bg-white shadow-sm border active:scale-95 transition-transform"
+                          style={{ color: C_CORAL2, borderColor: 'rgba(217,131,112,0.4)' }}
+                        >
+                          {dict.tryAgain}
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+            )}
+
+            {/* 录音条（按住说话时出现） */}
+            {recording && (
+              <div className="flex-shrink-0 mx-2 mb-1 px-2 py-1.5 rounded-lg flex items-center justify-center gap-1.5 bg-white/95 shadow-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D14B3F] animate-ping" />
+                <span className="text-[8.5px] font-bold" style={{ color: C_INK }}>
+                  {dict.listening}
+                </span>
+              </div>
+            )}
+
+            {/* 底部两大按钮（真实可按） */}
+            <div className="flex-shrink-0 flex gap-1.5 px-2 pb-2.5 pt-1">
+              <button
+                onClick={() => startScenario(0, true)}
+                className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-full text-[8.5px] font-bold text-white shadow-sm active:scale-95 transition-transform"
+                style={{ background: CORAL_GRAD }}
+              >
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <rect x="3" y="6.5" width="18" height="13" rx="2.5" stroke="white" strokeWidth="2" />
+                  <circle cx="12" cy="13" r="3.6" stroke="white" strokeWidth="2" />
+                  <path d="M8.5 6.5 L10 4 h4 l1.5 2.5" stroke="white" strokeWidth="2" strokeLinejoin="round" />
+                </svg>
+                拍照搜题
+              </button>
+              <button
+                onPointerDown={voiceDown}
+                onPointerUp={voiceUp}
+                onPointerLeave={() => recording && voiceUp()}
+                className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-full text-[8.5px] font-bold text-white shadow-sm active:scale-95 transition-transform select-none touch-none"
+                style={{ background: recording ? 'linear-gradient(135deg, #D14B3F 0%, #B93E33 100%)' : LEAF_GRAD }}
+              >
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <rect x="9" y="3" width="6" height="11" rx="3" stroke="white" strokeWidth="2" />
+                  <path d="M5.5 11.5 a6.5 6.5 0 0 0 13 0 M12 18 v3" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+                {recording ? '松开提问' : '按住说话'}
+              </button>
             </div>
           </div>
-        </div>
-      </DeviceView>
+        </DeviceView>
       </div>
     </div>
   )

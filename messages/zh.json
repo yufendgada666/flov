@@ -9,16 +9,16 @@
   },
   "intro": {
     "skip": "跳过",
-    "photoLabel": "小伴学习机",
+    "photoLabel": "题目照片",
     "problem": "小明带了20元，买了3本一样的笔记本，还剩2元，每本多少钱？",
     "childAsk": "答案是多少呀？",
     "banReply": "我不直接给答案，我们一步步来。",
     "step1": "20 − 2 = 18",
     "step2": "18 ÷ 3 = ?",
     "childSolve": "一本 6 元！是我自己算出来的！",
-    "reportToast": "21:30 · 家长报告已送达",
-    "brandName": "小伴",
-    "brandLine": "只教方法的 AI 学习机"
+    "reportToast": "微信 · 小伴学习报告已送达",
+    "brandName": "小伴 AI 学习机",
+    "brandLine": "只能学习的手机 · 不给答案只教方法"
   },
   "hero": {
     "eyebrow": "小伴 AI 学习机 · 线下有售",
@@ -37,13 +37,44 @@
       "title": "小伴",
       "statusTime": "19:32",
       "timestampChip": "晚上 7:32",
-      "turns": [
-        { "role": "child", "type": "photo", "text": "小明带了20元，买了3本一样的笔记本，还剩2元，每本多少钱？" },
-        { "role": "ban", "type": "text", "text": "我们先把题读明白～小明带了20元，最后剩2元。那你想想：买本子一共花了多少钱？你来算算 😊" },
-        { "role": "child", "type": "text", "text": "18元" },
-        { "role": "ban", "type": "text", "text": "对啦！花了18元，买了3本一样的本子。那求一本多少钱，该用什么方法呢？" },
-        { "role": "child", "type": "text", "text": "除法！18÷3" },
-        { "role": "ban", "type": "text", "text": "太棒了，这是你自己想出来的！算算等于几，这道题就被你拿下了～" }
+      "menuGreeting": "嗨，我是小伴！",
+      "menuHint": "点一道题，看我怎么教👇",
+      "tryAgain": "再试一题",
+      "listening": "在听你说…",
+      "scenarios": [
+        {
+          "label": "数学应用题",
+          "turns": [
+            { "role": "child", "type": "photo", "text": "小明带了20元，买了3本一样的笔记本，还剩2元，每本多少钱？" },
+            { "role": "ban", "type": "text", "text": "我们先把题读明白～小明带了20元，最后剩2元。那你想想：买本子一共花了多少钱？你来算算 😊" },
+            { "role": "child", "type": "text", "text": "18元" },
+            { "role": "ban", "type": "text", "text": "对啦！花了18元，买了3本一样的本子。那求一本多少钱，该用什么方法呢？" },
+            { "role": "child", "type": "text", "text": "除法！18÷3" },
+            { "role": "ban", "type": "text", "text": "太棒了，这是你自己想出来的！算算等于几，这道题就被你拿下了～" }
+          ]
+        },
+        {
+          "label": "英语",
+          "turns": [
+            { "role": "child", "type": "text", "text": "go 的过去式是什么呀？" },
+            { "role": "ban", "type": "text", "text": "咱们一起想～go 很特别，变过去式不加 ed。你在课文里见过「I ___ to school yesterday」吗？空里填的是哪个词？" },
+            { "role": "child", "type": "text", "text": "went？" },
+            { "role": "ban", "type": "text", "text": "对！就是 went～这类词叫不规则动词。那「She goes home」说昨天发生的，该怎么改？你来试试" },
+            { "role": "child", "type": "text", "text": "She went home!" },
+            { "role": "ban", "type": "text", "text": "漂亮！你已经会用 went 了～下次碰到 come、eat 这些词，也用今天的办法想一想" }
+          ]
+        },
+        {
+          "label": "语文古诗",
+          "turns": [
+            { "role": "child", "type": "text", "text": "「春眠不觉晓」的下一句是什么？" },
+            { "role": "ban", "type": "text", "text": "这是孟浩然的《春晓》～别急着背，先想一想：春天的早晨睡得正香，醒来时最先听到什么声音？" },
+            { "role": "child", "type": "text", "text": "鸟叫？" },
+            { "role": "ban", "type": "text", "text": "对啦！诗里写的就是到处都是鸟叫声。把它连成五个字试试：处处闻——？" },
+            { "role": "child", "type": "text", "text": "处处闻啼鸟！" },
+            { "role": "ban", "type": "text", "text": "完全正确！你看，不是背出来的，是自己想出来的——这样才记得牢～" }
+          ]
+        }
       ]
     }
   },
@@ -179,7 +210,7 @@
     "qrHint": "手机打开本页？长按识别二维码",
     "wechatId": "yufengdada666",
     "email": "yufeng@flov.la",
-    "phone": "电话待填",
+    "phone": "19261012419",
     "sticky": "扫码咨询 · 小伴学习机"
   },
   "footer": {
@@ -194,7 +225,7 @@
     },
     "contactTitle": "联系我们",
     "contactEmail": "yufeng@flov.la",
-    "contactPhone": "电话待填",
+    "contactPhone": "19261012419",
     "legal": { "privacy": "隐私政策", "terms": "用户协议" },
     "company": "北京花声智能科技有限公司",
     "copyright": "© 2026 花声科技 FLOV Inc.",

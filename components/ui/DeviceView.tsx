@@ -201,13 +201,16 @@ export default function DeviceView({ view, className = '', children, float = fal
           <span aria-hidden className="absolute -left-[3px] top-[26.5%] w-[4px] h-[7%] rounded-full bg-[#4E7CA5]" />
           <span aria-hidden className="absolute -left-[3px] top-[35%] w-[4px] h-[7%] rounded-full bg-[#4E7CA5]" />
 
-          {/* 黑色屏幕包边（内阴影出深度） */}
+          {/* 屏幕包边：细窄一圈深蓝灰（与蓝框衔接），代替原先厚重的纯黑环 */}
           <div
-            className="absolute inset-[2.4%] overflow-hidden"
-            style={{ borderRadius: '14.5% / 6.9%', background: '#0B0F14', boxShadow: 'inset 0 0 8px rgba(0,0,0,0.85)' }}
+            className="absolute inset-[1.5%] overflow-hidden"
+            style={{ borderRadius: '15% / 7.1%', background: '#141C26' }}
           >
-            {/* 屏幕内容区 */}
-            <div className="absolute inset-[2.2%] overflow-hidden" style={{ borderRadius: '12.5% / 6%', background: '#FAF6F0' }}>
+            {/* 屏幕内容区（做满，仅留 ~1% 细边；极细内阴影保持嵌入感） */}
+            <div
+              className="absolute inset-[1.1%] overflow-hidden"
+              style={{ borderRadius: '14.2% / 6.7%', background: '#FAF6F0', boxShadow: 'inset 0 0 4px rgba(10,16,24,0.5)' }}
+            >
               {children}
               {/* 周期性屏幕扫光 */}
               {sweep && (
