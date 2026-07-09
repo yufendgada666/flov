@@ -67,7 +67,20 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
   const [hoverPaused, setHoverPaused] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const tiltRef = useRef<HTMLDivElement>(null)
   const inView = useInView(rootRef, { amount: 0.3 })
+
+  const TILT_REST = 'rotateY(-4deg) rotateX(2deg)'
+  const onTiltMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reducedMotion || !tiltRef.current) return
+    const r = e.currentTarget.getBoundingClientRect()
+    const x = (e.clientX - r.left) / r.width - 0.5
+    const y = (e.clientY - r.top) / r.height - 0.5
+    tiltRef.current.style.transform = `rotateY(${(x * 10 - 4).toFixed(2)}deg) rotateX(${(2 - y * 6).toFixed(2)}deg)`
+  }
+  const onTiltLeave = () => {
+    if (tiltRef.current) tiltRef.current.style.transform = TILT_REST
+  }
 
   const total = dict.turns.length
   const paused = hoverPaused || !inView
@@ -96,7 +109,12 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
       ref={rootRef}
       className={`relative ${className}`}
       onMouseEnter={() => setHoverPaused(true)}
-      onMouseLeave={() => setHoverPaused(false)}
+      onMouseLeave={() => {
+        setHoverPaused(false)
+        onTiltLeave()
+      }}
+      onMouseMove={onTiltMove}
+      style={{ perspective: '1400px' }}
     >
       {/* 屏幕阅读器文字版 —— 核心说服力不依赖动画 */}
       <div className="sr-only">
@@ -121,7 +139,11 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
         }}
       />
 
-      <DeviceView view="front" className="relative">
+      <div
+        ref={tiltRef}
+        style={{ transform: TILT_REST, transition: 'transform 0.25s ease-out', transformStyle: 'preserve-3d' }}
+      >
+      <DeviceView view="front" className="relative" float shadow>
         <div className="absolute inset-0 flex flex-col">
           {/* App 顶栏（珊瑚渐变，让出居中挖孔） */}
           <div
@@ -225,6 +247,7 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
           </div>
         </div>
       </DeviceView>
+      </div>
     </div>
   )
 }

@@ -212,6 +212,36 @@
     z-index: 1;
   }
 
+  /* Device render motion — gentle float with a breathing ground shadow, and a
+     periodic screen sweep. All disabled for reduced motion. */
+  .dv-float {
+    animation: dv-float 4.5s ease-in-out infinite;
+  }
+  .dv-shadow {
+    animation: dv-shadow 4.5s ease-in-out infinite;
+  }
+  .dv-sweep {
+    animation: dv-sweep 8s ease-in-out infinite;
+  }
+  @keyframes dv-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-9px); }
+  }
+  @keyframes dv-shadow {
+    0%, 100% { transform: scaleX(1); opacity: 1; }
+    50% { transform: scaleX(0.93); opacity: 0.72; }
+  }
+  @keyframes dv-sweep {
+    0% { transform: translateX(-130%) skewX(-18deg); }
+    24% { transform: translateX(130%) skewX(-18deg); }
+    100% { transform: translateX(130%) skewX(-18deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dv-float, .dv-shadow, .dv-sweep {
+      animation: none;
+    }
+  }
+
   /* Ink wash divider */
   .ink-divider {
     height: 1px;

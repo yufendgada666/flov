@@ -67,12 +67,38 @@ export default function DeviceGallery({ dict }: { dict: GalleryDict }) {
         </HeaderReveal>
 
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-10 lg:gap-16 items-center max-w-4xl mx-auto">
-          {/* 双机位渲染：背面 + 正面 */}
-          <ScaleSettle className="flex items-end justify-center gap-6">
-            <DeviceView view="back" className="w-[150px] sm:w-[170px] -rotate-3" />
-            <DeviceView view="front" className="w-[150px] sm:w-[170px] rotate-3 translate-y-2">
-              <FrontScreen />
-            </DeviceView>
+          {/* 双机位渲染：背面 + 正面，落在"台面"上并带倒影 */}
+          <ScaleSettle className="relative">
+            <div className="relative z-[1] flex items-end justify-center gap-6">
+              <DeviceView view="back" className="w-[150px] sm:w-[170px] -rotate-3" />
+              <DeviceView view="front" className="w-[150px] sm:w-[170px] rotate-3 translate-y-2">
+                <FrontScreen />
+              </DeviceView>
+            </div>
+            {/* 接地阴影 */}
+            <div
+              aria-hidden
+              className="absolute left-1/2 -translate-x-1/2 bottom-[-10px] w-[92%] h-6 rounded-[50%] z-0"
+              style={{
+                background: 'radial-gradient(ellipse at center, rgba(42,64,86,0.30) 0%, rgba(42,64,86,0.10) 60%, transparent 100%)',
+                filter: 'blur(7px)',
+              }}
+            />
+            {/* 台面倒影（翻转副本 + 渐隐遮罩） */}
+            <div
+              aria-hidden
+              className="relative flex items-start justify-center gap-6 mt-1 pointer-events-none select-none"
+              style={{
+                transform: 'scaleY(-1)',
+                WebkitMaskImage: 'linear-gradient(to top, rgba(0,0,0,0.30) 0%, transparent 42%)',
+                maskImage: 'linear-gradient(to top, rgba(0,0,0,0.30) 0%, transparent 42%)',
+              }}
+            >
+              <DeviceView view="back" className="w-[150px] sm:w-[170px] -rotate-3" />
+              <DeviceView view="front" className="w-[150px] sm:w-[170px] rotate-3 translate-y-2" sweep={false}>
+                <FrontScreen />
+              </DeviceView>
+            </div>
           </ScaleSettle>
 
           {/* 规格 */}
