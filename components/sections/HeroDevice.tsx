@@ -83,9 +83,9 @@ export default function HeroDevice({ dict }: { dict: HeroDeviceDict }) {
             </div>
           </div>
 
-          {/* 设备列：蓝色学习机 + 机内实时演示 */}
+          {/* 设备列：蓝色学习机 + 机内实时演示（做大保证屏内可读可点） */}
           <div className="flex justify-center">
-            <DeviceDemo dict={dict.demo} className="w-[240px] sm:w-[264px] lg:w-[300px]" />
+            <DeviceDemo dict={dict.demo} className="w-[300px] sm:w-[330px] lg:w-[360px]" />
           </div>
         </div>
       </div>

@@ -218,7 +218,7 @@ export default function IntroOverlay({ dict, onDone }: IntroOverlayProps) {
       <div className="relative h-full flex items-center justify-center px-6">
         {/* 舞台：学习机 + 家长通知 */}
         <div className="io-stage relative">
-          <div className="io-dev invisible relative w-[190px] sm:w-[210px]">
+          <div className="io-dev invisible relative w-[240px] sm:w-[270px]">
             <DeviceView view="front" shadow sweep={false}>
               <div className="absolute inset-0 flex flex-col">
                 {/* App 顶栏 */}
@@ -227,8 +227,8 @@ export default function IntroOverlay({ dict, onDone }: IntroOverlayProps) {
                   style={{ background: 'linear-gradient(135deg, #D98370 0%, #C9705F 100%)' }}
                 >
                   <div className="flex items-center gap-1.5">
-                    <XiaoBanAvatar size={16} />
-                    <div className="text-[9px] font-bold text-white leading-none">小伴</div>
+                    <XiaoBanAvatar size={20} />
+                    <div className="text-[12px] font-bold text-white leading-none">小伴</div>
                   </div>
                 </div>
 
@@ -238,14 +238,14 @@ export default function IntroOverlay({ dict, onDone }: IntroOverlayProps) {
                     <div
                       className="px-2.5 py-2"
                       style={{
-                        background: 'repeating-linear-gradient(180deg, #FFFEFA 0px, #FFFEFA 15px, #EAE5D8 15px, #EAE5D8 16px)',
+                        background: 'repeating-linear-gradient(180deg, #FFFEFA 0px, #FFFEFA 19px, #EAE5D8 19px, #EAE5D8 20px)',
                       }}
                     >
                       <div className="flex items-center gap-1 mb-1" aria-hidden>
-                        <span className="w-1 h-1 rounded-full bg-cinnabar/50" />
-                        <span className="text-[7px] tracking-wider text-charcoal-lighter">{dict.photoLabel}</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-cinnabar/50" />
+                        <span className="text-[9px] tracking-wider text-charcoal-lighter">{dict.photoLabel}</span>
                       </div>
-                      <p className="text-[9px] leading-[15px] text-charcoal/85" style={{ transform: 'rotate(-0.6deg)' }}>
+                      <p className="text-[11.5px] leading-[18px] text-charcoal/85" style={{ transform: 'rotate(-0.6deg)' }}>
                         {dict.problem}
                       </p>
                     </div>
@@ -253,41 +253,41 @@ export default function IntroOverlay({ dict, onDone }: IntroOverlayProps) {
 
                   <div className="io-ask invisible flex justify-end">
                     <div
-                      className="max-w-[80%] px-2 py-1.5 text-[9px] leading-[1.5] text-white shadow-sm"
-                      style={{ background: 'linear-gradient(135deg, #D98370 0%, #C9705F 100%)', borderRadius: '9px 9px 3px 9px' }}
+                      className="max-w-[82%] px-2.5 py-2 text-[11.5px] leading-[1.55] text-white shadow-sm"
+                      style={{ background: 'linear-gradient(135deg, #D98370 0%, #C9705F 100%)', borderRadius: '11px 11px 4px 11px' }}
                     >
                       {dict.childAsk}
                     </div>
                   </div>
 
                   <div className="io-reply invisible flex items-start gap-1">
-                    <XiaoBanAvatar size={15} className="mt-0.5" />
+                    <XiaoBanAvatar size={18} className="mt-0.5" />
                     <div
-                      className="max-w-[80%] px-2 py-1.5 text-[9px] leading-[1.5] bg-white shadow-sm"
-                      style={{ color: '#33302B', borderRadius: '9px 9px 9px 3px' }}
+                      className="max-w-[82%] px-2.5 py-2 text-[11.5px] leading-[1.55] bg-white shadow-sm"
+                      style={{ color: '#33302B', borderRadius: '11px 11px 11px 4px' }}
                     >
                       {dict.banReply}
                     </div>
                   </div>
 
                   <div className="flex items-center gap-1.5 pl-5">
-                    <span className="io-step1 invisible inline-flex px-1.5 py-1 rounded-md bg-sunshine/30 text-charcoal text-[8px] font-mono font-bold border border-sunshine/50">
+                    <span className="io-step1 invisible inline-flex px-2 py-1.5 rounded-lg bg-sunshine/30 text-charcoal text-[10px] font-mono font-bold border border-sunshine/50">
                       {dict.step1}
                     </span>
-                    <span className="io-step2 invisible inline-flex px-1.5 py-1 rounded-md bg-sky/20 text-charcoal text-[8px] font-mono font-bold border border-sky/35">
+                    <span className="io-step2 invisible inline-flex px-2 py-1.5 rounded-lg bg-sky/20 text-charcoal text-[10px] font-mono font-bold border border-sky/35">
                       {dict.step2}
                     </span>
                   </div>
 
                   <div className="io-solve invisible flex justify-end items-center gap-1">
-                    <span className="io-check inline-flex items-center justify-center w-[18px] h-[18px] rounded-full bg-wechat shadow-sm">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <span className="io-check inline-flex items-center justify-center w-[22px] h-[22px] rounded-full bg-wechat shadow-sm">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
                         <path d="M6 12.5 L10 16.5 L18 7.5" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </span>
                     <div
-                      className="max-w-[72%] px-2 py-1.5 text-[9px] font-bold leading-[1.5] text-white shadow-sm"
-                      style={{ background: 'linear-gradient(135deg, #D98370 0%, #C9705F 100%)', borderRadius: '9px 9px 3px 9px' }}
+                      className="max-w-[76%] px-2.5 py-2 text-[11.5px] font-bold leading-[1.55] text-white shadow-sm"
+                      style={{ background: 'linear-gradient(135deg, #D98370 0%, #C9705F 100%)', borderRadius: '11px 11px 4px 11px' }}
                     >
                       {dict.childSolve}
                     </div>

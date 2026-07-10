@@ -52,22 +52,22 @@ const LEAF_GRAD = `linear-gradient(135deg, ${C_LEAF} 0%, ${C_LEAF2} 100%)`
 
 function PhotoBubble({ text }: { text: string }) {
   return (
-    <div className="relative rounded-md overflow-hidden w-[72%] shadow-sm">
+    <div className="relative rounded-lg overflow-hidden w-[80%] shadow-sm">
       <div
         className="px-2.5 py-2"
         style={{
-          background: 'repeating-linear-gradient(180deg, #FFFEFA 0px, #FFFEFA 15px, #EAE5D8 15px, #EAE5D8 16px)',
+          background: 'repeating-linear-gradient(180deg, #FFFEFA 0px, #FFFEFA 20px, #EAE5D8 20px, #EAE5D8 21px)',
         }}
       >
         <div className="flex items-center gap-1 mb-1" aria-hidden>
-          <span className="w-1 h-1 rounded-full bg-cinnabar/50" />
-          <span className="text-[7px] tracking-wider text-charcoal-lighter">数学练习册 · P42</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-cinnabar/50" />
+          <span className="text-[9px] tracking-wider text-charcoal-lighter">数学练习册 · P42</span>
         </div>
-        <p className="text-[9px] leading-[15px] text-charcoal/85" style={{ transform: 'rotate(-0.6deg)' }}>
+        <p className="text-[12px] leading-[19px] text-charcoal/85" style={{ transform: 'rotate(-0.6deg)' }}>
           {text}
         </p>
       </div>
-      <span className="absolute bottom-1 right-1.5 text-[7px] text-charcoal-lighter/80" aria-hidden>
+      <span className="absolute bottom-1 right-2 text-[9px] text-charcoal-lighter/80" aria-hidden>
         ▣ 照片
       </span>
     </div>
@@ -223,30 +223,30 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
               style={{ background: CORAL_GRAD }}
             >
               <div className="flex items-center gap-1.5">
-                <XiaoBanAvatar size={18} />
+                <XiaoBanAvatar size={22} />
                 <div className="leading-none">
-                  <div className="text-[10px] font-bold text-white">{dict.title}</div>
-                  <div className="text-[6.5px] text-white/80 mt-0.5 tracking-wider">学习小伙伴</div>
+                  <div className="text-[13px] font-bold text-white">{dict.title}</div>
+                  <div className="text-[9px] text-white/80 mt-0.5 tracking-wider">学习小伙伴</div>
                 </div>
               </div>
-              <div className="text-[7px] text-white/85 font-mono pb-0.5">{dict.statusTime}</div>
+              <div className="text-[9.5px] text-white/85 font-mono pb-0.5">{dict.statusTime}</div>
             </div>
 
             {/* 内容区：选题屏 或 对话 */}
             {mode === 'menu' ? (
-              <div className="flex-1 flex flex-col items-center justify-center gap-1.5 px-3 text-center">
-                <XiaoBanAvatar size={44} />
-                <div className="text-[11px] font-bold mt-1" style={{ color: C_INK }}>
+              <div className="flex-1 flex flex-col items-center justify-center gap-2 px-3 text-center">
+                <XiaoBanAvatar size={60} />
+                <div className="text-[15px] font-bold mt-1.5" style={{ color: C_INK }}>
                   {dict.menuGreeting}
                 </div>
-                <div className="text-[8px] mb-1.5" style={{ color: '#8A8378' }}>
+                <div className="text-[11.5px] mb-2" style={{ color: '#8A8378' }}>
                   {dict.menuHint}
                 </div>
                 {dict.scenarios.map((s, i) => (
                   <button
                     key={s.label}
                     onClick={() => startScenario(i, true)}
-                    className="w-[78%] py-1.5 rounded-full text-[9px] font-bold bg-white shadow-sm border active:scale-95 transition-transform"
+                    className="w-[88%] py-2.5 rounded-full text-[13px] font-bold bg-white shadow-sm border active:scale-95 transition-transform"
                     style={{ color: C_CORAL2, borderColor: 'rgba(217,131,112,0.4)' }}
                   >
                     {s.label}
@@ -254,10 +254,10 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
                 ))}
               </div>
             ) : (
-              <div ref={scrollRef} className="flex-1 overflow-y-auto px-2 py-2" style={{ scrollbarWidth: 'none' }}>
-                <div className="flex flex-col gap-1.5">
+              <div ref={scrollRef} className="flex-1 overflow-y-auto px-2.5 py-2.5" style={{ scrollbarWidth: 'none' }}>
+                <div className="flex flex-col gap-2">
                   <div className="text-center">
-                    <span className="text-[7px] text-charcoal-light/70">{dict.timestampChip}</span>
+                    <span className="text-[9.5px] text-charcoal-light/70">{dict.timestampChip}</span>
                   </div>
 
                   <AnimatePresence initial={false}>
@@ -271,16 +271,16 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
                           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                           className={`flex items-start gap-1 ${isChild ? 'justify-end' : ''}`}
                         >
-                          {!isChild && <XiaoBanAvatar size={16} className="mt-0.5" />}
+                          {!isChild && <XiaoBanAvatar size={20} className="mt-0.5" />}
                           {turn.type === 'photo' ? (
                             <PhotoBubble text={turn.text} />
                           ) : (
                             <div
-                              className="max-w-[76%] px-2 py-1.5 text-[9px] leading-[1.55] shadow-sm"
+                              className="max-w-[82%] px-3 py-2 text-[12.5px] leading-[1.6] shadow-sm"
                               style={
                                 isChild
-                                  ? { background: CORAL_GRAD, color: '#FFFFFF', borderRadius: '9px 9px 3px 9px' }
-                                  : { background: '#FFFFFF', color: C_INK, borderRadius: '9px 9px 9px 3px' }
+                                  ? { background: CORAL_GRAD, color: '#FFFFFF', borderRadius: '12px 12px 4px 12px' }
+                                  : { background: '#FFFFFF', color: C_INK, borderRadius: '12px 12px 12px 4px' }
                               }
                             >
                               {turn.text}
@@ -298,11 +298,11 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
                         exit={{ opacity: 0 }}
                         className="flex items-start gap-1"
                       >
-                        <XiaoBanAvatar size={16} className="mt-0.5" />
-                        <div className="bg-white rounded-lg px-2 py-1.5 flex gap-0.5 shadow-sm">
-                          <span className="w-1 h-1 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:0ms]" />
-                          <span className="w-1 h-1 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:150ms]" />
-                          <span className="w-1 h-1 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:300ms]" />
+                        <XiaoBanAvatar size={20} className="mt-0.5" />
+                        <div className="bg-white rounded-xl px-3 py-2 flex gap-1 shadow-sm">
+                          <span className="w-1.5 h-1.5 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:0ms]" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:150ms]" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-charcoal-lighter animate-bounce [animation-delay:300ms]" />
                         </div>
                       </motion.div>
                     )}
@@ -316,7 +316,7 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
                       >
                         <button
                           onClick={backToMenu}
-                          className="px-3 py-1 rounded-full text-[8.5px] font-bold bg-white shadow-sm border active:scale-95 transition-transform"
+                          className="px-5 py-2 rounded-full text-[12.5px] font-bold bg-white shadow-sm border active:scale-95 transition-transform"
                           style={{ color: C_CORAL2, borderColor: 'rgba(217,131,112,0.4)' }}
                         >
                           {dict.tryAgain}
@@ -330,22 +330,22 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
 
             {/* 录音条（按住说话时出现） */}
             {recording && (
-              <div className="flex-shrink-0 mx-2 mb-1 px-2 py-1.5 rounded-lg flex items-center justify-center gap-1.5 bg-white/95 shadow-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D14B3F] animate-ping" />
-                <span className="text-[8.5px] font-bold" style={{ color: C_INK }}>
+              <div className="flex-shrink-0 mx-2.5 mb-1 px-3 py-2 rounded-xl flex items-center justify-center gap-1.5 bg-white/95 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-[#D14B3F] animate-ping" />
+                <span className="text-[12px] font-bold" style={{ color: C_INK }}>
                   {dict.listening}
                 </span>
               </div>
             )}
 
             {/* 底部两大按钮（真实可按） */}
-            <div className="flex-shrink-0 flex gap-1.5 px-2 pb-2.5 pt-1">
+            <div className="flex-shrink-0 flex gap-2 px-2.5 pb-3 pt-1">
               <button
                 onClick={() => startScenario(0, true)}
-                className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-full text-[8.5px] font-bold text-white shadow-sm active:scale-95 transition-transform"
+                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-full text-[12.5px] font-bold text-white shadow-sm active:scale-95 transition-transform"
                 style={{ background: CORAL_GRAD }}
               >
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <rect x="3" y="6.5" width="18" height="13" rx="2.5" stroke="white" strokeWidth="2" />
                   <circle cx="12" cy="13" r="3.6" stroke="white" strokeWidth="2" />
                   <path d="M8.5 6.5 L10 4 h4 l1.5 2.5" stroke="white" strokeWidth="2" strokeLinejoin="round" />
@@ -356,10 +356,10 @@ export default function DeviceDemo({ dict, className = '' }: DeviceDemoProps) {
                 onPointerDown={voiceDown}
                 onPointerUp={voiceUp}
                 onPointerLeave={() => recording && voiceUp()}
-                className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-full text-[8.5px] font-bold text-white shadow-sm active:scale-95 transition-transform select-none touch-none"
+                className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-full text-[12.5px] font-bold text-white shadow-sm active:scale-95 transition-transform select-none touch-none"
                 style={{ background: recording ? 'linear-gradient(135deg, #D14B3F 0%, #B93E33 100%)' : LEAF_GRAD }}
               >
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <rect x="9" y="3" width="6" height="11" rx="3" stroke="white" strokeWidth="2" />
                   <path d="M5.5 11.5 a6.5 6.5 0 0 0 13 0 M12 18 v3" stroke="white" strokeWidth="2" strokeLinecap="round" />
                 </svg>

@@ -21,16 +21,16 @@ function FrontScreen() {
         style={{ background: 'linear-gradient(135deg, #D98370 0%, #C9705F 100%)' }}
       >
         <div className="flex items-center gap-1.5">
-          <XiaoBanAvatar size={18} />
-          <div className="text-[10px] font-bold text-white leading-none">小伴</div>
+          <XiaoBanAvatar size={20} />
+          <div className="text-[12px] font-bold text-white leading-none">小伴</div>
         </div>
       </div>
       <div className="flex-1 flex flex-col items-center justify-center gap-2 px-3 text-center">
-        <XiaoBanAvatar size={56} />
-        <div className="text-[11px] font-bold" style={{ color: '#33302B' }}>
+        <XiaoBanAvatar size={64} />
+        <div className="text-[14px] font-bold" style={{ color: '#33302B' }}>
           嗨，我是小伴！
         </div>
-        <div className="text-[8px] leading-relaxed" style={{ color: '#8A8378' }}>
+        <div className="text-[10.5px] leading-relaxed" style={{ color: '#8A8378' }}>
           把不会的题拍给我，
           <br />
           咱俩一起把它想明白
@@ -38,13 +38,13 @@ function FrontScreen() {
       </div>
       <div className="flex-shrink-0 flex gap-1.5 px-2 pb-2.5">
         <div
-          className="flex-1 py-1.5 rounded-full text-[8.5px] font-bold text-white text-center"
+          className="flex-1 py-2 rounded-full text-[11px] font-bold text-white text-center"
           style={{ background: 'linear-gradient(135deg, #D98370 0%, #C9705F 100%)' }}
         >
           拍照搜题
         </div>
         <div
-          className="flex-1 py-1.5 rounded-full text-[8.5px] font-bold text-white text-center"
+          className="flex-1 py-2 rounded-full text-[11px] font-bold text-white text-center"
           style={{ background: 'linear-gradient(135deg, #8AA585 0%, #789573 100%)' }}
         >
           按住说话
@@ -70,8 +70,8 @@ export default function DeviceGallery({ dict }: { dict: GalleryDict }) {
           {/* 双机位渲染：背面 + 正面，落在"台面"上并带倒影 */}
           <ScaleSettle className="relative">
             <div className="relative z-[1] flex items-end justify-center gap-6">
-              <DeviceView view="back" className="w-[150px] sm:w-[170px] -rotate-3" />
-              <DeviceView view="front" className="w-[150px] sm:w-[170px] rotate-3 translate-y-2">
+              <DeviceView view="back" className="w-[170px] sm:w-[195px] -rotate-3" />
+              <DeviceView view="front" className="w-[170px] sm:w-[195px] rotate-3 translate-y-2">
                 <FrontScreen />
               </DeviceView>
             </div>
@@ -94,8 +94,8 @@ export default function DeviceGallery({ dict }: { dict: GalleryDict }) {
                 maskImage: 'linear-gradient(to top, rgba(0,0,0,0.30) 0%, transparent 42%)',
               }}
             >
-              <DeviceView view="back" className="w-[150px] sm:w-[170px] -rotate-3" />
-              <DeviceView view="front" className="w-[150px] sm:w-[170px] rotate-3 translate-y-2" sweep={false}>
+              <DeviceView view="back" className="w-[170px] sm:w-[195px] -rotate-3" />
+              <DeviceView view="front" className="w-[170px] sm:w-[195px] rotate-3 translate-y-2" sweep={false}>
                 <FrontScreen />
               </DeviceView>
             </div>
